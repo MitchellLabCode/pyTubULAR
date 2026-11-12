@@ -1,0 +1,20 @@
+{
+  "source_repository": "https://github.com/npmitchell/tubular",
+  "source_commit": "9bd49dbffd38b199c32552b8cc089f611f584679",
+  "generated_date": "2026-11-12",
+  "matlab_version": "25.2.0.3055257 (R2025b) Update 2",
+  "source_sha256": {
+    "utility/mesh_handling/meshArea.m": "78284d515ae9af759672e5270e0fee945b423fac6b99794467f27c29bfde7d5a",
+    "utility/mesh_handling/meshVolumeArea.m": "ffa0a3fd377a7e016b6d9c8910482d06608c8050187ed54ed9d922adf18bd911",
+    "utility/mesh_handling/faceNormals.m": "8907cc290b7c4fb2fc3827b1be13ab87a45032926ec10ad058123530439487ad",
+    "utility/mesh_handling/meshAveragingOperators.m": "4ff65d042a4e2c1dde5627e607f5f07c2849fbbbc0942dfc2237568d3c4da244",
+    "utility/mesh_handling/coordinate_transformations/jacobian2Dto3DMesh.m": "ed896c434e71dcf29e2247d933d6cc5cdbd2d402e70a8af1ccf2dff6459c1cfc",
+    "utility/mesh_handling/coordinate_transformations/jacobian3Dto2DMesh.m": "ed9e100b8baf50f4b1334a9c994b212d163aeca626021fe384b30c5b5d7698a2",
+    "utility/geometry/metric/inducedMetric.m": "4f4fa6b2c60e8e995a78f6a65a574106b89f7611882e55d07b8dfaf576991a9b",
+    "utility/geometry/metric/constructFundamentalForms.m": "b5033d73290bd73e5a9ef99fbd0ed0a62986853be817568ff981ac02fd31a724",
+    "utility/mesh_handling/rectilinearMesh/defineFacesRectilinearGrid.m": "4163ac2dc384ed8a7d53320a7a7eace98cf5a3e98b25fd27d5090e26d5cfb168"
+  },
+  "fixture_sha256": "1e668810ea2e9d72c258064784e224e3526cc227f002af04ab313fb073f1bf52",
+  "generator_sha256": "48f60c95cabebd61f82354e7efe6fcbd1b552a6a7f8be9d5816d3cb6c354a7c2",
+  "generation_command": "addpath('python/scripts'); generate_matlab_reference(pwd, fullfile(pwd, 'python/tests/data/matlab_reference.mat'));"
+}

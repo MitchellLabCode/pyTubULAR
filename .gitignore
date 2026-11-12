@@ -218,3 +218,7 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# pyTubULAR local environments and macOS
+.venv*/
+.DS_Store

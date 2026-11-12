@@ -1,0 +1,888 @@
+{
+  "source_commit": "9bd49dbffd38b199c32552b8cc089f611f584679",
+  "scope": "@TubULAR MATLAB entry points; utility ports are mapped separately in translation.md",
+  "count": 86,
+  "files": [
+    {
+      "source": "@TubULAR/TubULAR.m",
+      "lines": 3266,
+      "sha256": "7b82c88865bc9250fa4b21a2a2be092ef60d45159c29c880235cb013ab1f755e",
+      "python_status": "not_ported",
+      "signatures": [
+        "classdef TubULAR < handle",
+        "function tubi = TubULAR(xp, opts)",
+        "function setTime(tubi, tt)",
+        "function [tpTrue, timestr ] = trueTime(tubi, tp, div60)",
+        "function clearTime(tubi)",
+        "function t0 = t0set(tubi, t0)",
+        "function makeMIPs(tubi, dim, pages, timePoints, adjustIV)",
+        "function im = mip(tubi, tp, dim, pages, adjustIV)",
+        "function mask = maskCurrentDataWithMesh(tubi, opts)",
+        "function [apts_sm, ppts_sm] = getAPpointsSm(tubi)",
+        "function [rot, trans] = getRotTrans(tubi)",
+        "function [xyzlim_raw, xyzlim_pix, xyzlim_um, xyzlim_um_buff] = ...",
+        "function features = getFeatures(tubi, varargin)",
+        "function plotConstrictionDynamics(tubi, opts)",
+        "function loadFeatures(tubi, varargin)",
+        "function setDataLimits(tubi, tp, adjustlow_pctile, adjusthigh_pctile)",
+        "function IV = loadCurrentData(tubi, adjustIV)",
+        "function IV = adjustIV(tubi, IV, adjustlow, adjusthigh, forceValues)",
+        "function [piv3d, vsm] = getCurrentVelocity(tubi, varargin)",
+        "function ars = xyz2APDV(tubi, a)",
+        "function axyz = APDV2xyz(tubi, a)",
+        "function daxyz = APDV2dxyz(tubi, a)",
+        "function dars = dx2APDV(tubi, da)",
+        "function setAPDVOptions(tubi, apdvOpts)",
+        "function apdvOptions = loadAPDVOptions(tubi)",
+        "function apdvOptions = saveAPDVOptions(tubi, apdvOptions)",
+        "function rawMesh = loadCurrentRawMesh(tubi)",
+        "function rawMesh = getCurrentRawMesh(tubi)",
+        "function alignedMesh = loadCurrentAlignedMesh(tubi)",
+        "function amesh = getCurrentAlignedMesh(tubi)",
+        "function setEndcapOptions(tubi, endcapOpts)",
+        "function loadEndcapOptions(tubi)",
+        "function saveEndcapOptions(tubi)",
+        "function clines = getCleanFastMarchingCenterlines(tubi)",
+        "function mesh = getCurrentCylinderMeshClean(tubi)",
+        "function loadCurrentCylinderMesh(tubi)",
+        "function mesh = loadCurrentCylinderMeshClean(tubi)",
+        "function mesh = getCurrentCutMesh(tubi)",
+        "function mesh = loadCurrentCutMesh(tubi)",
+        "function uvcutMesh = getCurrentUVCutMesh(tubi, options)",
+        "function uvcutMesh = loadCurrentUVCutMesh(tubi)",
+        "function spcutMesh = getCurrentSPCutMesh(tubi)",
+        "function spcutMesh = loadCurrentSPCutMesh(tubi)",
+        "function spcutMeshSm = getCurrentSPCutMeshSm(tubi)",
+        "function loadCurrentSPCutMeshSm(tubi)",
+        "function spcutMeshSmRS = getCurrentSPCutMeshSmRS(tubi)",
+        "function mesh = loadCurrentSPCutMeshSmRS(tubi)",
+        "function spcutMeshSmRSC = getCurrentSPCutMeshSmRSC(tubi)",
+        "function loadCurrentSPCutMeshSmRSC(tubi)",
+        "function [xyzrs, fieldfaces, tri, baryc] = uv2APDV(tubi, uv, coordSys, umax, vmax)",
+        "function [radii, radius_cline] = getRadii(tubi, options)",
+        "function mesh = getCurrentRicciMesh(tubi)",
+        "function ricciMesh = loadCurrentRicciMesh(tubi, maxIter)",
+        "function beltrami = getBeltramiCoefficient(tubi, options)",
+        "function beltrami = loadBeltramiCoefficient(tubi, options)",
+        "function indentation = getPathlineIndentation(tubi, options)",
+        "function indentation = measurePathlineIndentation(tubi, options)",
+        "function doubleCoverPullbackImages(tubi, options)",
+        "function [mss, mcline, avgpts] = getCurrentClineDVhoop(tubi)",
+        "function Length_t = measureLength(tubi, options)",
+        "function plotSPCutMeshSm(tubi, options)",
+        "function plotSPCutMeshSmRS(tubi, options)",
+        "function plotSPCutMeshSmRSC(tubi, options)",
+        "function [v3dsmM, nsmM] = loadSPCutMeshSm(tubi)",
+        "function seg2d = getCurrentSegmentation2D(tubi, options)",
+        "function seg2dCorr = getCurrentSegmentation2DCorrected(tubi, options)",
+        "function seg3d = getCurrentSegmentation3D(tubi, options)",
+        "function seg3dCorr = getCurrentSegmentation3DCorrected(tubi, options)",
+        "function seg3d = loadCurrentSegmentation3D(tubi)",
+        "function seg3dCorr = loadCurrentSegmentation3DCorrected(tubi)",
+        "function loadCurrentCellDensity(tubi)",
+        "function getPIV(tubi, options)",
+        "function piv = loadPIV(tubi, options)",
+        "function [vrms, timestamps] = measureRMSvelocityOverTime(tubi, options)",
+        "function [p2d, p3d] = samplePullbackPathlines(tubi, XY0, options)",
+        "function pathlines = getPullbackPathlines(tubi, t0, varargin)",
+        "function loadPullbackPathlines(tubi, t0, varargin)",
+        "function vels = loadVelocityRaw(tubi, varargin)",
+        "function vels = getVelocityRaw(tubi, varargin)",
+        "function vels = loadVelocityAverage(tubi, varargin)",
+        "function vels = getVelocityAverage(tubi, varargin)",
+        "function outStruct = getPathlineVelocities(tubi, options)",
+        "function loadVelocitySimpleAverage(tubi, varargin)",
+        "function getVelocitySimpleAverage(tubi, varargin)",
+        "function strain = getCurrentPathlineStrain(tubi, t0Pathlines, varargin)",
+        "function [strain, tre, dev, theta] = getPathlineStrain(tubi, options)",
+        "function plotPathlineBeltramiKymograph(tubi, t0Pathlines, options)",
+        "function tracks = manualTrackingAdd(tubi, options)",
+        "function manualTrackingCorrect(options)",
+        "function pcaResults = getPCAoverTime(tubi, options)",
+        "function lbsResults = getLBSoverTime(tubi, options)",
+        "function uv = XY2uv(im, XY, doubleCovered, umax, vmax)",
+        "function duv = dXY2duv(im, dXY, doubleCovered, umax, vmax)",
+        "function XY = uv2XY(im, uv, doubleCovered, umax, vmax)",
+        "function [xx, yy] = clipXY(xx, yy, Lx, Ly)",
+        "function im2 = extendImage2DoubleCover(im, histeq)",
+        "function XY = singleToDoubleCover(XY, Ly)",
+        "function XY = doubleToSingleCover(XY, Ly)",
+        "function [mag_ap, theta_ap] = dvAverageNematic(magnitude, theta)",
+        "function invRot = invertRotation(rot)",
+        "function [dorsal, ventral, left, right] = quarterIndicesDV(nV)"
+      ]
+    },
+    {
+      "source": "@TubULAR/alignMaskedDataAPDV.m",
+      "lines": 29,
+      "sha256": "e6c7fe68b12268e5d54736d5f7180fab1b42ce6e7796ebc0dd6020c8839c7acf",
+      "python_status": "not_ported",
+      "signatures": []
+    },
+    {
+      "source": "@TubULAR/alignMeshesAPDV.m",
+      "lines": 860,
+      "sha256": "f3db3c219a9f48efaefd4ac3197513aa5cdb279d7a04b1496fc685e4d5aa2d47",
+      "python_status": "not_ported",
+      "signatures": [
+        "function [rot, trans, xyzlim_raw, xyzlim, xyzlim_um, xyzlim_um_buff] = ..."
+      ]
+    },
+    {
+      "source": "@TubULAR/cleanCylMeshes.m",
+      "lines": 185,
+      "sha256": "5e3371ad5af190713df8b68f5d67111749496b13a1256629189f9c594bb2c763",
+      "python_status": "not_ported",
+      "signatures": [
+        "function cleanCylMeshes(tubi, cleanCylOptions)"
+      ]
+    },
+    {
+      "source": "@TubULAR/cleanFastMarchingCenterlines.m",
+      "lines": 225,
+      "sha256": "1f4526da4817f2ea4ada333102391cebc8ad5714dbe9f284c4e258a824737101",
+      "python_status": "not_ported",
+      "signatures": [
+        "function cntrlines = cleanFastMarchingCenterlines(tubi, idOptions)"
+      ]
+    },
+    {
+      "source": "@TubULAR/computeAPDVCoords.m",
+      "lines": 891,
+      "sha256": "6ecd6f08ff75ea288fe9483319cd23b1102a75a4d191a847f58a8bed8dae7fea",
+      "python_status": "not_ported",
+      "signatures": [
+        "function [acom,pcom,dcom, rot,trans] = computeAPDVCoords(tubi, opts)"
+      ]
+    },
+    {
+      "source": "@TubULAR/computeAPDpoints.m",
+      "lines": 874,
+      "sha256": "5d937bb57e3bb152d6a54ec0316004b1380064c29a2250e68a902822bf72efa8",
+      "python_status": "not_ported",
+      "signatures": [
+        "function [apts_sm, ppts_sm, dpt] = computeAPDpoints(tubi, opts)"
+      ]
+    },
+    {
+      "source": "@TubULAR/computeLBSoverTime.m",
+      "lines": 1656,
+      "sha256": "1504853afcdda529dcbe906da5944c5f1e9793196b3678ee51781058897cd704",
+      "python_status": "not_ported",
+      "signatures": [
+        "function results = computeLBSoverTime(tubi, options)"
+      ]
+    },
+    {
+      "source": "@TubULAR/computeLocalSurfacePatch.m",
+      "lines": 407,
+      "sha256": "3e949e8b2e7193c429ec1b43a434f83b62102498e3fe718796e0b3a28c1d7357",
+      "python_status": "not_ported",
+      "signatures": [
+        "function [subm, newpts] = computeLocalSurfacePatch(QS, pts, options)"
+      ]
+    },
+    {
+      "source": "@TubULAR/computePCAoverTime.m",
+      "lines": 1392,
+      "sha256": "ac1701b8af883e852928c6b4943f23388fe7fea9fd331223a4de501a7b8f93b2",
+      "python_status": "not_ported",
+      "signatures": [
+        "function results = computePCAoverTime(tubi, options)"
+      ]
+    },
+    {
+      "source": "@TubULAR/computeRicciMeshes.m",
+      "lines": 181,
+      "sha256": "7a9357825ab5324efbad5270642fb1ea64bfcae95c6597b116efde5b4c5e10fb",
+      "python_status": "not_ported",
+      "signatures": [
+        "function computeRicciMeshes(QS, options)"
+      ]
+    },
+    {
+      "source": "@TubULAR/computeStartEndCOMs.m",
+      "lines": 348,
+      "sha256": "96da9a30b71bd8bf53d9501874683157c6bdefcf51424514cf0227f8447ed7c9",
+      "python_status": "not_ported",
+      "signatures": [
+        "function [acom_sm, pcom_sm, dcom] = computeAPDCOMs(QS, opts)"
+      ]
+    },
+    {
+      "source": "@TubULAR/coordinateSystemDemo.m",
+      "lines": 446,
+      "sha256": "c5109c598220c7770f02b4af1ff046089d7836c7b036dbba2acba4d5cdfb8b43",
+      "python_status": "not_ported",
+      "signatures": [
+        "function fig = coordinateSystemDemo(tubi, options)",
+        "function labelAxes_util(coordSys, interpreter, tubi)",
+        "function formatPBSpaceLabels(normLongitudinal, coordSys)"
+      ]
+    },
+    {
+      "source": "@TubULAR/fitPhiOffsetsViaTexture.m",
+      "lines": 135,
+      "sha256": "de196a54121a6372f57dcead6a8f606657a5bc18c5afd0aa3ae7231ccdea2ef2",
+      "python_status": "not_ported",
+      "signatures": [
+        "function phi0_fit = fitPhiOffsetsViaTexture(tubi, ..."
+      ]
+    },
+    {
+      "source": "@TubULAR/generateCellSegmentation2D.m",
+      "lines": 387,
+      "sha256": "290a0bea406d46d452315af61ef899a8662e63b43f52934b3766a3ccd6152c55",
+      "python_status": "not_ported",
+      "signatures": [
+        "function generateCellSegmentation2D(tubi, options)"
+      ]
+    },
+    {
+      "source": "@TubULAR/generateCellSegmentation3D.m",
+      "lines": 696,
+      "sha256": "4b18ac419ec36590703f7d760b03a9fba57790290a9203b7329128176cccadf6",
+      "python_status": "not_ported",
+      "signatures": [
+        "function generateCellSegmentation3D(QS, options)"
+      ]
+    },
+    {
+      "source": "@TubULAR/generateCellSegmentationPathlines3D.m",
+      "lines": 1464,
+      "sha256": "b5cb1fcdf083baf45069d02c079b497de36221b017d658079b31b25564b99b47",
+      "python_status": "not_ported",
+      "signatures": [
+        "function generateCellSegmentationPathlines3D(tubi, options)"
+      ]
+    },
+    {
+      "source": "@TubULAR/generateCurrentCutMesh.m",
+      "lines": 461,
+      "sha256": "28ba6750ab189dcccd621702ebd270a59acd6fc2aefd87ee85ca3e35f99a192d",
+      "python_status": "not_ported",
+      "signatures": [
+        "function generateCurrentCutMesh(tubi, cutMeshOptions)"
+      ]
+    },
+    {
+      "source": "@TubULAR/generateCurrentPullbacks.m",
+      "lines": 482,
+      "sha256": "d7cf97f4ae326689cebc2afc0632e55c2e192cd7060223a89bf1a5389932ce43",
+      "python_status": "not_ported",
+      "signatures": [
+        "function generateCurrentPullbacks(tubi, cutMesh, spcutMesh, ..."
+      ]
+    },
+    {
+      "source": "@TubULAR/generateCurrentSPCutMesh.m",
+      "lines": 853,
+      "sha256": "aa526ddf75f020da4ee97c85fa75bbfd0c6bbf22469b5d4daacd7f84c77e9fed",
+      "python_status": "not_ported",
+      "signatures": [
+        "function spcutMesh = generateCurrentSPCutMesh(tubi, cutMesh, spcutMeshOptions)"
+      ]
+    },
+    {
+      "source": "@TubULAR/generateCurrentUVCutMesh.m",
+      "lines": 186,
+      "sha256": "65eee2cc9fb19dd7c88a591c2cfe4e3bf24ee639cd18e8c4b1253d765b431c04",
+      "python_status": "not_ported",
+      "signatures": [
+        "function uvcutMesh = generateCurrentUVCutMesh(tubi, options)"
+      ]
+    },
+    {
+      "source": "@TubULAR/generateFastMarchingCenterlines.m",
+      "lines": 678,
+      "sha256": "d9d52ad4e4f7303f93f74b2f236991a33d54c9f1b34dd8c0c4274c320ba12d88",
+      "python_status": "not_ported",
+      "signatures": [
+        "function generateFastMarchingCenterlines(tubi, cntrlineOptions)"
+      ]
+    },
+    {
+      "source": "@TubULAR/generatePathlineRicciMeshTimePoint.m",
+      "lines": 57,
+      "sha256": "7b2a6000434251dfd79ee4362b4e5beb09b9bafaa633ab9fd2141ee87312c3f1",
+      "python_status": "not_ported",
+      "signatures": [
+        "function [ricciMesh, ricciMu] = generatePathlineRicciMeshTimePoint(QS, tp, options)"
+      ]
+    },
+    {
+      "source": "@TubULAR/generateRawRicciMeshTimePoint.m",
+      "lines": 568,
+      "sha256": "06d77571640f3643990443a4b1c582744c1034b87f68e02fd22a29574cf33340",
+      "python_status": "not_ported",
+      "signatures": [
+        "function [rawRicciMesh, ricciMu] = generateRawRicciMeshTimePoint(QS, tp, options)"
+      ]
+    },
+    {
+      "source": "@TubULAR/generateRicciMeshTimePoint.m",
+      "lines": 833,
+      "sha256": "602266e523b3817d21ff446100645c2a15b51411ce2354fdf01352444f8f76f9",
+      "python_status": "not_ported",
+      "signatures": [
+        "function [ricciMesh, ricciMu] = generateRicciMeshTimePoint(QS, tp, options)"
+      ]
+    },
+    {
+      "source": "@TubULAR/generateSPCutMeshSmStack.m",
+      "lines": 98,
+      "sha256": "1cdd85aca240853b5d75e8c8b4ba4bcd3b0ae97e64f687106516ab3ddbc1eaae",
+      "python_status": "not_ported",
+      "signatures": [
+        "function generateSPCutMeshSmStack(QS, spcutMeshSmStackOptions)"
+      ]
+    },
+    {
+      "source": "@TubULAR/generateSPCutMeshStack.m",
+      "lines": 115,
+      "sha256": "3309dad2d5c592469dd3e393964754b0965656dd4d2117533e7d18e3dd665dff",
+      "python_status": "not_ported",
+      "signatures": [
+        "function generateSPCutMeshStack(QS, spcutMeshStackOptions)"
+      ]
+    },
+    {
+      "source": "@TubULAR/generateUVPrimeCutMeshes.m",
+      "lines": 342,
+      "sha256": "8c5c16073f7c505fbd3acc15c56aefcce588847b7c533d0d1f63ef080ad25759",
+      "python_status": "not_ported",
+      "signatures": [
+        "function generateUVPrimeCutMeshes(QS, options)"
+      ]
+    },
+    {
+      "source": "@TubULAR/getCurrentData.m",
+      "lines": 396,
+      "sha256": "6b093cc0bdde1f4a21c0d81e76eaede8267e252e3fd193372f0380ab6942a565",
+      "python_status": "not_ported",
+      "signatures": [
+        "function IV = getCurrentData(tubi, adjustIV, varargin)",
+        "function stacks = rescaleToUnitAspect(data, resolution)",
+        "function data = loadStackBioformats(tubi, varargin)",
+        "function data = loadStackNoBioformats(tubi, varargin)"
+      ]
+    },
+    {
+      "source": "@TubULAR/getMeshes.m",
+      "lines": 833,
+      "sha256": "6091416f5a526fd7fa4c4d0ea332688e79d928f870d6ffc3ce23071faad3a805",
+      "python_status": "not_ported",
+      "signatures": [
+        "function getMeshes(tubi, overwrite, method)",
+        "function writeGifFrame(fig, fname, isFirst)"
+      ]
+    },
+    {
+      "source": "@TubULAR/helmholtzHodge.m",
+      "lines": 471,
+      "sha256": "f4310deef4f255e9158475473cc6a4607e284ed2da2ba82c3f917e666c662aae",
+      "python_status": "not_ported",
+      "signatures": [
+        "function helmholtzHodge(tubi, options)"
+      ]
+    },
+    {
+      "source": "@TubULAR/identifyFolds.m",
+      "lines": 159,
+      "sha256": "c555b2df8007ac73a8c327e78ca5f5fd5dafb245025eeb7465c3e28cfc1226b5",
+      "python_status": "not_ported",
+      "signatures": [
+        "function identifyFolds(tubi, options)"
+      ]
+    },
+    {
+      "source": "@TubULAR/initializeTubULAR.m",
+      "lines": 881,
+      "sha256": "bfd2140836fac1d6232f04896072a8f1fb16108f1fc3c81d429582bce1d513db",
+      "python_status": "not_ported",
+      "signatures": [
+        "function initializeTubULAR(tubi, xp, opts)"
+      ]
+    },
+    {
+      "source": "@TubULAR/interpolateOntoPullbackXY.m",
+      "lines": 119,
+      "sha256": "b7095988de5e18e2d8356d0f23d62a1a92520099e7ff4280ac82299136da91df",
+      "python_status": "not_ported",
+      "signatures": [
+        "function sf = interpolateOntoPullbackXY(tubi, XY, scalar_field, options)"
+      ]
+    },
+    {
+      "source": "@TubULAR/measureBeltramiCoefficient.m",
+      "lines": 396,
+      "sha256": "801e55b3ccf971abccf4b4b92a3a94f8f5fbe27f45d5d7e6e0b1560c0fdcc43d",
+      "python_status": "not_ported",
+      "signatures": [
+        "function measureBeltramiCoefficient(tubi, options)"
+      ]
+    },
+    {
+      "source": "@TubULAR/measureBeltramiCoefficientPullbackToPullback.m",
+      "lines": 395,
+      "sha256": "78eca8d0bc899ba37f4f3cbc23b342403d80d5198202464e0bacdb00ecba31ae",
+      "python_status": "not_ported",
+      "signatures": [
+        "function measureBeltramiCoefficientPullbackToPullback(QS, options)"
+      ]
+    },
+    {
+      "source": "@TubULAR/measureCurvatures.m",
+      "lines": 90,
+      "sha256": "27fca67ffd5cb9ebe1e2c391bf5288eac71d3df7ace9effae3e9c828cc9b4f21",
+      "python_status": "not_ported",
+      "signatures": [
+        "function measureCurvatures(QS, options)"
+      ]
+    },
+    {
+      "source": "@TubULAR/measureDxDyStrainFiltered.m",
+      "lines": 379,
+      "sha256": "1a7d1bc038868b06c94b35e60d677749a4033e2c85619ebb6c44ac1de1c2c956",
+      "python_status": "not_ported",
+      "signatures": [
+        "function measureDxDyStrainFiltered(QS, options)"
+      ]
+    },
+    {
+      "source": "@TubULAR/measureMetricKinematics.m",
+      "lines": 620,
+      "sha256": "faeabdb7bedba621e450a9d2bf30cb77646fa3b397a039770cc51b408457c050",
+      "python_status": "not_ported",
+      "signatures": [
+        "function measureMetricKinematics(tubi, options)"
+      ]
+    },
+    {
+      "source": "@TubULAR/measureMetricStrainRate.m",
+      "lines": 712,
+      "sha256": "ef382988bef1c995294ccc60c6ab3689b9aae269ad61c836d66955819b1128c7",
+      "python_status": "not_ported",
+      "signatures": [
+        "function measureMetricStrainRate(QS, options)"
+      ]
+    },
+    {
+      "source": "@TubULAR/measurePIV2d.m",
+      "lines": 483,
+      "sha256": "b4925bc53e705ab6a78621eae318951ad6223616949a51dbb16ac2678f1cde0b",
+      "python_status": "not_ported",
+      "signatures": [
+        "function measurePIV2d(tubi, options)"
+      ]
+    },
+    {
+      "source": "@TubULAR/measurePIV3d.m",
+      "lines": 1103,
+      "sha256": "7fd722657057829a69e4e5867c4cb57516035abfa8a7b7fa82f5042f66fec41f",
+      "python_status": "not_ported",
+      "signatures": [
+        "function measurePIV3d(tubi, options)"
+      ]
+    },
+    {
+      "source": "@TubULAR/measurePIV3dMultiChannel.m",
+      "lines": 964,
+      "sha256": "40c3c958bd4c4d323b71aa665f61c40f0b1dd2082ed36e5d501c49debcf0f5bd",
+      "python_status": "not_ported",
+      "signatures": [
+        "function measurePIV3dMultiChannel(QS, options)"
+      ]
+    },
+    {
+      "source": "@TubULAR/measurePathlineMetric.m",
+      "lines": 282,
+      "sha256": "361dd605a46ebb85932c5242851bc62d933c82e8faeea03ec3ae2885886ab1a7",
+      "python_status": "not_ported",
+      "signatures": [
+        "function measurePathlineStrain(QS, options)"
+      ]
+    },
+    {
+      "source": "@TubULAR/measurePathlineMetricKinematics.m",
+      "lines": 423,
+      "sha256": "efb8e0300c868c4e06e797c1bf695fcae97794f92aa625a6faaf8dbd891279a5",
+      "python_status": "not_ported",
+      "signatures": [
+        "function measurePathlineMetricKinematics(tubi, options)"
+      ]
+    },
+    {
+      "source": "@TubULAR/measurePathlineStrain.m",
+      "lines": 483,
+      "sha256": "fcab7319299adb262afd176e0c123f2002e3b39bb74237089cab1276a8e240eb",
+      "python_status": "not_ported",
+      "signatures": [
+        "function measurePathlineStrain(tubi, options)"
+      ]
+    },
+    {
+      "source": "@TubULAR/measurePathlineStrainRate.m",
+      "lines": 429,
+      "sha256": "627c772cd62639669efe4d2620e11442ce221e8d3f04e2ed9c11570c15468eb6",
+      "python_status": "not_ported",
+      "signatures": [
+        "function measurePathlineStrainRate(tubi, options)"
+      ]
+    },
+    {
+      "source": "@TubULAR/measurePathlineVelocities.m",
+      "lines": 426,
+      "sha256": "e0c511b91eb573562f0a96ff8ab88032c691ba012f9753f9cc0a2fa742f43272",
+      "python_status": "not_ported",
+      "signatures": [
+        "function outStruct = measurePathlineVelocities(tubi, options)"
+      ]
+    },
+    {
+      "source": "@TubULAR/measurePullbackPathlines.m",
+      "lines": 1636,
+      "sha256": "970cb066bf845488339acdb9371255ab8af1200499cd68b7aeba797529c3d74e",
+      "python_status": "not_ported",
+      "signatures": [
+        "function measurePullbackPathlines(tubi, options)"
+      ]
+    },
+    {
+      "source": "@TubULAR/measureStrainRate.m",
+      "lines": 442,
+      "sha256": "97f51c6376a0dd2c17b13fe58198949df098683784acb7b8ea27f29a5f3bb056",
+      "python_status": "not_ported",
+      "signatures": [
+        "function measureStrainRate(tubi, options)"
+      ]
+    },
+    {
+      "source": "@TubULAR/measureSurfaceAreaVolume.m",
+      "lines": 173,
+      "sha256": "21e8eb95e76d3c79aafc90e6eb5b25a7833137c641fb7d08060b38ec59579320",
+      "python_status": "not_ported",
+      "signatures": [
+        "function measureSurfaceAreaVolume(QS, options)"
+      ]
+    },
+    {
+      "source": "@TubULAR/measureTwist.m",
+      "lines": 342,
+      "sha256": "a6f93978bd712e61f73831b6645104c2b3e53c4ed4048f924a5474ac66e37c74",
+      "python_status": "not_ported",
+      "signatures": [
+        "function measureTwist(tubi, options)"
+      ]
+    },
+    {
+      "source": "@TubULAR/measureUVPrimePathlineFeatureIDs.m",
+      "lines": 279,
+      "sha256": "43051317c02d8c8cf0197457ed57303dc864283c1ef076fa2b303d2645e15c77",
+      "python_status": "not_ported",
+      "signatures": [
+        "function featureIDs = measureUVPrimePathlineFeatureIDs(QS, pathlineType, options)"
+      ]
+    },
+    {
+      "source": "@TubULAR/measureUVPrimePathlines.m",
+      "lines": 1236,
+      "sha256": "03cab49fb6a7d3f6df6bbbb9403c90b91cd313f856ef42c1121a1e03ba5490f1",
+      "python_status": "not_ported",
+      "signatures": [
+        "function measureUVPrimePathlines(QS, options)"
+      ]
+    },
+    {
+      "source": "@TubULAR/measureWrithe.m",
+      "lines": 135,
+      "sha256": "ac53c760d7fd55145fbf2cbc06cbcd9daa32009b1e670c45347c77659b28c2e9",
+      "python_status": "not_ported",
+      "signatures": [
+        "function [Wr, Wr_density, dWr, Length_t, clines_resampled] = measureWrithe(tubi, options)"
+      ]
+    },
+    {
+      "source": "@TubULAR/measureXYZLims.m",
+      "lines": 147,
+      "sha256": "2e7ced194b1bed32767398fb7861a1a01d24d92b6b766b37d7843fc72bc6dc33",
+      "python_status": "not_ported",
+      "signatures": [
+        "function [xyzlim_raw, xyzlim, xyzlim_um, xyzlim_um_buff] = ..."
+      ]
+    },
+    {
+      "source": "@TubULAR/plotAlignedMeshesPretty.m",
+      "lines": 340,
+      "sha256": "83c11f30cb9c3786890063b1eda304d86c6d314821ea7dade45cd3ed802ae897",
+      "python_status": "not_ported",
+      "signatures": [
+        "function plotAlignedMeshesPretty(QS, options)"
+      ]
+    },
+    {
+      "source": "@TubULAR/plotAverageVelocitiesTimePoint.m",
+      "lines": 405,
+      "sha256": "09f290885f6996f2bb9b869aef1a280dcd8d2d9e718e05145ca493267c44cba8",
+      "python_status": "not_ported",
+      "signatures": [
+        "function plotAverageVelocitiesTimePoint(tubi, tp, options)"
+      ]
+    },
+    {
+      "source": "@TubULAR/plotClineXSections.m",
+      "lines": 152,
+      "sha256": "f195250de589d7b6054d7d0a70ecdf8762814eb613e1844a0d7f1e6d0b1f6189",
+      "python_status": "not_ported",
+      "signatures": [
+        "function plotClineXSections(QS, options)"
+      ]
+    },
+    {
+      "source": "@TubULAR/plotCutPath.m",
+      "lines": 64,
+      "sha256": "783e232b003e650191f8b8c85f2eb701e109417441370d08d040ad2f9ea9eb20",
+      "python_status": "not_ported",
+      "signatures": [
+        "function plotCutPath(tubi, cutMesh, cutP)"
+      ]
+    },
+    {
+      "source": "@TubULAR/plotMetric.m",
+      "lines": 598,
+      "sha256": "674105dd0bc34e8a89ab7b66dd26900f124297fde0d91304c83efe5a215f1939",
+      "python_status": "not_ported",
+      "signatures": [
+        "function plotMetric(QS, options)"
+      ]
+    },
+    {
+      "source": "@TubULAR/plotMetricKinematics.m",
+      "lines": 1439,
+      "sha256": "758080a3d9037b1233df7ce1fe4072fc4a0fa832ebe82ba9d91f516b9bea0567",
+      "python_status": "not_ported",
+      "signatures": [
+        "function plotMetricKinematics(tubi, options)"
+      ]
+    },
+    {
+      "source": "@TubULAR/plotMetricKinematicsTimePoint.m",
+      "lines": 440,
+      "sha256": "76045cb837321958dc58b4d112a959d66f1498e6d4347e4af3b1bcac0b001afc",
+      "python_status": "not_ported",
+      "signatures": [
+        "function plotMetricKinematicsTimePoint(tubi, tp, options)"
+      ]
+    },
+    {
+      "source": "@TubULAR/plotPathlineMetricKinematics.m",
+      "lines": 750,
+      "sha256": "2ffc1f7c7f024a38aa00930835da3307444c10cb05d01d5355bcb360d4ed0ded",
+      "python_status": "not_ported",
+      "signatures": [
+        "function plotPathlineMetricKinematics(tubi, options)"
+      ]
+    },
+    {
+      "source": "@TubULAR/plotPathlineStrain.m",
+      "lines": 428,
+      "sha256": "b7484ace5afdb191be04d51bf5d25d46eb60c5ecb93764c690c9593220bbaae2",
+      "python_status": "not_ported",
+      "signatures": [
+        "function plotPathlineStrain(tubi, options)"
+      ]
+    },
+    {
+      "source": "@TubULAR/plotPathlineStrainRate.m",
+      "lines": 415,
+      "sha256": "6a7ed919bc05f18620442174c29ee15cf2543fad407732d4a0f57b83a4c39b3d",
+      "python_status": "not_ported",
+      "signatures": [
+        "function plotPathlineStrainRate(tubi, options)"
+      ]
+    },
+    {
+      "source": "@TubULAR/plotPathlineStrainRateTimePoint.m",
+      "lines": 321,
+      "sha256": "4572bffd482b72fb4eec544dcc806c2c467e9a669587faca588ca7b1cfc64b04",
+      "python_status": "not_ported",
+      "signatures": [
+        "function plotPathlineStrainRateTimePoint(QS, tp, options)"
+      ]
+    },
+    {
+      "source": "@TubULAR/plotPathlineStrainTimePoint.m",
+      "lines": 484,
+      "sha256": "0679f3f8eabc7a3a244ff48a4a67f1728d73402b8b711624dbaeff32377deaea",
+      "python_status": "not_ported",
+      "signatures": [
+        "function plotPathlineStrainTimePoint(tubi, tp, options)"
+      ]
+    },
+    {
+      "source": "@TubULAR/plotPathlineVelocities.m",
+      "lines": 156,
+      "sha256": "9bfabdc0d8e9a87dbc164464d2f0076f7eb07cfd837d383c5a2c14dfe7bccf13",
+      "python_status": "not_ported",
+      "signatures": [
+        "function plotPathlineVelocities(tubi, options)"
+      ]
+    },
+    {
+      "source": "@TubULAR/plotPathlineVelocitiesTimePoint.m",
+      "lines": 285,
+      "sha256": "a06e4bacfc697d0afd0ae743a3f6445c2511e0ce7048a997b4c18fd3d7238ea0",
+      "python_status": "not_ported",
+      "signatures": [
+        "function plotPathlineVelocitiesTimePoint(QS, tp, options)"
+      ]
+    },
+    {
+      "source": "@TubULAR/plotSPCutMeshSmSeriesUtility.m",
+      "lines": 168,
+      "sha256": "6995310ba09b603de2c8b67df594ac2385d421d23a4e6bcdf7891f70dd4641c1",
+      "python_status": "not_ported",
+      "signatures": [
+        "function plotSPCutMeshSmSeriesUtility(tubi, coordsys, options)"
+      ]
+    },
+    {
+      "source": "@TubULAR/plotSeriesOnSurfaceTexturePatch.m",
+      "lines": 579,
+      "sha256": "3fe1c619d210065299fe64314cd12fdfab25c41fd0d9d1149cffffc9f442ad0d",
+      "python_status": "not_ported",
+      "signatures": [
+        "function plotSeriesOnSurfaceTexturePatch(tubi,..."
+      ]
+    },
+    {
+      "source": "@TubULAR/plotStrainRate.m",
+      "lines": 323,
+      "sha256": "11d16a2080863632d1d5d925e6bea2ccfadb8c38090b62080a79e9ae9127689c",
+      "python_status": "not_ported",
+      "signatures": [
+        "function plotStrainRate(tubi, options)"
+      ]
+    },
+    {
+      "source": "@TubULAR/plotStrainRate3DFiltered.m",
+      "lines": 369,
+      "sha256": "b26cc59cf0622e8529b5f65015337a09b0626ccc340280a73bf774cee502651b",
+      "python_status": "not_ported",
+      "signatures": [
+        "function plotStrainRate3DFiltered(tubi, options)"
+      ]
+    },
+    {
+      "source": "@TubULAR/plotStrainRateTimePoint.m",
+      "lines": 498,
+      "sha256": "12413e6ea667de4be496f9e33ccd2173e43bafb4147acb33ab0089e09392c5d3",
+      "python_status": "not_ported",
+      "signatures": [
+        "function plotStrainRateTimePoint(tubi, tp, options)"
+      ]
+    },
+    {
+      "source": "@TubULAR/plotTimeAvgVelocities.m",
+      "lines": 278,
+      "sha256": "75b72b80d41803fc5576733f998ac019a54cee0b1c9039555cce49cf1b55d9b4",
+      "python_status": "not_ported",
+      "signatures": [
+        "function plotTimeAvgVelocities(tubi, options)"
+      ]
+    },
+    {
+      "source": "@TubULAR/prepareIlastik.m",
+      "lines": 150,
+      "sha256": "63fb2c33d29141fca017ed40c19eb1c277af7b97c985d1735594c1b8497e19c0",
+      "python_status": "not_ported",
+      "signatures": [
+        "function prepareIlastik(tubi)"
+      ]
+    },
+    {
+      "source": "@TubULAR/processCorrectedCellSegmentation2D.m",
+      "lines": 285,
+      "sha256": "5cea99e0479deda852b496f6b5cf7af01852df6dac6966708e8edc1a8d54811a",
+      "python_status": "not_ported",
+      "signatures": [
+        "function processCorrectedCellSegmentation2D(QS, options)"
+      ]
+    },
+    {
+      "source": "@TubULAR/pullbackPathlines.m",
+      "lines": 321,
+      "sha256": "a7cb97a9d1489d4ed7e26a26b78176f141f1f5aa495fac12acdad96dc94e11d0",
+      "python_status": "not_ported",
+      "signatures": [
+        "function [XX, YY] = pullbackPathlines(QS, x0, y0, t0, options)"
+      ]
+    },
+    {
+      "source": "@TubULAR/sliceMeshEndcaps.m",
+      "lines": 935,
+      "sha256": "e5ee3de448dd4892f8730a91a7e288c7413d817abf9b46d2888455f11d923717",
+      "python_status": "not_ported",
+      "signatures": [
+        "function sliceMeshEndcaps(tubi, opts, methodOpts)"
+      ]
+    },
+    {
+      "source": "@TubULAR/smoothDynamicSPhiMeshes.m",
+      "lines": 247,
+      "sha256": "7f3316adbebdbff4fd668b914be77cada83dfc24fabb7abc0dfdecfb5464c8e8",
+      "python_status": "not_ported",
+      "signatures": [
+        "function [v3dsmM, nsmM] = smoothDynamicSPhiMeshes(tubi, options)"
+      ]
+    },
+    {
+      "source": "@TubULAR/timeAverageVelocities.m",
+      "lines": 473,
+      "sha256": "e134ebf17615e839e45dcfa7594fe5c4c3f19889b879de75833af41733eda501",
+      "python_status": "not_ported",
+      "signatures": [
+        "function timeAverageVelocities(tubi, options)"
+      ]
+    },
+    {
+      "source": "@TubULAR/visualizeDemoTracks.m",
+      "lines": 716,
+      "sha256": "813baa62aa6ca6f14485c349065d66199626492ece77a4036260eb5a9c25d3e5",
+      "python_status": "not_ported",
+      "signatures": [
+        "function visualizeDemoTracks(QS, Options)",
+        "function colors = get_colors_for_demoTracks(Ncells)"
+      ]
+    },
+    {
+      "source": "@TubULAR/visualizeMeshEvolution.m",
+      "lines": 1336,
+      "sha256": "8d8e4e700def03dc06f63ce33b3a5b740edcc737a610a7ad9d7fd92b73e5e547",
+      "python_status": "not_ported",
+      "signatures": [
+        "function visualizeMeshEvolution(tubi, options)",
+        "function RGB = applyLUT(I, lut)",
+        "function RGB = applyLUT3D(V, lut)"
+      ]
+    },
+    {
+      "source": "@TubULAR/visualizeSegmentationPatch.m",
+      "lines": 954,
+      "sha256": "9d4552f4014a94d6f98cff986ac5a680595b44cfc12b89f670e790384cf7f708",
+      "python_status": "not_ported",
+      "signatures": [
+        "function visualizeSegmentationPatch(QS, Options)"
+      ]
+    },
+    {
+      "source": "@TubULAR/visualizeTracking3D.m",
+      "lines": 846,
+      "sha256": "c5395ae9b9b3de7430d4b959689342c2cd21a1a46c6ff886b0769f63566c2178",
+      "python_status": "not_ported",
+      "signatures": [
+        "function visualizeTracking3D(QS, options)"
+      ]
+    }
+  ]
+}
