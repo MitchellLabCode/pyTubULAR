@@ -4,8 +4,8 @@
 from tubular import TubULAR, Mesh, MeshSource, MethodNotPortedError
 ```
 
-Version 0.2.0a1 introduces a stateful experiment object using MATLAB method
-names. Of 200 original callable method names, 46 are **adapted** and 154 are
+Version 0.3.0a1 extends the stateful experiment object using MATLAB method
+names. Of 200 original callable method names, 51 are **adapted** and 149 are
 **not ported**. Adapted means working within the scope below, not every legacy
 argument, format, return value, or side effect. The constructor is additional
 to this count. The original MATLAB repository is only a reference source.
@@ -59,6 +59,7 @@ The constructor accepts these options:
 | `flipy` | Reflect APDV Y after rotation, translation, and scaling; default false |
 | `resolution` | Positive scalar APDV length per coordinate unit; see frame section |
 | `rot`, `trans` | Explicit APDV rotation and translation; supply both or neither |
+| `normalShift` | Bounds padding parameter in raw-coordinate units; default 0. Does not displace loaded meshes. |
 | `fullFileBase`, `fileName` | Explicit filename mappings, described below |
 | `makeDirs` | Only false is supported; constructor creates no files or directories |
 
@@ -184,6 +185,116 @@ saved analysis files are not replicated. Selection and current caches are preser
 `measure_current_geometry(mesh_kind="spcutMeshSm")` returns the first and second
 fundamental forms of a supplied chart. This native helper is separate from the
 unported full `measureCurvatures` workflow.
+
+## Surface queries and field interpolation (0.3)
+
+```python
+# First register a spcutMeshSmRS whose XYZ vertices are already in APDV.
+tubi.setTime(4)
+xyz, face_ids, chart, weights = tubi.uv2APDV(
+    [[0.25, 0.3], [0.75, 0.6]], return_details=True,
+)
+```
+
+`uv2APDV(uv, coordSys="spsmrs", umax=1, vmax=1)` uses the supplied triangle
+connectivity to interpolate each query onto the existing 3D surface. It
+normalizes the chart's U values by their maximum and multiplies by `umax`, as
+in MATLAB. It neither translates U's origin nor rescales V. Only `spsmrs` is
+supported: the legacy `sprs` branch requires a separate `sphi` field that the
+current `Mesh` schema does not store. MATLAB ignores `vmax` in this method;
+Python rejects non-unit values explicitly. This does not constrain the stored
+V range or the query V values to [0, 1].
+
+Return value is N-by-3 XYZ by default. `return_details=True` returns the four
+items shown above. The third item is the normalized chart `Mesh`, replacing
+the MATLAB triangulation object. Face IDs are zero-based and weights follow
+that face's vertex order. Out-of-chart points have face ID -1 and NaN XYZ and
+weights (MATLAB uses NaN face IDs and zero weights outside). Holes are preserved;
+there is no re-triangulation, extrapolation, or periodic wrapping. No second
+APDV transform or reflection is applied to the already aligned vertices.
+
+Shared edges and vertices use the first incident face in the supplied ordering;
+MATLAB may select a different adjacent face there. This does not change
+continuous vertex interpolation. Overlapping interiors or nonadjacent faces
+covering the same query raise an error, even if their XYZ coordinates agree.
+These are query-local checks, not a global proof of an overlap-free chart.
+
+The reusable Python operation supports arbitrary scalar and vector fields:
+
+```python
+from tubular.surface import locate_chart
+
+located = locate_chart(mesh, uv_points)  # Uses the mesh's actual UV units/range.
+positions = located.interpolate(mesh.v)
+vertex_values = located.interpolate(values_per_vertex)
+face_values = located.interpolate(values_per_face, location="faces")
+```
+
+Vertex fields use barycentric interpolation; face fields are piecewise
+constant and use the same first-face rule on shared boundaries. Values must
+be finite, with one row per vertex/face. Queries and source meshes are not
+mutated. `located.valid`, `face_indices`, and `barycentric` retain coverage
+information for callers. The query spatial index limits per-face candidates;
+large biological meshes have not yet been performance-benchmarked.
+
+`interpolateOntoPullbackXY(XY, scalar_field, options)` is a **different** operation:
+it reproduces the existing rectilinear, tiled-field interpolation used by the
+MATLAB class. It does not use a triangular chart. Its supported options are:
+
+| Option | Supported behavior |
+| --- | --- |
+| `Lx`, `Ly` | Required image width/height, each greater than 1; XY is one-based. No image file is guessed. |
+| `imCoords` | `sp_sme` only; otherwise defaults to `tubi.piv.imCoords` (initially `sp_sme`). |
+| `sfLocation` | `vertices` only; the original face-field branch is incomplete and remains unsupported. |
+| `iMethod` | `linear` (default, bilinear on this grid) or `nearest`. Exact midpoint ties choose the upper node, matching MATLAB. |
+
+The field must contain `nU*nV` values, supplied as a flat U-fastest vector,
+MATLAB column vector, or `(nU, nV)` array. The original tiling is retained:
+`[field[:, :-1], field, field[:, 1:]]`. X nodes span 1 to Lx; Y nodes span
+`1 - Ly/4` to `1.25*Ly` over `3*nV - 2` rows. Outside that entire tiled grid,
+nearest-node extrapolation applies in both axes. This is not infinite periodic
+wrapping. The seam values are not smoothed or repaired.
+
+The source contains an `imCoords`/`coordSys` typo and never applies supplied
+`sfLocation` or `iMethod`. Python honors the documented option names and rejects
+unsupported branches. Default linear outputs match the actual original class;
+the newly honored nearest option is checked against MATLAB's own
+`griddedInterpolant`, including midpoint ties.
+
+## Experiment bounds and existing centerlines (0.3)
+
+`measureXYZLims(options=None)` returns `(raw, pixels, physical, buffered)`, each
+a 3-by-2 array with XYZ rows and minimum/maximum columns. It loads registered
+raw mesh sources over `timePoints` (all acquired timepoints by default), applies
+the configured APDV transform including Y reflection, and computes bounds from
+the transformed vertices. The raw coordinates must be in the frame expected
+by that transform; raw mesh unit labels must agree across the series.
+
+`physical` is in the configured `spaceUnits`; the legacy `um` property names do
+not enforce micrometers. `pixels = physical / APDV.resolution`. Padding on each
+side is `2 * abs(normalShift) * APDV.resolution`, matching the original. The
+optional `normalShift` overrides the object's value for this calculation.
+Only `timePoints` and `normalShift` options are supported.
+
+Results are copied into `plotting.xyzlim_raw`, `xyzlim_pix`, `xyzlim_um`, and
+`xyzlim_um_buff` after the entire calculation succeeds. Current time and mesh
+caches are preserved. `getXYZLims()` recomputes from current sources and frame,
+so changes do not leave stale bounds. Unlike MATLAB, these methods do not load
+or write bound text files; old `fileName.xyzlim_*` entries are not consulted.
+
+`getCurrentClineDVhoop()` loads top-level `mss`, `mcline`, and `avgpts` from the
+selected time's existing MAT file. Set `fullFileBase.clineDVhoop` to its filename
+pattern. `mss` must be an increasing row/column vector matching the number of
+N-by-3 `mcline` points. `avgpts` is a separate M-by-3 array; M may differ from N.
+Both curves must have at least two points and finite coordinates. A preexisting
+centerline is required: extraction, smoothing, and spline fitting remain pending.
+
+Returns `(mss, mcline, avgpts)`, with `mss` flattened to a Python vector. The
+stored coordinates are assumed to be physical coordinates before optional Y
+reflection; no additional rotation or scale is applied. Each call reloads the
+file and reflects once if `flipy=True`, matching MATLAB. Independent read-only
+copies enter `currentCline`, and time changes clear that cache. Invalid files
+raise before updating any centerline cache entry.
 
 ## Image-coordinate helpers and intentional differences
 

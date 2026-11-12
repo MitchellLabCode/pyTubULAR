@@ -1,8 +1,8 @@
 # MATLAB method coverage
 
-Generated from the original MATLAB class metadata and the Python class in 0.2.0a1.
+Generated from the original MATLAB class metadata and the Python class in 0.3.0a1.
 
-46 adapted methods; 154 pending ports; 200 total.
+51 adapted methods; 149 pending ports; 200 total.
 
 **Adapted** means working within the [class API scope](class_api.md), not full
 MATLAB workflow equivalence. **Not ported** methods raise `MethodNotPortedError`.
@@ -58,7 +58,7 @@ hidden helpers are included. Native Python convenience methods are not counted.
 | `getBeltramiCoefficient` | not_ported | `@TubULAR/TubULAR.m` |
 | `getCleanFastMarchingCenterlines` | not_ported | `@TubULAR/TubULAR.m` |
 | `getCurrentAlignedMesh` | adapted | `@TubULAR/TubULAR.m` |
-| `getCurrentClineDVhoop` | not_ported | `@TubULAR/TubULAR.m` |
+| `getCurrentClineDVhoop` | adapted | `@TubULAR/TubULAR.m` |
 | `getCurrentCutMesh` | adapted | `@TubULAR/TubULAR.m` |
 | `getCurrentCylinderMeshClean` | adapted | `@TubULAR/TubULAR.m` |
 | `getCurrentData` | adapted | `@TubULAR/getCurrentData.m` |
@@ -89,11 +89,11 @@ hidden helpers are included. Native Python convenience methods are not counted.
 | `getVelocityAverage` | not_ported | `@TubULAR/TubULAR.m` |
 | `getVelocityRaw` | not_ported | `@TubULAR/TubULAR.m` |
 | `getVelocitySimpleAverage` | not_ported | `@TubULAR/TubULAR.m` |
-| `getXYZLims` | not_ported | `@TubULAR/TubULAR.m` |
+| `getXYZLims` | adapted | `@TubULAR/TubULAR.m` |
 | `helmholtzHodge` | not_ported | `@TubULAR/helmholtzHodge.m` |
 | `identifyFolds` | not_ported | `@TubULAR/identifyFolds.m` |
 | `initializeTubULAR` | not_ported | `@TubULAR/initializeTubULAR.m` |
-| `interpolateOntoPullbackXY` | not_ported | `@TubULAR/interpolateOntoPullbackXY.m` |
+| `interpolateOntoPullbackXY` | adapted | `@TubULAR/interpolateOntoPullbackXY.m` |
 | `invertRotation` | adapted | `@TubULAR/TubULAR.m` |
 | `loadAPDVOptions` | not_ported | `@TubULAR/TubULAR.m` |
 | `loadBeltramiCoefficient` | not_ported | `@TubULAR/TubULAR.m` |
@@ -155,7 +155,7 @@ hidden helpers are included. Native Python convenience methods are not counted.
 | `measureUVPrimePathlineFeatureIDs` | not_ported | `@TubULAR/measureUVPrimePathlineFeatureIDs.m` |
 | `measureUVPrimePathlines` | not_ported | `@TubULAR/measureUVPrimePathlines.m` |
 | `measureWrithe` | not_ported | `@TubULAR/measureWrithe.m` |
-| `measureXYZLims` | not_ported | `@TubULAR/measureXYZLims.m` |
+| `measureXYZLims` | adapted | `@TubULAR/measureXYZLims.m` |
 | `mip` | adapted | `@TubULAR/TubULAR.m` |
 | `plotAlignedMeshesPretty` | not_ported | `@TubULAR/plotAlignedMeshesPretty.m` |
 | `plotAverageVelocitiesTimePoint` | not_ported | `@TubULAR/plotAverageVelocitiesTimePoint.m` |
@@ -204,7 +204,7 @@ hidden helpers are included. Native Python convenience methods are not counted.
 | `timeAverageVelocities` | not_ported | `@TubULAR/timeAverageVelocities.m` |
 | `timeAverageVelocitiesSimple` | not_ported | `@TubULAR/TubULAR.m` |
 | `trueTime` | adapted | `@TubULAR/TubULAR.m` |
-| `uv2APDV` | not_ported | `@TubULAR/TubULAR.m` |
+| `uv2APDV` | adapted | `@TubULAR/TubULAR.m` |
 | `uv2XY` | adapted | `@TubULAR/TubULAR.m` |
 | `visualizeDemoTracks` | not_ported | `@TubULAR/visualizeDemoTracks.m` |
 | `visualizeMeshEvolution` | not_ported | `@TubULAR/visualizeMeshEvolution.m` |

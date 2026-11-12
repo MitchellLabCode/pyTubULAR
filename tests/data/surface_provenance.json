@@ -1,0 +1,16 @@
+{
+  "source_repository": "https://github.com/npmitchell/tubular",
+  "source_commit": "9bd49dbffd38b199c32552b8cc089f611f584679",
+  "matlab_version": "25.2.0.3055257 (R2025b) Update 2",
+  "fixture_sha256": "4f199a890206732b59a1c8ff6d5f3878463f97dbc626c36d23bfd161ec357807",
+  "generator_sha256": "5ba58b56edec49155ccbf89a76c795cd50e2d0faeeb0c3ff27fd27c004ebde88",
+  "source_sha256": {
+    "@TubULAR/TubULAR.m": "7b82c88865bc9250fa4b21a2a2be092ef60d45159c29c880235cb013ab1f755e",
+    "@TubULAR/initializeTubULAR.m": "bfd2140836fac1d6232f04896072a8f1fb16108f1fc3c81d429582bce1d513db",
+    "@TubULAR/interpolateOntoPullbackXY.m": "b7095988de5e18e2d8356d0f23d62a1a92520099e7ff4280ac82299136da91df",
+    "@TubULAR/measureXYZLims.m": "2e7ced194b1bed32767398fb7861a1a01d24d92b6b766b37d7843fc72bc6dc33",
+    "utility/axisymmetric_pullbacks/interpolate2Dpts_3Dmesh.m": "86e7611a2b132cc1f92376f5dd5d10d3c3e4677870528c18434da6721974b5d0",
+    "utility/mesh_handling/read_ply_mod.m": "6bc1c613f68d612d4bc7f19cc3f06ebafb5a5006098d672a46fc7a704c0cbeb0"
+  },
+  "note": "Calls original TubULAR methods on a synthetic experiment. lambda_err=0 is supplied explicitly because the original default smoothing struct lacks it. All MATLAB input/output files are temporary; original source unchanged."
+}

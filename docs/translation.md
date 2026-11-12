@@ -12,6 +12,14 @@ methods from pending ports; it is not a claim of complete MATLAB compatibility.
 
 ## Implemented source map
 
+The 0.3 class additions map `uv2APDV` to the original
+`utility/axisymmetric_pullbacks/interpolate2Dpts_3Dmesh.m` barycentric operation;
+`surface.locate_chart` also exposes this operation for arbitrary vertex/face
+fields. `interpolateOntoPullbackXY` retains the separate tiled rectilinear-grid
+algorithm. Bounds and centerline methods preserve the numerical transforms
+while keeping file output outside the calculation. See the class guide for
+supported options, outside-point sentinels, and intentional cache differences.
+
 All paths below are relative to the original TubULAR repository.
 
 | MATLAB source | Python API | Equivalence and deliberate differences |

@@ -22,8 +22,12 @@ outputs are available.
 
 The `TubULAR` object now supplies time selection, mesh and volume sources,
 APDV transforms, coordinate helpers, and an explicit method-coverage catalog.
-Its 46 adapted MATLAB methods are documented in [class_api.md](class_api.md).
-The other 154 method names are explicit pending ports, including topology,
+Its 51 adapted MATLAB methods are documented in [class_api.md](class_api.md).
+The next five after the initial class milestone add UV surface queries,
+rectilinear pullback-field interpolation, experiment bounds, and existing hoop
+centerline loading. Their outputs have been compared to an actual original
+MATLAB `TubULAR` instance on synthetic inputs.
+The other 149 method names are explicit pending ports, including topology,
 parameterization, velocity, strain, and plotting workflows.
 
 Import one existing MATLAB `spcutMeshSm` and its matching raw image volume.

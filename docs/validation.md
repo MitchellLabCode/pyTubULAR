@@ -3,7 +3,8 @@
 The initial implementation was checked on macOS arm64 with Python 3.9.6,
 NumPy 2.0.2, SciPy 1.13.1, and MATLAB R2025b Update 2. The repository contains
 62 passing tests at the numerical-foundation checkpoint. The class milestone
-extends this to **100 passing tests** in the same local environment. The CI workflow additionally requests
+extended this to 100 passing tests. The geometry-method milestone extends it to
+**122 passing tests** in the same local environment. The CI workflow additionally requests
 Linux, Windows, and macOS jobs on several Python versions; a configured job
 is not evidence of a successful run. Consult GitHub Actions for those results.
 
@@ -79,12 +80,59 @@ Additional Python tests check known APDV position/vector transforms, mirroring
 and inverses, explicit anisotropic-resolution handling, time labels and gaps,
 cache invalidation across every mesh stage, separate-instance state, named MAT
 structs, NPZ patterns, channel/MIP axes, file reloads, area/volume scaling, units,
-and class-driven geometry and pullback sampling. APDV expectations are analytic;
-we have not run full MATLAB experiment initialization as a parity test.
+and class-driven geometry and pullback sampling. APDV expectations in those
+initial class tests are analytic. The next milestone also initializes a
+synthetic original MATLAB experiment as described below.
 
 These tests establish the documented adapted behavior, not equivalence of all
 200 methods. In particular, MATLAB preprocessing, mesh generation, plotting,
 filtering, and persistence side effects have not been replicated by the class.
+
+## Geometry-method references (0.3)
+
+`scripts/generate_surface_reference.m` constructs an actual original MATLAB
+`TubULAR` instance, calls `uv2APDV`, `interpolateOntoPullbackXY`,
+`measureXYZLims`, `getXYZLims`, and `getCurrentClineDVhoop`, and saves their
+outputs. The original initializer needs explicit `lambda_err=0` because that
+field is absent from its default smoothing struct. Supplying it is sufficient;
+no MATLAB source is edited. All experiment inputs and analysis outputs are
+created in a temporary directory and removed after fixture generation.
+
+References include a nontrivial chart, off-surface queries, non-unit U scaling,
+tiled nonconstant fields, out-of-grid extrapolation, rotated/reflected/translated
+meshes at two timepoints, physical padding, and a reflected centerline. The
+original interpolation class ignores `iMethod`; a direct MATLAB
+`griddedInterpolant` call supplies independent checks of the newly honored
+nearest option and its upper-node midpoint tie rule. SciPy's default nearest
+tie rule differs, so Python selects the matching nodes explicitly.
+
+```matlab
+addpath('/path/to/pyTubULAR/scripts');
+generate_surface_reference('/path/to/tubular', ...
+    '/path/to/pyTubULAR/tests/data/matlab_surface_reference.mat');
+```
+
+The MATLAB version and SHA-256 hashes for source files, generator, and fixture
+are preserved in `tests/data/surface_provenance.json`. Run all comparisons with:
+
+```sh
+python -m pytest tests/test_surface_methods.py
+python examples/surface_queries.py
+```
+
+Independent tests cover affine scalar/vector interpolation, exact shared edges,
+reversed winding, UV scale changes, chart holes, overlapping faces even with
+identical XYZ, empty/outside queries, source immutability, field-axis conventions,
+nearest ties, changed sources/frames, unit mismatches, independent centerline
+cache copies, repeated reflection, and malformed centerline reloads. Surface
+face IDs outside the chart deliberately use -1 and NaN weights in Python;
+MATLAB uses NaN IDs and zero weights. Shared-edge face identity is not required
+to match MATLAB's triangulation tie choice.
+
+The default interpolation is bilinear on the legacy full tiled grid, whereas
+the separate `surface.locate_chart` operation is piecewise linear on the
+supplied triangles. Neither is a substitute for local ARAP flattening, seam
+construction, or missing chart generation. Validation remains synthetic.
 
 ## Analytic and failure-case coverage
 

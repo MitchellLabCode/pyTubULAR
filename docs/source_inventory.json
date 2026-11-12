@@ -408,7 +408,7 @@
       "source": "@TubULAR/interpolateOntoPullbackXY.m",
       "lines": 119,
       "sha256": "b7095988de5e18e2d8356d0f23d62a1a92520099e7ff4280ac82299136da91df",
-      "python_status": "not_ported",
+      "python_status": "partial_adapted",
       "signatures": [
         "function sf = interpolateOntoPullbackXY(tubi, XY, scalar_field, options)"
       ]
@@ -606,7 +606,7 @@
       "source": "@TubULAR/measureXYZLims.m",
       "lines": 147,
       "sha256": "2e7ced194b1bed32767398fb7861a1a01d24d92b6b766b37d7843fc72bc6dc33",
-      "python_status": "not_ported",
+      "python_status": "partial_adapted",
       "signatures": [
         "function [xyzlim_raw, xyzlim, xyzlim_um, xyzlim_um_buff] = ..."
       ]

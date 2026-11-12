@@ -86,7 +86,7 @@ class TubULAR(CoordinateMethods):
         self._time_points = times
         options = _options(opts, {"meshDir", "timeUnits", "spaceUnits", "nU", "nV", "flipy",
                                 "timeInterval", "timeinterval", "t0", "resolution", "rot", "trans",
-                                "fullFileBase", "fileName", "makeDirs"}, "TubULAR")
+                                "fullFileBase", "fileName", "makeDirs", "normalShift"}, "TubULAR")
         if options.get("makeDirs", False):
             raise NotImplementedError("automatic MATLAB directory-tree creation is not implemented")
         if "timeInterval" in options and "timeinterval" in options:
@@ -100,6 +100,10 @@ class TubULAR(CoordinateMethods):
         self.nU = _size(options.get("nU", 100), "nU")
         self.nV = _size(options.get("nV", 100), "nV")
         self.flipy = boolean(options.get("flipy", False), "flipy")
+        self.normalShift = scalar(options.get("normalShift", 0), "normalShift")
+        self.plotting = SimpleNamespace(xyzlim_raw=None, xyzlim_pix=None,
+                                        xyzlim_um=None, xyzlim_um_buff=None)
+        self.piv = SimpleNamespace(imCoords="sp_sme")
         self.uvexten = f"_nU{self.nU:04d}_nV{self.nV:04d}"
         self.dir = SimpleNamespace(mesh=Path(options.get("meshDir", ".")),
                                    data=Path(file_meta.get("dataDir", ".")))
@@ -471,6 +475,162 @@ class TubULAR(CoordinateMethods):
     def measure_current_geometry(self, *, mesh_kind="spcutMeshSm"):
         """Native Python access to first/second forms of the current chart."""
         return fundamental_forms(self.get_mesh(mesh_kind))
+
+    def uv2APDV(self, uv, coordSys="spsmrs", umax=1, vmax=1, *, return_details=False):
+        """Map chart points to the supplied APDV mesh using its original triangles.
+
+        Only spsmrs is supported: register an already aligned spcutMeshSmRS.
+        U is normalized by max(U) as in MATLAB. V is not rescaled; vmax must
+        be 1 because the original ignores that argument. No periodic wrapping.
+        With return_details, return (xyz, face_indices, chart_mesh, barycentric).
+        Outside points have NaN coordinates/weights and face index -1.
+        """
+        from .surface import locate_chart
+        if coordSys is None or coordSys == "":
+            coordSys = "spsmrs"
+        if not isinstance(coordSys, str) or coordSys.lower() != "spsmrs":
+            raise NotImplementedError("uv2APDV currently supports only spsmrs; sprs requires a separate sphi field")
+        umax = scalar(umax, "umax", positive=True)
+        if scalar(vmax, "vmax", positive=True) != 1:
+            raise NotImplementedError("MATLAB ignores vmax here; only vmax=1 is supported")
+        details = boolean(return_details, "return_details")
+        mesh = self.getCurrentSPCutMeshSmRS()
+        if mesh.u is None or mesh.u[:, 0].max() <= 0:
+            raise ValueError("uv2APDV requires a UV chart with positive max(U)")
+        chart = mesh.u.copy()
+        chart[:, 0] *= umax / chart[:, 0].max()
+        chart_mesh = Mesh(mesh.v, mesh.f, chart, mesh.length_unit)
+        located = locate_chart(chart_mesh, uv)
+        xyz = located.interpolate(mesh.v)
+        if details:
+            return xyz, located.face_indices, chart_mesh, located.barycentric
+        return xyz
+
+    def interpolateOntoPullbackXY(self, XY, scalar_field, options=None):
+        """Interpolate a rectilinear sp_sme vertex field on the legacy tiled grid.
+
+        Requires explicit Lx (width), Ly (height), and nU*nV values, U fastest.
+        Linear interpolation is bilinear, as in the original griddedInterpolant;
+        nearest extrapolation applies outside the entire three-tile grid.
+        Exact midpoint ties select the upper grid node, matching MATLAB.
+        This grid operation is distinct from triangle-based surface.locate_chart.
+        """
+        from scipy.interpolate import RegularGridInterpolator
+        opts = _options(options, {"imCoords", "sfLocation", "iMethod", "Lx", "Ly"},
+                        "interpolateOntoPullbackXY")
+        if opts.get("imCoords", self.piv.imCoords) != "sp_sme":
+            raise NotImplementedError("only the sp_sme double-cover grid is supported")
+        if opts.get("sfLocation", "vertices") != "vertices":
+            raise NotImplementedError("the legacy face-field interpolation branch is incomplete")
+        method = opts.get("iMethod", "linear")
+        if method not in ("linear", "nearest"):
+            raise NotImplementedError("only linear and nearest interpolation are supported")
+        if "Lx" not in opts or "Ly" not in opts:
+            raise ValueError("supply Lx (width) and Ly (height) explicitly")
+        Lx, Ly = scalar(opts["Lx"], "Lx", positive=True), scalar(opts["Ly"], "Ly", positive=True)
+        if Lx <= 1 or Ly <= 1:
+            raise ValueError("Lx and Ly must exceed one")
+        xy = points(XY, "XY", 2)
+        field = np.asarray(scalar_field)
+        if field.ndim not in (1, 2):
+            raise ValueError("scalar_field must be a vector or (nU, nV) grid")
+        field = real_array(field, "scalar_field", ndim=field.ndim)
+        if field.ndim == 2 and field.shape not in ((self.nU, self.nV), (self.nU*self.nV, 1)):
+            raise ValueError("scalar_field grid must have shape (nU, nV), or be a column vector")
+        if field.size != self.nU*self.nV:
+            raise ValueError("scalar_field must contain nU*nV values")
+        field = field.reshape((self.nU, self.nV), order="F")
+        tiled = np.concatenate((field[:, :-1], field, field[:, 1:]), axis=1)
+        x = np.linspace(1, Lx, self.nU)
+        y = np.linspace(1, 1.5*Ly, 3*self.nV-2) - 0.25*Ly
+        def nearest_values(query):
+            # SciPy's nearest mode chooses the lower node at ties, whereas
+            # MATLAB chooses the upper node. Use explicit midpoint bins.
+            i = np.searchsorted(x[:-1] + np.diff(x)/2, query[:, 0], side="right")
+            j = np.searchsorted(y[:-1] + np.diff(y)/2, query[:, 1], side="right")
+            return tiled[i, j]
+
+        if method == "nearest":
+            return nearest_values(xy)
+        interpolator = RegularGridInterpolator((x, y), tiled, method="linear",
+                                               bounds_error=False, fill_value=np.nan)
+        result = interpolator(xy)
+        outside = ((xy[:, 0] < x[0]) | (xy[:, 0] > x[-1]) |
+                   (xy[:, 1] < y[0]) | (xy[:, 1] > y[-1]))
+        if outside.any():
+            result[outside] = nearest_values(xy[outside])
+        return result
+
+    def measureXYZLims(self, options=None):
+        """Return (raw, aligned_pixels, physical, buffered) 3-by-2 bounds.
+
+        Reads registered raw meshes across time; no writes or time selection
+        changes. Physical padding is 2*abs(normalShift)*APDV.resolution.
+        Supported options: timePoints, normalShift. Legacy output files/plots
+        are not produced. The physical unit is spaceUnits, not necessarily um.
+        """
+        opts = _options(options, {"timePoints", "normalShift"}, "measureXYZLims")
+        times = real_array(opts.get("timePoints", self.timePoints), "timePoints", ndim=1)
+        if len(times) == 0 or np.any(np.diff(times) <= 0):
+            raise ValueError("timePoints must be nonempty and strictly increasing")
+        times = [self._time(t) for t in times]
+        shift = scalar(opts.get("normalShift", self.normalShift), "normalShift")
+        self.getRotTrans()  # Validate the frame before reading mesh sources.
+        lower, upper = np.full(3, np.inf), np.full(3, -np.inf)
+        apdv_lower, apdv_upper = lower.copy(), upper.copy()
+        units = set()
+        for time in times:
+            mesh = self._read_mesh("rawMesh", time)
+            units.add(mesh.length_unit)
+            lower, upper = np.minimum(lower, mesh.v.min(axis=0)), np.maximum(upper, mesh.v.max(axis=0))
+            aligned = self.xyz2APDV(mesh.v)
+            apdv_lower = np.minimum(apdv_lower, aligned.min(axis=0))
+            apdv_upper = np.maximum(apdv_upper, aligned.max(axis=0))
+        if len(units) != 1:
+            raise ValueError("raw mesh units differ across timepoints")
+        raw = np.column_stack((lower, upper))
+        physical = np.column_stack((apdv_lower, apdv_upper))
+        pixels = physical / self.APDV.resolution
+        buffered = physical + 2*abs(shift)*self.APDV.resolution*np.array([-1, 1])
+        result = (raw, pixels, physical, buffered)
+        for key, array in zip(("xyzlim_raw", "xyzlim_pix", "xyzlim_um", "xyzlim_um_buff"), result):
+            setattr(self.plotting, key, array.copy())
+        return result
+
+    def getXYZLims(self):
+        """Recompute bounds from current sources/frame, avoiding stale file caches."""
+        return self.measureXYZLims()
+
+    def getCurrentClineDVhoop(self):
+        """Load mss, mcline, avgpts from an explicit MAT filename pattern.
+
+        The stored curve is in physical coordinates before optional Y reflection.
+        Reloads each call as MATLAB does; no additional rotation/scale or fitting.
+        """
+        from scipy.io import loadmat
+        time = self._require_time()
+        if not hasattr(self.fullFileBase, "clineDVhoop"):
+            raise FileNotFoundError("supply fullFileBase.clineDVhoop for the existing centerline MAT files")
+        path = self._format_path(self.fullFileBase.clineDVhoop, time)
+        data = loadmat(path, variable_names=["mss", "mcline", "avgpts"])
+        if not {"mss", "mcline", "avgpts"}.issubset(data):
+            raise ValueError("centerline MAT file must contain mss, mcline, and avgpts")
+        mss = np.asarray(data["mss"])
+        if mss.ndim != 2 or 1 not in mss.shape:
+            raise ValueError("mss must be a MATLAB row or column vector")
+        mss = real_array(mss.ravel(), "mss", ndim=1)
+        cline, average = points(data["mcline"], "mcline", 3), points(data["avgpts"], "avgpts", 3)
+        if len(mss) < 2 or len(cline) != len(mss) or len(average) < 2 or np.any(np.diff(mss) <= 0):
+            raise ValueError("centerline needs matching mss/mcline lengths, increasing mss, and at least two points")
+        if self.flipy:
+            cline[:, 1] *= -1
+            average[:, 1] *= -1
+        result = mss, cline, average
+        for key, array in zip(("mss", "mcline", "avgpts"), result):
+            cached = array.copy()
+            cached.setflags(write=False)
+            setattr(self.currentCline, key, cached)
+        return result
 
     def sample_current_pullback(self, u, v, *, mesh_kind="spcutMeshSm", channel=0,
                                 spacing_xyz=(1, 1, 1), origin_xyz=(0, 0, 0),

@@ -33,6 +33,7 @@ flowchart TD
 | `grid` | Rectilinear connectivity and explicit seam mapping | No implicit parameterization |
 | `io` | MATLAB and NPZ adapters | Conversion happens at this boundary |
 | `imaging` | Trilinear sampling and supplied-chart pullbacks | No segmentation or temporal tracking |
+| `surface` | Barycentric query locations and scalar/vector interpolation | Retains original triangles and holes; no surface fitting |
 | `analysis` | JSON-compatible mesh inspection | Same callable for CLI and GUI |
 | `cli` | Input/output and user-facing failures | Delegates calculations to core |
 | `experiment` | `TubULAR` state, time selection, explicit sources, cache invalidation | Calls core operations; no viewer or implicit output writes |
@@ -54,7 +55,7 @@ Changing time clears all current caches, including aligned and Ricci meshes.
 Each instance owns its state. `getCurrent…` reuses a loaded mesh;
 `loadCurrent…` reloads it. No constructor, getter, or measurement writes files.
 
-The object adapts 46 original method names and explicitly marks 154 as pending.
+The object adapts 51 original method names and explicitly marks 149 as pending.
 This compatibility layer is separate from the future durable project manifest:
 the in-memory object is not a serialization format or a complete ImSAnE port.
 See [class API](class_api.md) for the supported scope and changed conventions.
