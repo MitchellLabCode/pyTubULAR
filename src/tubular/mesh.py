@@ -84,6 +84,21 @@ class Mesh:
     def with_vertices(self, vertices) -> Mesh:
         return Mesh(vertices, self.faces, self.uv, self.length_unit)
 
+    @property
+    def v(self):
+        """MATLAB-style alias for vertices (XYZ)."""
+        return self.vertices
+
+    @property
+    def f(self):
+        """MATLAB-style alias for faces, still ZERO-based in Python."""
+        return self.faces
+
+    @property
+    def u(self):
+        """MATLAB-style alias for the supplied UV chart, or None."""
+        return self.uv
+
 
 @dataclass(frozen=True)
 class Topology:

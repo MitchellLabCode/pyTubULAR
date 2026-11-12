@@ -1,0 +1,1012 @@
+[
+  {
+    "name": "plotPathlineStrainTimePoint",
+    "static": false,
+    "hidden": true
+  },
+  {
+    "name": "plotPathlineStrainRateTimePoint",
+    "static": false,
+    "hidden": true
+  },
+  {
+    "name": "plotStrainRateTimePoint",
+    "static": false,
+    "hidden": true
+  },
+  {
+    "name": "plotPathlineVelocitiesTimePoint",
+    "static": false,
+    "hidden": true
+  },
+  {
+    "name": "plotAverageVelocitiesTimePoint",
+    "static": false,
+    "hidden": true
+  },
+  {
+    "name": "pullbackPathlines",
+    "static": false,
+    "hidden": true
+  },
+  {
+    "name": "plotMetricKinematicsTimePoint",
+    "static": false,
+    "hidden": true
+  },
+  {
+    "name": "plotSPCutMeshSmSeriesUtility",
+    "static": false,
+    "hidden": true
+  },
+  {
+    "name": "initializeTubULAR",
+    "static": false,
+    "hidden": true
+  },
+  {
+    "name": "TubULAR",
+    "static": false,
+    "hidden": true
+  },
+  {
+    "name": "getLBSoverTime",
+    "static": false,
+    "hidden": false
+  },
+  {
+    "name": "computeLBSoverTime",
+    "static": false,
+    "hidden": false
+  },
+  {
+    "name": "getPCAoverTime",
+    "static": false,
+    "hidden": false
+  },
+  {
+    "name": "computePCAoverTime",
+    "static": false,
+    "hidden": false
+  },
+  {
+    "name": "interpolateOntoPullbackXY",
+    "static": false,
+    "hidden": false
+  },
+  {
+    "name": "visualizeSegmentationPatch",
+    "static": false,
+    "hidden": false
+  },
+  {
+    "name": "visualizeTracking3D",
+    "static": false,
+    "hidden": false
+  },
+  {
+    "name": "visualizeDemoTracks",
+    "static": false,
+    "hidden": false
+  },
+  {
+    "name": "manualTrackingCorrect",
+    "static": false,
+    "hidden": false
+  },
+  {
+    "name": "manualTrackingAdd",
+    "static": false,
+    "hidden": false
+  },
+  {
+    "name": "plotPathlineBeltramiKymograph",
+    "static": false,
+    "hidden": false
+  },
+  {
+    "name": "plotPathlineStrain",
+    "static": false,
+    "hidden": false
+  },
+  {
+    "name": "getPathlineStrain",
+    "static": false,
+    "hidden": false
+  },
+  {
+    "name": "measurePathlineStrain",
+    "static": false,
+    "hidden": false
+  },
+  {
+    "name": "getCurrentPathlineStrain",
+    "static": false,
+    "hidden": false
+  },
+  {
+    "name": "plotPathlineStrainRate",
+    "static": false,
+    "hidden": false
+  },
+  {
+    "name": "measureDxDyStrainFiltered",
+    "static": false,
+    "hidden": false
+  },
+  {
+    "name": "measurePathlineStrainRate",
+    "static": false,
+    "hidden": false
+  },
+  {
+    "name": "plotStrainRate3DFiltered",
+    "static": false,
+    "hidden": false
+  },
+  {
+    "name": "plotStrainRate",
+    "static": false,
+    "hidden": false
+  },
+  {
+    "name": "measureStrainRate",
+    "static": false,
+    "hidden": false
+  },
+  {
+    "name": "measureMetricStrainRate",
+    "static": false,
+    "hidden": false
+  },
+  {
+    "name": "measureStokesForces",
+    "static": false,
+    "hidden": false
+  },
+  {
+    "name": "plotPathlineMetricKinematics",
+    "static": false,
+    "hidden": false
+  },
+  {
+    "name": "measurePathlineMetricKinematics",
+    "static": false,
+    "hidden": false
+  },
+  {
+    "name": "plotMetricKinematics",
+    "static": false,
+    "hidden": false
+  },
+  {
+    "name": "measureMetricKinematics",
+    "static": false,
+    "hidden": false
+  },
+  {
+    "name": "getVelocitySimpleAverage",
+    "static": false,
+    "hidden": false
+  },
+  {
+    "name": "loadVelocitySimpleAverage",
+    "static": false,
+    "hidden": false
+  },
+  {
+    "name": "timeAverageVelocitiesSimple",
+    "static": false,
+    "hidden": false
+  },
+  {
+    "name": "plotPathlineVelocities",
+    "static": false,
+    "hidden": false
+  },
+  {
+    "name": "getPathlineVelocities",
+    "static": false,
+    "hidden": false
+  },
+  {
+    "name": "measurePathlineVelocities",
+    "static": false,
+    "hidden": false
+  },
+  {
+    "name": "helmholtzHodge",
+    "static": false,
+    "hidden": false
+  },
+  {
+    "name": "plotTimeAvgVelocities",
+    "static": false,
+    "hidden": false
+  },
+  {
+    "name": "getVelocityAverage",
+    "static": false,
+    "hidden": false
+  },
+  {
+    "name": "loadVelocityAverage",
+    "static": false,
+    "hidden": false
+  },
+  {
+    "name": "timeAverageVelocities",
+    "static": false,
+    "hidden": false
+  },
+  {
+    "name": "getVelocityRaw",
+    "static": false,
+    "hidden": false
+  },
+  {
+    "name": "loadVelocityRaw",
+    "static": false,
+    "hidden": false
+  },
+  {
+    "name": "loadPullbackPathlines",
+    "static": false,
+    "hidden": false
+  },
+  {
+    "name": "getPullbackPathlines",
+    "static": false,
+    "hidden": false
+  },
+  {
+    "name": "measurePullbackPathlines",
+    "static": false,
+    "hidden": false
+  },
+  {
+    "name": "samplePullbackPathlines",
+    "static": false,
+    "hidden": false
+  },
+  {
+    "name": "plotMetric",
+    "static": false,
+    "hidden": false
+  },
+  {
+    "name": "measureRMSvelocityOverTime",
+    "static": false,
+    "hidden": false
+  },
+  {
+    "name": "measureTwist",
+    "static": false,
+    "hidden": false
+  },
+  {
+    "name": "measurePIV3d",
+    "static": false,
+    "hidden": false
+  },
+  {
+    "name": "measurePIV2d",
+    "static": false,
+    "hidden": false
+  },
+  {
+    "name": "loadPIV",
+    "static": false,
+    "hidden": false
+  },
+  {
+    "name": "getPIV",
+    "static": false,
+    "hidden": false
+  },
+  {
+    "name": "coordinateSystemDemo",
+    "static": false,
+    "hidden": false
+  },
+  {
+    "name": "generateRicciMeshTimePoint",
+    "static": false,
+    "hidden": false
+  },
+  {
+    "name": "fitPhiOffsetsViaTexture",
+    "static": false,
+    "hidden": false
+  },
+  {
+    "name": "measureThickness",
+    "static": false,
+    "hidden": false
+  },
+  {
+    "name": "generateSPCutMeshSmStack",
+    "static": false,
+    "hidden": false
+  },
+  {
+    "name": "generateSPCutMeshStack",
+    "static": false,
+    "hidden": false
+  },
+  {
+    "name": "plotCellDensityKymograph",
+    "static": false,
+    "hidden": false
+  },
+  {
+    "name": "plotCellDensity",
+    "static": false,
+    "hidden": false
+  },
+  {
+    "name": "loadCurrentCellDensity",
+    "static": false,
+    "hidden": false
+  },
+  {
+    "name": "measureCellDensity",
+    "static": false,
+    "hidden": false
+  },
+  {
+    "name": "estimateIntercalationRate",
+    "static": false,
+    "hidden": false
+  },
+  {
+    "name": "plotSegmentationStatisticsLobes",
+    "static": false,
+    "hidden": false
+  },
+  {
+    "name": "loadCurrentSegmentation3DCorrected",
+    "static": false,
+    "hidden": false
+  },
+  {
+    "name": "loadCurrentSegmentation3D",
+    "static": false,
+    "hidden": false
+  },
+  {
+    "name": "getCurrentSegmentation3DCorrected",
+    "static": false,
+    "hidden": false
+  },
+  {
+    "name": "getCurrentSegmentation3D",
+    "static": false,
+    "hidden": false
+  },
+  {
+    "name": "getCurrentSegmentation2DCorrected",
+    "static": false,
+    "hidden": false
+  },
+  {
+    "name": "getCurrentSegmentation2D",
+    "static": false,
+    "hidden": false
+  },
+  {
+    "name": "generateCellSegmentationPathlines3D",
+    "static": false,
+    "hidden": false
+  },
+  {
+    "name": "generateCellSegmentation3D",
+    "static": false,
+    "hidden": false
+  },
+  {
+    "name": "processCorrectedCellSegmentation2D",
+    "static": false,
+    "hidden": false
+  },
+  {
+    "name": "generateCellSegmentation2D",
+    "static": false,
+    "hidden": false
+  },
+  {
+    "name": "measureCurvatures",
+    "static": false,
+    "hidden": false
+  },
+  {
+    "name": "loadSPCutMeshSm",
+    "static": false,
+    "hidden": false
+  },
+  {
+    "name": "plotSPCutMeshSmRSC",
+    "static": false,
+    "hidden": false
+  },
+  {
+    "name": "plotSPCutMeshSmRS",
+    "static": false,
+    "hidden": false
+  },
+  {
+    "name": "plotSPCutMeshSm",
+    "static": false,
+    "hidden": false
+  },
+  {
+    "name": "smoothDynamicSPhiMeshes",
+    "static": false,
+    "hidden": false
+  },
+  {
+    "name": "measureLength",
+    "static": false,
+    "hidden": false
+  },
+  {
+    "name": "measureWrithe",
+    "static": false,
+    "hidden": false
+  },
+  {
+    "name": "getCurrentClineDVhoop",
+    "static": false,
+    "hidden": false
+  },
+  {
+    "name": "doubleCoverPullbackImages",
+    "static": false,
+    "hidden": false
+  },
+  {
+    "name": "generateCurrentPullbacks",
+    "static": false,
+    "hidden": false
+  },
+  {
+    "name": "measurePathlineIndentation",
+    "static": false,
+    "hidden": false
+  },
+  {
+    "name": "getPathlineIndentation",
+    "static": false,
+    "hidden": false
+  },
+  {
+    "name": "measureBeltramiCoefficientPullbackToPullback",
+    "static": false,
+    "hidden": false
+  },
+  {
+    "name": "loadBeltramiCoefficient",
+    "static": false,
+    "hidden": false
+  },
+  {
+    "name": "getBeltramiCoefficient",
+    "static": false,
+    "hidden": false
+  },
+  {
+    "name": "measureBeltramiCoefficient",
+    "static": false,
+    "hidden": false
+  },
+  {
+    "name": "measureRPhiPathlines",
+    "static": false,
+    "hidden": false
+  },
+  {
+    "name": "loadCurrentRicciMesh",
+    "static": false,
+    "hidden": false
+  },
+  {
+    "name": "getCurrentRicciMesh",
+    "static": false,
+    "hidden": false
+  },
+  {
+    "name": "getRadii",
+    "static": false,
+    "hidden": false
+  },
+  {
+    "name": "uv2APDV",
+    "static": false,
+    "hidden": false
+  },
+  {
+    "name": "loadCurrentSPCutMeshSmRSC",
+    "static": false,
+    "hidden": false
+  },
+  {
+    "name": "getCurrentSPCutMeshSmRSC",
+    "static": false,
+    "hidden": false
+  },
+  {
+    "name": "loadCurrentSPCutMeshSmRS",
+    "static": false,
+    "hidden": false
+  },
+  {
+    "name": "getCurrentSPCutMeshSmRS",
+    "static": false,
+    "hidden": false
+  },
+  {
+    "name": "loadCurrentSPCutMeshSm",
+    "static": false,
+    "hidden": false
+  },
+  {
+    "name": "getCurrentSPCutMeshSm",
+    "static": false,
+    "hidden": false
+  },
+  {
+    "name": "loadCurrentSPCutMesh",
+    "static": false,
+    "hidden": false
+  },
+  {
+    "name": "getCurrentSPCutMesh",
+    "static": false,
+    "hidden": false
+  },
+  {
+    "name": "generateCurrentSPCutMesh",
+    "static": false,
+    "hidden": false
+  },
+  {
+    "name": "loadCurrentUVCutMesh",
+    "static": false,
+    "hidden": false
+  },
+  {
+    "name": "getCurrentUVCutMesh",
+    "static": false,
+    "hidden": false
+  },
+  {
+    "name": "generateCurrentUVCutMesh",
+    "static": false,
+    "hidden": false
+  },
+  {
+    "name": "loadCurrentCutMesh",
+    "static": false,
+    "hidden": false
+  },
+  {
+    "name": "getCurrentCutMesh",
+    "static": false,
+    "hidden": false
+  },
+  {
+    "name": "plotCutPath",
+    "static": false,
+    "hidden": false
+  },
+  {
+    "name": "generateCurrentCutMesh",
+    "static": false,
+    "hidden": false
+  },
+  {
+    "name": "generateRawRicciMeshTimePoint",
+    "static": false,
+    "hidden": false
+  },
+  {
+    "name": "loadCurrentCylinderMeshClean",
+    "static": false,
+    "hidden": false
+  },
+  {
+    "name": "loadCurrentCylinderMesh",
+    "static": false,
+    "hidden": false
+  },
+  {
+    "name": "getCurrentCylinderMeshClean",
+    "static": false,
+    "hidden": false
+  },
+  {
+    "name": "getCleanFastMarchingCenterlines",
+    "static": false,
+    "hidden": false
+  },
+  {
+    "name": "cleanFastMarchingCenterlines",
+    "static": false,
+    "hidden": false
+  },
+  {
+    "name": "sliceMeshEndcaps",
+    "static": false,
+    "hidden": false
+  },
+  {
+    "name": "saveEndcapOptions",
+    "static": false,
+    "hidden": false
+  },
+  {
+    "name": "loadEndcapOptions",
+    "static": false,
+    "hidden": false
+  },
+  {
+    "name": "setEndcapOptions",
+    "static": false,
+    "hidden": false
+  },
+  {
+    "name": "generateFastMarchingCenterlines",
+    "static": false,
+    "hidden": false
+  },
+  {
+    "name": "measureSurfaceAreaVolume",
+    "static": false,
+    "hidden": false
+  },
+  {
+    "name": "plotSeriesOnSurfaceTexturePatch",
+    "static": false,
+    "hidden": false
+  },
+  {
+    "name": "visualizeMeshEvolution",
+    "static": false,
+    "hidden": false
+  },
+  {
+    "name": "alignMaskedDataAPDV",
+    "static": false,
+    "hidden": false
+  },
+  {
+    "name": "generateMaskedData",
+    "static": false,
+    "hidden": false
+  },
+  {
+    "name": "getCurrentAlignedMesh",
+    "static": false,
+    "hidden": false
+  },
+  {
+    "name": "loadCurrentAlignedMesh",
+    "static": false,
+    "hidden": false
+  },
+  {
+    "name": "getCurrentRawMesh",
+    "static": false,
+    "hidden": false
+  },
+  {
+    "name": "loadCurrentRawMesh",
+    "static": false,
+    "hidden": false
+  },
+  {
+    "name": "plotAlignedMeshesPretty",
+    "static": false,
+    "hidden": false
+  },
+  {
+    "name": "alignMeshesAPDV",
+    "static": false,
+    "hidden": false
+  },
+  {
+    "name": "saveAPDVOptions",
+    "static": false,
+    "hidden": false
+  },
+  {
+    "name": "loadAPDVOptions",
+    "static": false,
+    "hidden": false
+  },
+  {
+    "name": "setAPDVOptions",
+    "static": false,
+    "hidden": false
+  },
+  {
+    "name": "dx2APDV",
+    "static": false,
+    "hidden": false
+  },
+  {
+    "name": "APDV2dxyz",
+    "static": false,
+    "hidden": false
+  },
+  {
+    "name": "APDV2xyz",
+    "static": false,
+    "hidden": false
+  },
+  {
+    "name": "xyz2APDV",
+    "static": false,
+    "hidden": false
+  },
+  {
+    "name": "computeAPDpoints",
+    "static": false,
+    "hidden": false
+  },
+  {
+    "name": "getCurrentVelocity",
+    "static": false,
+    "hidden": false
+  },
+  {
+    "name": "adjustIV",
+    "static": false,
+    "hidden": false
+  },
+  {
+    "name": "getCurrentData",
+    "static": false,
+    "hidden": false
+  },
+  {
+    "name": "loadCurrentData",
+    "static": false,
+    "hidden": false
+  },
+  {
+    "name": "setDataLimits",
+    "static": false,
+    "hidden": false
+  },
+  {
+    "name": "loadFeatures",
+    "static": false,
+    "hidden": false
+  },
+  {
+    "name": "measureFoldCrossSectionDynamics",
+    "static": false,
+    "hidden": false
+  },
+  {
+    "name": "generateFoldCrossSections",
+    "static": false,
+    "hidden": false
+  },
+  {
+    "name": "plotConstrictionDynamics",
+    "static": false,
+    "hidden": false
+  },
+  {
+    "name": "plotLobes",
+    "static": false,
+    "hidden": false
+  },
+  {
+    "name": "measureLobeDynamics",
+    "static": false,
+    "hidden": false
+  },
+  {
+    "name": "measureFoldRadiiVariance",
+    "static": false,
+    "hidden": false
+  },
+  {
+    "name": "identifyFolds",
+    "static": false,
+    "hidden": false
+  },
+  {
+    "name": "getFeatures",
+    "static": false,
+    "hidden": false
+  },
+  {
+    "name": "getXYZLims",
+    "static": false,
+    "hidden": false
+  },
+  {
+    "name": "getRotTrans",
+    "static": false,
+    "hidden": false
+  },
+  {
+    "name": "getAPpointsSm",
+    "static": false,
+    "hidden": false
+  },
+  {
+    "name": "computeAPDVCoords",
+    "static": false,
+    "hidden": false
+  },
+  {
+    "name": "maskCurrentDataWithMesh",
+    "static": false,
+    "hidden": false
+  },
+  {
+    "name": "getMeshes",
+    "static": false,
+    "hidden": false
+  },
+  {
+    "name": "prepareIlastik",
+    "static": false,
+    "hidden": false
+  },
+  {
+    "name": "mip",
+    "static": false,
+    "hidden": false
+  },
+  {
+    "name": "makeMIPs",
+    "static": false,
+    "hidden": false
+  },
+  {
+    "name": "t0set",
+    "static": false,
+    "hidden": false
+  },
+  {
+    "name": "clearTime",
+    "static": false,
+    "hidden": false
+  },
+  {
+    "name": "trueTime",
+    "static": false,
+    "hidden": false
+  },
+  {
+    "name": "setTime",
+    "static": false,
+    "hidden": false
+  },
+  {
+    "name": "quarterIndicesDV",
+    "static": true,
+    "hidden": false
+  },
+  {
+    "name": "invertRotation",
+    "static": true,
+    "hidden": false
+  },
+  {
+    "name": "dvAverageNematic",
+    "static": true,
+    "hidden": false
+  },
+  {
+    "name": "doubleResolution",
+    "static": true,
+    "hidden": false
+  },
+  {
+    "name": "doubleToSingleCover",
+    "static": true,
+    "hidden": false
+  },
+  {
+    "name": "singleToDoubleCover",
+    "static": true,
+    "hidden": false
+  },
+  {
+    "name": "extendImage2DoubleCover",
+    "static": true,
+    "hidden": false
+  },
+  {
+    "name": "clipXY",
+    "static": true,
+    "hidden": false
+  },
+  {
+    "name": "uv2XY",
+    "static": true,
+    "hidden": false
+  },
+  {
+    "name": "dXY2duv",
+    "static": true,
+    "hidden": false
+  },
+  {
+    "name": "XY2uv",
+    "static": true,
+    "hidden": false
+  },
+  {
+    "name": "cleanCylMeshes",
+    "static": false,
+    "hidden": false
+  },
+  {
+    "name": "computeLocalSurfacePatch",
+    "static": false,
+    "hidden": false
+  },
+  {
+    "name": "computeRicciMeshes",
+    "static": false,
+    "hidden": false
+  },
+  {
+    "name": "computeStartEndCOMs",
+    "static": false,
+    "hidden": false
+  },
+  {
+    "name": "generatePathlineRicciMeshTimePoint",
+    "static": false,
+    "hidden": false
+  },
+  {
+    "name": "generateUVPrimeCutMeshes",
+    "static": false,
+    "hidden": false
+  },
+  {
+    "name": "measurePathlineMetric",
+    "static": false,
+    "hidden": false
+  },
+  {
+    "name": "measurePIV3dMultiChannel",
+    "static": false,
+    "hidden": false
+  },
+  {
+    "name": "measureUVPrimePathlineFeatureIDs",
+    "static": false,
+    "hidden": false
+  },
+  {
+    "name": "measureUVPrimePathlines",
+    "static": false,
+    "hidden": false
+  },
+  {
+    "name": "measureXYZLims",
+    "static": false,
+    "hidden": false
+  },
+  {
+    "name": "plotClineXSections",
+    "static": false,
+    "hidden": false
+  },
+  {
+    "name": "empty",
+    "static": true,
+    "hidden": true
+  }
+]

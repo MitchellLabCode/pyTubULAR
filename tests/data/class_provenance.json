@@ -1,0 +1,9 @@
+{
+  "source_repository": "https://github.com/npmitchell/tubular",
+  "source_commit": "9bd49dbffd38b199c32552b8cc089f611f584679",
+  "class_sha256": "7b82c88865bc9250fa4b21a2a2be092ef60d45159c29c880235cb013ab1f755e",
+  "fixture_sha256": "da6812b427c8db86e7990e989ef50c182ed0d666e51d2940c6c451afa658bc62",
+  "inventory_sha256": "ecc8329a20ef8b373d54a9069ecbd16358e3223fa10255fc62089cc7e535dcf2",
+  "generator_sha256": "e3990f32ab39985d47e4477507892d771850328f1be8e60ca25907d4b7e4ea17",
+  "note": "Metadata InputNames parsing triggers an existing syntax error in generateCurrentCutMesh.m. Names/Static/Hidden and static numerical references generated from the unchanged original class."
+}

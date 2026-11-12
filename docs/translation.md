@@ -5,6 +5,11 @@ This is a deliberate translation of selected routines, not a mechanical rewrite
 of every MATLAB file. Source defects and ambiguous conventions are recorded
 rather than carried forward silently.
 
+The Python `TubULAR` class is now available. Its method-by-method scope and
+intentional differences are described in [class_api.md](class_api.md) and
+[method_coverage.md](method_coverage.md). The inventory distinguishes adapted
+methods from pending ports; it is not a claim of complete MATLAB compatibility.
+
 ## Implemented source map
 
 All paths below are relative to the original TubULAR repository.

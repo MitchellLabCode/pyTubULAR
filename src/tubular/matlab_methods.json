@@ -1,0 +1,1211 @@
+{
+  "source_repository": "https://github.com/npmitchell/tubular",
+  "source_commit": "9bd49dbffd38b199c32552b8cc089f611f584679",
+  "class_sha256": "7b82c88865bc9250fa4b21a2a2be092ef60d45159c29c880235cb013ab1f755e",
+  "exclusions": [
+    "TubULAR (constructor exposed as Python __init__)",
+    "empty (MATLAB object array utility)"
+  ],
+  "methods": [
+    {
+      "name": "APDV2dxyz",
+      "static": false,
+      "hidden": false,
+      "source": "@TubULAR/TubULAR.m"
+    },
+    {
+      "name": "APDV2xyz",
+      "static": false,
+      "hidden": false,
+      "source": "@TubULAR/TubULAR.m"
+    },
+    {
+      "name": "XY2uv",
+      "static": true,
+      "hidden": false,
+      "source": "@TubULAR/TubULAR.m"
+    },
+    {
+      "name": "adjustIV",
+      "static": false,
+      "hidden": false,
+      "source": "@TubULAR/TubULAR.m"
+    },
+    {
+      "name": "alignMaskedDataAPDV",
+      "static": false,
+      "hidden": false,
+      "source": "@TubULAR/alignMaskedDataAPDV.m"
+    },
+    {
+      "name": "alignMeshesAPDV",
+      "static": false,
+      "hidden": false,
+      "source": "@TubULAR/alignMeshesAPDV.m"
+    },
+    {
+      "name": "cleanCylMeshes",
+      "static": false,
+      "hidden": false,
+      "source": "@TubULAR/cleanCylMeshes.m"
+    },
+    {
+      "name": "cleanFastMarchingCenterlines",
+      "static": false,
+      "hidden": false,
+      "source": "@TubULAR/cleanFastMarchingCenterlines.m"
+    },
+    {
+      "name": "clearTime",
+      "static": false,
+      "hidden": false,
+      "source": "@TubULAR/TubULAR.m"
+    },
+    {
+      "name": "clipXY",
+      "static": true,
+      "hidden": false,
+      "source": "@TubULAR/TubULAR.m"
+    },
+    {
+      "name": "computeAPDVCoords",
+      "static": false,
+      "hidden": false,
+      "source": "@TubULAR/computeAPDVCoords.m"
+    },
+    {
+      "name": "computeAPDpoints",
+      "static": false,
+      "hidden": false,
+      "source": "@TubULAR/computeAPDpoints.m"
+    },
+    {
+      "name": "computeLBSoverTime",
+      "static": false,
+      "hidden": false,
+      "source": "@TubULAR/computeLBSoverTime.m"
+    },
+    {
+      "name": "computeLocalSurfacePatch",
+      "static": false,
+      "hidden": false,
+      "source": "@TubULAR/computeLocalSurfacePatch.m"
+    },
+    {
+      "name": "computePCAoverTime",
+      "static": false,
+      "hidden": false,
+      "source": "@TubULAR/computePCAoverTime.m"
+    },
+    {
+      "name": "computeRicciMeshes",
+      "static": false,
+      "hidden": false,
+      "source": "@TubULAR/computeRicciMeshes.m"
+    },
+    {
+      "name": "computeStartEndCOMs",
+      "static": false,
+      "hidden": false,
+      "source": "@TubULAR/computeStartEndCOMs.m"
+    },
+    {
+      "name": "coordinateSystemDemo",
+      "static": false,
+      "hidden": false,
+      "source": "@TubULAR/coordinateSystemDemo.m"
+    },
+    {
+      "name": "dXY2duv",
+      "static": true,
+      "hidden": false,
+      "source": "@TubULAR/TubULAR.m"
+    },
+    {
+      "name": "doubleCoverPullbackImages",
+      "static": false,
+      "hidden": false,
+      "source": "@TubULAR/TubULAR.m"
+    },
+    {
+      "name": "doubleResolution",
+      "static": true,
+      "hidden": false,
+      "source": "@TubULAR/TubULAR.m"
+    },
+    {
+      "name": "doubleToSingleCover",
+      "static": true,
+      "hidden": false,
+      "source": "@TubULAR/TubULAR.m"
+    },
+    {
+      "name": "dvAverageNematic",
+      "static": true,
+      "hidden": false,
+      "source": "@TubULAR/TubULAR.m"
+    },
+    {
+      "name": "dx2APDV",
+      "static": false,
+      "hidden": false,
+      "source": "@TubULAR/TubULAR.m"
+    },
+    {
+      "name": "estimateIntercalationRate",
+      "static": false,
+      "hidden": false,
+      "source": "@TubULAR/TubULAR.m"
+    },
+    {
+      "name": "extendImage2DoubleCover",
+      "static": true,
+      "hidden": false,
+      "source": "@TubULAR/TubULAR.m"
+    },
+    {
+      "name": "fitPhiOffsetsViaTexture",
+      "static": false,
+      "hidden": false,
+      "source": "@TubULAR/fitPhiOffsetsViaTexture.m"
+    },
+    {
+      "name": "generateCellSegmentation2D",
+      "static": false,
+      "hidden": false,
+      "source": "@TubULAR/generateCellSegmentation2D.m"
+    },
+    {
+      "name": "generateCellSegmentation3D",
+      "static": false,
+      "hidden": false,
+      "source": "@TubULAR/generateCellSegmentation3D.m"
+    },
+    {
+      "name": "generateCellSegmentationPathlines3D",
+      "static": false,
+      "hidden": false,
+      "source": "@TubULAR/generateCellSegmentationPathlines3D.m"
+    },
+    {
+      "name": "generateCurrentCutMesh",
+      "static": false,
+      "hidden": false,
+      "source": "@TubULAR/generateCurrentCutMesh.m"
+    },
+    {
+      "name": "generateCurrentPullbacks",
+      "static": false,
+      "hidden": false,
+      "source": "@TubULAR/generateCurrentPullbacks.m"
+    },
+    {
+      "name": "generateCurrentSPCutMesh",
+      "static": false,
+      "hidden": false,
+      "source": "@TubULAR/generateCurrentSPCutMesh.m"
+    },
+    {
+      "name": "generateCurrentUVCutMesh",
+      "static": false,
+      "hidden": false,
+      "source": "@TubULAR/generateCurrentUVCutMesh.m"
+    },
+    {
+      "name": "generateFastMarchingCenterlines",
+      "static": false,
+      "hidden": false,
+      "source": "@TubULAR/generateFastMarchingCenterlines.m"
+    },
+    {
+      "name": "generateFoldCrossSections",
+      "static": false,
+      "hidden": false,
+      "source": "@TubULAR/TubULAR.m"
+    },
+    {
+      "name": "generateMaskedData",
+      "static": false,
+      "hidden": false,
+      "source": "@TubULAR/TubULAR.m"
+    },
+    {
+      "name": "generatePathlineRicciMeshTimePoint",
+      "static": false,
+      "hidden": false,
+      "source": "@TubULAR/generatePathlineRicciMeshTimePoint.m"
+    },
+    {
+      "name": "generateRawRicciMeshTimePoint",
+      "static": false,
+      "hidden": false,
+      "source": "@TubULAR/generateRawRicciMeshTimePoint.m"
+    },
+    {
+      "name": "generateRicciMeshTimePoint",
+      "static": false,
+      "hidden": false,
+      "source": "@TubULAR/generateRicciMeshTimePoint.m"
+    },
+    {
+      "name": "generateSPCutMeshSmStack",
+      "static": false,
+      "hidden": false,
+      "source": "@TubULAR/generateSPCutMeshSmStack.m"
+    },
+    {
+      "name": "generateSPCutMeshStack",
+      "static": false,
+      "hidden": false,
+      "source": "@TubULAR/generateSPCutMeshStack.m"
+    },
+    {
+      "name": "generateUVPrimeCutMeshes",
+      "static": false,
+      "hidden": false,
+      "source": "@TubULAR/generateUVPrimeCutMeshes.m"
+    },
+    {
+      "name": "getAPpointsSm",
+      "static": false,
+      "hidden": false,
+      "source": "@TubULAR/TubULAR.m"
+    },
+    {
+      "name": "getBeltramiCoefficient",
+      "static": false,
+      "hidden": false,
+      "source": "@TubULAR/TubULAR.m"
+    },
+    {
+      "name": "getCleanFastMarchingCenterlines",
+      "static": false,
+      "hidden": false,
+      "source": "@TubULAR/TubULAR.m"
+    },
+    {
+      "name": "getCurrentAlignedMesh",
+      "static": false,
+      "hidden": false,
+      "source": "@TubULAR/TubULAR.m"
+    },
+    {
+      "name": "getCurrentClineDVhoop",
+      "static": false,
+      "hidden": false,
+      "source": "@TubULAR/TubULAR.m"
+    },
+    {
+      "name": "getCurrentCutMesh",
+      "static": false,
+      "hidden": false,
+      "source": "@TubULAR/TubULAR.m"
+    },
+    {
+      "name": "getCurrentCylinderMeshClean",
+      "static": false,
+      "hidden": false,
+      "source": "@TubULAR/TubULAR.m"
+    },
+    {
+      "name": "getCurrentData",
+      "static": false,
+      "hidden": false,
+      "source": "@TubULAR/getCurrentData.m"
+    },
+    {
+      "name": "getCurrentPathlineStrain",
+      "static": false,
+      "hidden": false,
+      "source": "@TubULAR/TubULAR.m"
+    },
+    {
+      "name": "getCurrentRawMesh",
+      "static": false,
+      "hidden": false,
+      "source": "@TubULAR/TubULAR.m"
+    },
+    {
+      "name": "getCurrentRicciMesh",
+      "static": false,
+      "hidden": false,
+      "source": "@TubULAR/TubULAR.m"
+    },
+    {
+      "name": "getCurrentSPCutMesh",
+      "static": false,
+      "hidden": false,
+      "source": "@TubULAR/TubULAR.m"
+    },
+    {
+      "name": "getCurrentSPCutMeshSm",
+      "static": false,
+      "hidden": false,
+      "source": "@TubULAR/TubULAR.m"
+    },
+    {
+      "name": "getCurrentSPCutMeshSmRS",
+      "static": false,
+      "hidden": false,
+      "source": "@TubULAR/TubULAR.m"
+    },
+    {
+      "name": "getCurrentSPCutMeshSmRSC",
+      "static": false,
+      "hidden": false,
+      "source": "@TubULAR/TubULAR.m"
+    },
+    {
+      "name": "getCurrentSegmentation2D",
+      "static": false,
+      "hidden": false,
+      "source": "@TubULAR/TubULAR.m"
+    },
+    {
+      "name": "getCurrentSegmentation2DCorrected",
+      "static": false,
+      "hidden": false,
+      "source": "@TubULAR/TubULAR.m"
+    },
+    {
+      "name": "getCurrentSegmentation3D",
+      "static": false,
+      "hidden": false,
+      "source": "@TubULAR/TubULAR.m"
+    },
+    {
+      "name": "getCurrentSegmentation3DCorrected",
+      "static": false,
+      "hidden": false,
+      "source": "@TubULAR/TubULAR.m"
+    },
+    {
+      "name": "getCurrentUVCutMesh",
+      "static": false,
+      "hidden": false,
+      "source": "@TubULAR/TubULAR.m"
+    },
+    {
+      "name": "getCurrentVelocity",
+      "static": false,
+      "hidden": false,
+      "source": "@TubULAR/TubULAR.m"
+    },
+    {
+      "name": "getFeatures",
+      "static": false,
+      "hidden": false,
+      "source": "@TubULAR/TubULAR.m"
+    },
+    {
+      "name": "getLBSoverTime",
+      "static": false,
+      "hidden": false,
+      "source": "@TubULAR/TubULAR.m"
+    },
+    {
+      "name": "getMeshes",
+      "static": false,
+      "hidden": false,
+      "source": "@TubULAR/getMeshes.m"
+    },
+    {
+      "name": "getPCAoverTime",
+      "static": false,
+      "hidden": false,
+      "source": "@TubULAR/TubULAR.m"
+    },
+    {
+      "name": "getPIV",
+      "static": false,
+      "hidden": false,
+      "source": "@TubULAR/TubULAR.m"
+    },
+    {
+      "name": "getPathlineIndentation",
+      "static": false,
+      "hidden": false,
+      "source": "@TubULAR/TubULAR.m"
+    },
+    {
+      "name": "getPathlineStrain",
+      "static": false,
+      "hidden": false,
+      "source": "@TubULAR/TubULAR.m"
+    },
+    {
+      "name": "getPathlineVelocities",
+      "static": false,
+      "hidden": false,
+      "source": "@TubULAR/TubULAR.m"
+    },
+    {
+      "name": "getPullbackPathlines",
+      "static": false,
+      "hidden": false,
+      "source": "@TubULAR/TubULAR.m"
+    },
+    {
+      "name": "getRadii",
+      "static": false,
+      "hidden": false,
+      "source": "@TubULAR/TubULAR.m"
+    },
+    {
+      "name": "getRotTrans",
+      "static": false,
+      "hidden": false,
+      "source": "@TubULAR/TubULAR.m"
+    },
+    {
+      "name": "getVelocityAverage",
+      "static": false,
+      "hidden": false,
+      "source": "@TubULAR/TubULAR.m"
+    },
+    {
+      "name": "getVelocityRaw",
+      "static": false,
+      "hidden": false,
+      "source": "@TubULAR/TubULAR.m"
+    },
+    {
+      "name": "getVelocitySimpleAverage",
+      "static": false,
+      "hidden": false,
+      "source": "@TubULAR/TubULAR.m"
+    },
+    {
+      "name": "getXYZLims",
+      "static": false,
+      "hidden": false,
+      "source": "@TubULAR/TubULAR.m"
+    },
+    {
+      "name": "helmholtzHodge",
+      "static": false,
+      "hidden": false,
+      "source": "@TubULAR/helmholtzHodge.m"
+    },
+    {
+      "name": "identifyFolds",
+      "static": false,
+      "hidden": false,
+      "source": "@TubULAR/identifyFolds.m"
+    },
+    {
+      "name": "initializeTubULAR",
+      "static": false,
+      "hidden": true,
+      "source": "@TubULAR/initializeTubULAR.m"
+    },
+    {
+      "name": "interpolateOntoPullbackXY",
+      "static": false,
+      "hidden": false,
+      "source": "@TubULAR/interpolateOntoPullbackXY.m"
+    },
+    {
+      "name": "invertRotation",
+      "static": true,
+      "hidden": false,
+      "source": "@TubULAR/TubULAR.m"
+    },
+    {
+      "name": "loadAPDVOptions",
+      "static": false,
+      "hidden": false,
+      "source": "@TubULAR/TubULAR.m"
+    },
+    {
+      "name": "loadBeltramiCoefficient",
+      "static": false,
+      "hidden": false,
+      "source": "@TubULAR/TubULAR.m"
+    },
+    {
+      "name": "loadCurrentAlignedMesh",
+      "static": false,
+      "hidden": false,
+      "source": "@TubULAR/TubULAR.m"
+    },
+    {
+      "name": "loadCurrentCellDensity",
+      "static": false,
+      "hidden": false,
+      "source": "@TubULAR/TubULAR.m"
+    },
+    {
+      "name": "loadCurrentCutMesh",
+      "static": false,
+      "hidden": false,
+      "source": "@TubULAR/TubULAR.m"
+    },
+    {
+      "name": "loadCurrentCylinderMesh",
+      "static": false,
+      "hidden": false,
+      "source": "@TubULAR/TubULAR.m"
+    },
+    {
+      "name": "loadCurrentCylinderMeshClean",
+      "static": false,
+      "hidden": false,
+      "source": "@TubULAR/TubULAR.m"
+    },
+    {
+      "name": "loadCurrentData",
+      "static": false,
+      "hidden": false,
+      "source": "@TubULAR/TubULAR.m"
+    },
+    {
+      "name": "loadCurrentRawMesh",
+      "static": false,
+      "hidden": false,
+      "source": "@TubULAR/TubULAR.m"
+    },
+    {
+      "name": "loadCurrentRicciMesh",
+      "static": false,
+      "hidden": false,
+      "source": "@TubULAR/TubULAR.m"
+    },
+    {
+      "name": "loadCurrentSPCutMesh",
+      "static": false,
+      "hidden": false,
+      "source": "@TubULAR/TubULAR.m"
+    },
+    {
+      "name": "loadCurrentSPCutMeshSm",
+      "static": false,
+      "hidden": false,
+      "source": "@TubULAR/TubULAR.m"
+    },
+    {
+      "name": "loadCurrentSPCutMeshSmRS",
+      "static": false,
+      "hidden": false,
+      "source": "@TubULAR/TubULAR.m"
+    },
+    {
+      "name": "loadCurrentSPCutMeshSmRSC",
+      "static": false,
+      "hidden": false,
+      "source": "@TubULAR/TubULAR.m"
+    },
+    {
+      "name": "loadCurrentSegmentation3D",
+      "static": false,
+      "hidden": false,
+      "source": "@TubULAR/TubULAR.m"
+    },
+    {
+      "name": "loadCurrentSegmentation3DCorrected",
+      "static": false,
+      "hidden": false,
+      "source": "@TubULAR/TubULAR.m"
+    },
+    {
+      "name": "loadCurrentUVCutMesh",
+      "static": false,
+      "hidden": false,
+      "source": "@TubULAR/TubULAR.m"
+    },
+    {
+      "name": "loadEndcapOptions",
+      "static": false,
+      "hidden": false,
+      "source": "@TubULAR/TubULAR.m"
+    },
+    {
+      "name": "loadFeatures",
+      "static": false,
+      "hidden": false,
+      "source": "@TubULAR/TubULAR.m"
+    },
+    {
+      "name": "loadPIV",
+      "static": false,
+      "hidden": false,
+      "source": "@TubULAR/TubULAR.m"
+    },
+    {
+      "name": "loadPullbackPathlines",
+      "static": false,
+      "hidden": false,
+      "source": "@TubULAR/TubULAR.m"
+    },
+    {
+      "name": "loadSPCutMeshSm",
+      "static": false,
+      "hidden": false,
+      "source": "@TubULAR/TubULAR.m"
+    },
+    {
+      "name": "loadVelocityAverage",
+      "static": false,
+      "hidden": false,
+      "source": "@TubULAR/TubULAR.m"
+    },
+    {
+      "name": "loadVelocityRaw",
+      "static": false,
+      "hidden": false,
+      "source": "@TubULAR/TubULAR.m"
+    },
+    {
+      "name": "loadVelocitySimpleAverage",
+      "static": false,
+      "hidden": false,
+      "source": "@TubULAR/TubULAR.m"
+    },
+    {
+      "name": "makeMIPs",
+      "static": false,
+      "hidden": false,
+      "source": "@TubULAR/TubULAR.m"
+    },
+    {
+      "name": "manualTrackingAdd",
+      "static": false,
+      "hidden": false,
+      "source": "@TubULAR/TubULAR.m"
+    },
+    {
+      "name": "manualTrackingCorrect",
+      "static": false,
+      "hidden": false,
+      "source": "@TubULAR/TubULAR.m"
+    },
+    {
+      "name": "maskCurrentDataWithMesh",
+      "static": false,
+      "hidden": false,
+      "source": "@TubULAR/TubULAR.m"
+    },
+    {
+      "name": "measureBeltramiCoefficient",
+      "static": false,
+      "hidden": false,
+      "source": "@TubULAR/measureBeltramiCoefficient.m"
+    },
+    {
+      "name": "measureBeltramiCoefficientPullbackToPullback",
+      "static": false,
+      "hidden": false,
+      "source": "@TubULAR/measureBeltramiCoefficientPullbackToPullback.m"
+    },
+    {
+      "name": "measureCellDensity",
+      "static": false,
+      "hidden": false,
+      "source": "@TubULAR/TubULAR.m"
+    },
+    {
+      "name": "measureCurvatures",
+      "static": false,
+      "hidden": false,
+      "source": "@TubULAR/measureCurvatures.m"
+    },
+    {
+      "name": "measureDxDyStrainFiltered",
+      "static": false,
+      "hidden": false,
+      "source": "@TubULAR/measureDxDyStrainFiltered.m"
+    },
+    {
+      "name": "measureFoldCrossSectionDynamics",
+      "static": false,
+      "hidden": false,
+      "source": "@TubULAR/TubULAR.m"
+    },
+    {
+      "name": "measureFoldRadiiVariance",
+      "static": false,
+      "hidden": false,
+      "source": "@TubULAR/TubULAR.m"
+    },
+    {
+      "name": "measureLength",
+      "static": false,
+      "hidden": false,
+      "source": "@TubULAR/TubULAR.m"
+    },
+    {
+      "name": "measureLobeDynamics",
+      "static": false,
+      "hidden": false,
+      "source": "@TubULAR/TubULAR.m"
+    },
+    {
+      "name": "measureMetricKinematics",
+      "static": false,
+      "hidden": false,
+      "source": "@TubULAR/measureMetricKinematics.m"
+    },
+    {
+      "name": "measureMetricStrainRate",
+      "static": false,
+      "hidden": false,
+      "source": "@TubULAR/measureMetricStrainRate.m"
+    },
+    {
+      "name": "measurePIV2d",
+      "static": false,
+      "hidden": false,
+      "source": "@TubULAR/measurePIV2d.m"
+    },
+    {
+      "name": "measurePIV3d",
+      "static": false,
+      "hidden": false,
+      "source": "@TubULAR/measurePIV3d.m"
+    },
+    {
+      "name": "measurePIV3dMultiChannel",
+      "static": false,
+      "hidden": false,
+      "source": "@TubULAR/measurePIV3dMultiChannel.m"
+    },
+    {
+      "name": "measurePathlineIndentation",
+      "static": false,
+      "hidden": false,
+      "source": "@TubULAR/TubULAR.m"
+    },
+    {
+      "name": "measurePathlineMetric",
+      "static": false,
+      "hidden": false,
+      "source": "@TubULAR/measurePathlineMetric.m"
+    },
+    {
+      "name": "measurePathlineMetricKinematics",
+      "static": false,
+      "hidden": false,
+      "source": "@TubULAR/measurePathlineMetricKinematics.m"
+    },
+    {
+      "name": "measurePathlineStrain",
+      "static": false,
+      "hidden": false,
+      "source": "@TubULAR/measurePathlineStrain.m"
+    },
+    {
+      "name": "measurePathlineStrainRate",
+      "static": false,
+      "hidden": false,
+      "source": "@TubULAR/measurePathlineStrainRate.m"
+    },
+    {
+      "name": "measurePathlineVelocities",
+      "static": false,
+      "hidden": false,
+      "source": "@TubULAR/measurePathlineVelocities.m"
+    },
+    {
+      "name": "measurePullbackPathlines",
+      "static": false,
+      "hidden": false,
+      "source": "@TubULAR/measurePullbackPathlines.m"
+    },
+    {
+      "name": "measureRMSvelocityOverTime",
+      "static": false,
+      "hidden": false,
+      "source": "@TubULAR/TubULAR.m"
+    },
+    {
+      "name": "measureRPhiPathlines",
+      "static": false,
+      "hidden": false,
+      "source": "@TubULAR/TubULAR.m"
+    },
+    {
+      "name": "measureStokesForces",
+      "static": false,
+      "hidden": false,
+      "source": "@TubULAR/TubULAR.m"
+    },
+    {
+      "name": "measureStrainRate",
+      "static": false,
+      "hidden": false,
+      "source": "@TubULAR/measureStrainRate.m"
+    },
+    {
+      "name": "measureSurfaceAreaVolume",
+      "static": false,
+      "hidden": false,
+      "source": "@TubULAR/measureSurfaceAreaVolume.m"
+    },
+    {
+      "name": "measureThickness",
+      "static": false,
+      "hidden": false,
+      "source": "@TubULAR/TubULAR.m"
+    },
+    {
+      "name": "measureTwist",
+      "static": false,
+      "hidden": false,
+      "source": "@TubULAR/measureTwist.m"
+    },
+    {
+      "name": "measureUVPrimePathlineFeatureIDs",
+      "static": false,
+      "hidden": false,
+      "source": "@TubULAR/measureUVPrimePathlineFeatureIDs.m"
+    },
+    {
+      "name": "measureUVPrimePathlines",
+      "static": false,
+      "hidden": false,
+      "source": "@TubULAR/measureUVPrimePathlines.m"
+    },
+    {
+      "name": "measureWrithe",
+      "static": false,
+      "hidden": false,
+      "source": "@TubULAR/measureWrithe.m"
+    },
+    {
+      "name": "measureXYZLims",
+      "static": false,
+      "hidden": false,
+      "source": "@TubULAR/measureXYZLims.m"
+    },
+    {
+      "name": "mip",
+      "static": false,
+      "hidden": false,
+      "source": "@TubULAR/TubULAR.m"
+    },
+    {
+      "name": "plotAlignedMeshesPretty",
+      "static": false,
+      "hidden": false,
+      "source": "@TubULAR/plotAlignedMeshesPretty.m"
+    },
+    {
+      "name": "plotAverageVelocitiesTimePoint",
+      "static": false,
+      "hidden": true,
+      "source": "@TubULAR/plotAverageVelocitiesTimePoint.m"
+    },
+    {
+      "name": "plotCellDensity",
+      "static": false,
+      "hidden": false,
+      "source": "@TubULAR/TubULAR.m"
+    },
+    {
+      "name": "plotCellDensityKymograph",
+      "static": false,
+      "hidden": false,
+      "source": "@TubULAR/TubULAR.m"
+    },
+    {
+      "name": "plotClineXSections",
+      "static": false,
+      "hidden": false,
+      "source": "@TubULAR/plotClineXSections.m"
+    },
+    {
+      "name": "plotConstrictionDynamics",
+      "static": false,
+      "hidden": false,
+      "source": "@TubULAR/TubULAR.m"
+    },
+    {
+      "name": "plotCutPath",
+      "static": false,
+      "hidden": false,
+      "source": "@TubULAR/plotCutPath.m"
+    },
+    {
+      "name": "plotLobes",
+      "static": false,
+      "hidden": false,
+      "source": "@TubULAR/TubULAR.m"
+    },
+    {
+      "name": "plotMetric",
+      "static": false,
+      "hidden": false,
+      "source": "@TubULAR/plotMetric.m"
+    },
+    {
+      "name": "plotMetricKinematics",
+      "static": false,
+      "hidden": false,
+      "source": "@TubULAR/plotMetricKinematics.m"
+    },
+    {
+      "name": "plotMetricKinematicsTimePoint",
+      "static": false,
+      "hidden": true,
+      "source": "@TubULAR/plotMetricKinematicsTimePoint.m"
+    },
+    {
+      "name": "plotPathlineBeltramiKymograph",
+      "static": false,
+      "hidden": false,
+      "source": "@TubULAR/TubULAR.m"
+    },
+    {
+      "name": "plotPathlineMetricKinematics",
+      "static": false,
+      "hidden": false,
+      "source": "@TubULAR/plotPathlineMetricKinematics.m"
+    },
+    {
+      "name": "plotPathlineStrain",
+      "static": false,
+      "hidden": false,
+      "source": "@TubULAR/plotPathlineStrain.m"
+    },
+    {
+      "name": "plotPathlineStrainRate",
+      "static": false,
+      "hidden": false,
+      "source": "@TubULAR/plotPathlineStrainRate.m"
+    },
+    {
+      "name": "plotPathlineStrainRateTimePoint",
+      "static": false,
+      "hidden": true,
+      "source": "@TubULAR/plotPathlineStrainRateTimePoint.m"
+    },
+    {
+      "name": "plotPathlineStrainTimePoint",
+      "static": false,
+      "hidden": true,
+      "source": "@TubULAR/plotPathlineStrainTimePoint.m"
+    },
+    {
+      "name": "plotPathlineVelocities",
+      "static": false,
+      "hidden": false,
+      "source": "@TubULAR/plotPathlineVelocities.m"
+    },
+    {
+      "name": "plotPathlineVelocitiesTimePoint",
+      "static": false,
+      "hidden": true,
+      "source": "@TubULAR/plotPathlineVelocitiesTimePoint.m"
+    },
+    {
+      "name": "plotSPCutMeshSm",
+      "static": false,
+      "hidden": false,
+      "source": "@TubULAR/TubULAR.m"
+    },
+    {
+      "name": "plotSPCutMeshSmRS",
+      "static": false,
+      "hidden": false,
+      "source": "@TubULAR/TubULAR.m"
+    },
+    {
+      "name": "plotSPCutMeshSmRSC",
+      "static": false,
+      "hidden": false,
+      "source": "@TubULAR/TubULAR.m"
+    },
+    {
+      "name": "plotSPCutMeshSmSeriesUtility",
+      "static": false,
+      "hidden": true,
+      "source": "@TubULAR/plotSPCutMeshSmSeriesUtility.m"
+    },
+    {
+      "name": "plotSegmentationStatisticsLobes",
+      "static": false,
+      "hidden": false,
+      "source": "@TubULAR/TubULAR.m"
+    },
+    {
+      "name": "plotSeriesOnSurfaceTexturePatch",
+      "static": false,
+      "hidden": false,
+      "source": "@TubULAR/plotSeriesOnSurfaceTexturePatch.m"
+    },
+    {
+      "name": "plotStrainRate",
+      "static": false,
+      "hidden": false,
+      "source": "@TubULAR/plotStrainRate.m"
+    },
+    {
+      "name": "plotStrainRate3DFiltered",
+      "static": false,
+      "hidden": false,
+      "source": "@TubULAR/plotStrainRate3DFiltered.m"
+    },
+    {
+      "name": "plotStrainRateTimePoint",
+      "static": false,
+      "hidden": true,
+      "source": "@TubULAR/plotStrainRateTimePoint.m"
+    },
+    {
+      "name": "plotTimeAvgVelocities",
+      "static": false,
+      "hidden": false,
+      "source": "@TubULAR/plotTimeAvgVelocities.m"
+    },
+    {
+      "name": "prepareIlastik",
+      "static": false,
+      "hidden": false,
+      "source": "@TubULAR/prepareIlastik.m"
+    },
+    {
+      "name": "processCorrectedCellSegmentation2D",
+      "static": false,
+      "hidden": false,
+      "source": "@TubULAR/processCorrectedCellSegmentation2D.m"
+    },
+    {
+      "name": "pullbackPathlines",
+      "static": false,
+      "hidden": true,
+      "source": "@TubULAR/pullbackPathlines.m"
+    },
+    {
+      "name": "quarterIndicesDV",
+      "static": true,
+      "hidden": false,
+      "source": "@TubULAR/TubULAR.m"
+    },
+    {
+      "name": "samplePullbackPathlines",
+      "static": false,
+      "hidden": false,
+      "source": "@TubULAR/TubULAR.m"
+    },
+    {
+      "name": "saveAPDVOptions",
+      "static": false,
+      "hidden": false,
+      "source": "@TubULAR/TubULAR.m"
+    },
+    {
+      "name": "saveEndcapOptions",
+      "static": false,
+      "hidden": false,
+      "source": "@TubULAR/TubULAR.m"
+    },
+    {
+      "name": "setAPDVOptions",
+      "static": false,
+      "hidden": false,
+      "source": "@TubULAR/TubULAR.m"
+    },
+    {
+      "name": "setDataLimits",
+      "static": false,
+      "hidden": false,
+      "source": "@TubULAR/TubULAR.m"
+    },
+    {
+      "name": "setEndcapOptions",
+      "static": false,
+      "hidden": false,
+      "source": "@TubULAR/TubULAR.m"
+    },
+    {
+      "name": "setTime",
+      "static": false,
+      "hidden": false,
+      "source": "@TubULAR/TubULAR.m"
+    },
+    {
+      "name": "singleToDoubleCover",
+      "static": true,
+      "hidden": false,
+      "source": "@TubULAR/TubULAR.m"
+    },
+    {
+      "name": "sliceMeshEndcaps",
+      "static": false,
+      "hidden": false,
+      "source": "@TubULAR/sliceMeshEndcaps.m"
+    },
+    {
+      "name": "smoothDynamicSPhiMeshes",
+      "static": false,
+      "hidden": false,
+      "source": "@TubULAR/smoothDynamicSPhiMeshes.m"
+    },
+    {
+      "name": "t0set",
+      "static": false,
+      "hidden": false,
+      "source": "@TubULAR/TubULAR.m"
+    },
+    {
+      "name": "timeAverageVelocities",
+      "static": false,
+      "hidden": false,
+      "source": "@TubULAR/timeAverageVelocities.m"
+    },
+    {
+      "name": "timeAverageVelocitiesSimple",
+      "static": false,
+      "hidden": false,
+      "source": "@TubULAR/TubULAR.m"
+    },
+    {
+      "name": "trueTime",
+      "static": false,
+      "hidden": false,
+      "source": "@TubULAR/TubULAR.m"
+    },
+    {
+      "name": "uv2APDV",
+      "static": false,
+      "hidden": false,
+      "source": "@TubULAR/TubULAR.m"
+    },
+    {
+      "name": "uv2XY",
+      "static": true,
+      "hidden": false,
+      "source": "@TubULAR/TubULAR.m"
+    },
+    {
+      "name": "visualizeDemoTracks",
+      "static": false,
+      "hidden": false,
+      "source": "@TubULAR/visualizeDemoTracks.m"
+    },
+    {
+      "name": "visualizeMeshEvolution",
+      "static": false,
+      "hidden": false,
+      "source": "@TubULAR/visualizeMeshEvolution.m"
+    },
+    {
+      "name": "visualizeSegmentationPatch",
+      "static": false,
+      "hidden": false,
+      "source": "@TubULAR/visualizeSegmentationPatch.m"
+    },
+    {
+      "name": "visualizeTracking3D",
+      "static": false,
+      "hidden": false,
+      "source": "@TubULAR/visualizeTracking3D.m"
+    },
+    {
+      "name": "xyz2APDV",
+      "static": false,
+      "hidden": false,
+      "source": "@TubULAR/TubULAR.m"
+    }
+  ]
+}

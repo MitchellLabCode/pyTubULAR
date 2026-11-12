@@ -2,7 +2,8 @@
 
 The initial implementation was checked on macOS arm64 with Python 3.9.6,
 NumPy 2.0.2, SciPy 1.13.1, and MATLAB R2025b Update 2. The repository contains
-62 passing tests at this checkpoint. The CI workflow additionally requests
+62 passing tests at the numerical-foundation checkpoint. The class milestone
+extends this to **100 passing tests** in the same local environment. The CI workflow additionally requests
 Linux, Windows, and macOS jobs on several Python versions; a configured job
 is not evidence of a successful run. Consult GitHub Actions for those results.
 
@@ -39,6 +40,51 @@ generate_matlab_reference('/path/to/tubular', ...
 
 Review changed expected outputs before updating provenance and accepting a new
 fixture. The MATLAB binary itself is not needed for ordinary Python CI.
+
+## TubULAR class validation
+
+`scripts/generate_class_reference.m` queries the original MATLAB class metadata
+and calls its static numerical helpers directly. The committed inventory has
+202 entries: excluding the constructor and MATLAB-generated `empty` leaves
+200 original method names, including publicly accessible hidden helpers.
+Python checks that every name is present and that every pending method raises
+`MethodNotPortedError` without changing selection or creating output files.
+
+The coordinate fixtures cover non-square images, non-unit UV extents,
+double/single covers, even/odd row counts, nematic averaging, and legacy
+dorsal/ventral index groups. MATLAB arithmetic defects are tested through
+explicit `legacy=True` modes; corrected defaults are separately checked with
+inverse/differential identities. Dtype preservation is checked for 16-bit images.
+Hashes of the class, generator, inventory, and fixture are recorded in
+`tests/data/class_provenance.json`.
+
+```sh
+python -m pytest tests/test_experiment.py tests/test_class_coordinates.py
+python examples/class_workflow.py
+```
+
+To regenerate the class references from the recorded, unchanged source:
+
+```matlab
+addpath('/path/to/pyTubULAR/scripts');
+generate_class_reference('/path/to/tubular', '/path/to/pyTubULAR/tests/data');
+```
+
+The generator reads names and flags rather than full method argument metadata:
+MATLAB's `InputNames` inspection encounters an existing missing-`end` parse
+error in `generateCurrentCutMesh.m` in this source snapshot. No original source
+was edited to obtain the fixtures. This is not validation of that method.
+
+Additional Python tests check known APDV position/vector transforms, mirroring
+and inverses, explicit anisotropic-resolution handling, time labels and gaps,
+cache invalidation across every mesh stage, separate-instance state, named MAT
+structs, NPZ patterns, channel/MIP axes, file reloads, area/volume scaling, units,
+and class-driven geometry and pullback sampling. APDV expectations are analytic;
+we have not run full MATLAB experiment initialization as a parity test.
+
+These tests establish the documented adapted behavior, not equivalence of all
+200 methods. In particular, MATLAB preprocessing, mesh generation, plotting,
+filtering, and persistence side effects have not been replicated by the class.
 
 ## Analytic and failure-case coverage
 

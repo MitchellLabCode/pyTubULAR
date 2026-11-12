@@ -1,6 +1,7 @@
 # Translation milestones and acceptance criteria
 
-This is the full-program design; only milestone 1 is implemented. Each stage
+This is the full-program design. Milestone 1 and the class-interface slice
+below are implemented; full real-data interchange remains incomplete. Each stage
 must have a runnable non-GUI API before a GUI exposes it. There is no reliable
 schedule estimate until representative real data and its expected MATLAB
 outputs are available.
@@ -18,6 +19,12 @@ outputs are available.
 | 9. GUI and distribution | Napari project/inspection prototype can start after stage 2; complete workflow after scientific stages | Linked 2D/3D selections, cancellation, save/reopen, offline operation, packaging tests on supported systems, researcher usability sessions |
 
 ## Next concrete slice
+
+The `TubULAR` object now supplies time selection, mesh and volume sources,
+APDV transforms, coordinate helpers, and an explicit method-coverage catalog.
+Its 46 adapted MATLAB methods are documented in [class_api.md](class_api.md).
+The other 154 method names are explicit pending ports, including topology,
+parameterization, velocity, strain, and plotting workflows.
 
 Import one existing MATLAB `spcutMeshSm` and its matching raw image volume.
 Keep the existing mapping fixed. Compare surface overlays, sampled pullback,

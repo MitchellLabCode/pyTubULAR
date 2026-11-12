@@ -1,13 +1,13 @@
 {
   "source_commit": "9bd49dbffd38b199c32552b8cc089f611f584679",
-  "scope": "@TubULAR MATLAB entry points; utility ports are mapped separately in translation.md",
+  "scope": "@TubULAR MATLAB source files; class method coverage is in matlab_methods.json and docs/method_coverage.md; utility ports are mapped in translation.md",
   "count": 86,
   "files": [
     {
       "source": "@TubULAR/TubULAR.m",
       "lines": 3266,
       "sha256": "7b82c88865bc9250fa4b21a2a2be092ef60d45159c29c880235cb013ab1f755e",
-      "python_status": "not_ported",
+      "python_status": "partial_adapted",
       "signatures": [
         "classdef TubULAR < handle",
         "function tubi = TubULAR(xp, opts)",
@@ -359,7 +359,7 @@
       "source": "@TubULAR/getCurrentData.m",
       "lines": 396,
       "sha256": "6b093cc0bdde1f4a21c0d81e76eaede8267e252e3fd193372f0380ab6942a565",
-      "python_status": "not_ported",
+      "python_status": "partial_adapted",
       "signatures": [
         "function IV = getCurrentData(tubi, adjustIV, varargin)",
         "function stacks = rescaleToUnitAspect(data, resolution)",
@@ -561,7 +561,7 @@
       "source": "@TubULAR/measureSurfaceAreaVolume.m",
       "lines": 173,
       "sha256": "21e8eb95e76d3c79aafc90e6eb5b25a7833137c641fb7d08060b38ec59579320",
-      "python_status": "not_ported",
+      "python_status": "partial_adapted",
       "signatures": [
         "function measureSurfaceAreaVolume(QS, options)"
       ]

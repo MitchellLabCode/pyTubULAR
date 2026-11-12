@@ -4,13 +4,20 @@ A Python implementation of [TubULAR](https://github.com/npmitchell/tubular),
 developed as an independent Mitchell Lab repository. The numerical core is
 designed to work from scripts, notebooks, and eventually a desktop GUI.
 
-**Status: experimental foundation, not a replacement for the MATLAB pipeline.**
+**Status: experimental class API (0.2.0a1), not a replacement for the MATLAB pipeline.**
 The translated geometry routines have been checked against outputs generated
 by the original MATLAB functions. Full surface mapping, motion analysis, and
 biological-dataset equivalence remain future milestones. There is no GUI yet.
 
+`from tubular import TubULAR` now provides an experiment object with the original
+MATLAB method names. **46 of 200 methods have working, adapted implementations**;
+the remaining names raise `MethodNotPortedError`. Method names alone do not imply
+equivalent options, file formats, or complete scientific workflows.
+
 ## What works
 
+- A `TubULAR` object with time selection, stage-specific mesh caches, image
+  channels, APDV transforms, coordinate helpers, and raw area/volume series.
 - Validated triangular meshes with explicit coordinates, units, and indexing.
 - Manifold/orientation checks, area, signed closed-mesh volume, and face normals.
 - Face/vertex averaging, 2D–3D Jacobians, vector projection, induced metrics,
@@ -34,11 +41,35 @@ python -m pytest
 tubular demo /tmp/tube.npz
 tubular inspect /tmp/tube.npz
 python examples/synthetic_pullback.py /tmp/pytubular-demo
+python examples/class_workflow.py
 ```
 
 On Windows, activate with `.venv\Scripts\activate` and use a local output path.
 Outputs must not already exist. The demo writes a mesh, sampled pullback arrays,
 and a JSON geometry report; it does not launch a viewer.
+
+## Use the TubULAR object
+
+```python
+from tubular import TubULAR
+from tubular.grid import cylinder_mesh
+
+tubi = TubULAR(time_points=[0, 2], opts={"timeInterval": 3, "timeUnits": "min"})
+mesh = cylinder_mesh(17, 65, radius=6, length=24, length_unit="um")
+tubi.register_mesh(0, mesh, kind="spcutMeshSm")
+tubi.setTime(0)
+current = tubi.getCurrentSPCutMeshSm()
+metric, curvature = tubi.measure_current_geometry()
+print(tubi.trueTime(2))  # 6 minutes relative to the first timepoint
+print(TubULAR.method_status("measureStrainRate")["status"])  # not_ported
+```
+
+Existing MAT/NPZ meshes and NumPy volumes can be registered without copying the
+original experiment directory. Getters load supplied artifacts; they do not
+generate missing cuts or parameterizations. See the
+[class API and migration guide](docs/class_api.md),
+[complete method coverage](docs/method_coverage.md), and
+[runnable two-timepoint example](examples/class_workflow.py).
 
 ## Bring a MATLAB mesh across
 

@@ -35,12 +35,31 @@ flowchart TD
 | `imaging` | Trilinear sampling and supplied-chart pullbacks | No segmentation or temporal tracking |
 | `analysis` | JSON-compatible mesh inspection | Same callable for CLI and GUI |
 | `cli` | Input/output and user-facing failures | Delegates calculations to core |
+| `experiment` | `TubULAR` state, time selection, explicit sources, cache invalidation | Calls core operations; no viewer or implicit output writes |
+| `_coordinates` | MATLAB-named image/APDV support helpers | Explicit coordinate conventions and legacy arithmetic options |
+| `_method_catalog` | Original method inventory and actionable pending-method errors | Packaged metadata; no runtime MATLAB dependency |
 
 `Mesh` copies its arrays and marks them read-only to prevent ordinary accidental
 mutation. This is an API convention, not a security boundary. New geometry is
 represented by a new mesh. Computational functions return values and do not
 save files or change global state. Pullback sampling accepts progress and
 cancellation callbacks without importing a UI library.
+
+## Implemented experiment object
+
+`TubULAR` provides the familiar MATLAB-facing interface over these modules.
+It accepts Python metadata mappings, stores acquisition timepoints, loads
+explicit mesh/image sources, and owns caches for the selected timepoint.
+Changing time clears all current caches, including aligned and Ricci meshes.
+Each instance owns its state. `getCurrent…` reuses a loaded mesh;
+`loadCurrent…` reloads it. No constructor, getter, or measurement writes files.
+
+The object adapts 46 original method names and explicitly marks 154 as pending.
+This compatibility layer is separate from the future durable project manifest:
+the in-memory object is not a serialization format or a complete ImSAnE port.
+See [class API](class_api.md) for the supported scope and changed conventions.
+GUI controllers can use it for selection and loading; background workers should
+receive immutable mesh/data inputs rather than share a mutable selected time.
 
 ## Proposed project model (not implemented)
 
