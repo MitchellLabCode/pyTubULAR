@@ -123,7 +123,7 @@
       "source": "@TubULAR/alignMeshesAPDV.m",
       "lines": 860,
       "sha256": "f3db3c219a9f48efaefd4ac3197513aa5cdb279d7a04b1496fc685e4d5aa2d47",
-      "python_status": "not_ported",
+      "python_status": "partial_adapted",
       "signatures": [
         "function [rot, trans, xyzlim_raw, xyzlim, xyzlim_um, xyzlim_um_buff] = ..."
       ]
@@ -150,7 +150,7 @@
       "source": "@TubULAR/computeAPDVCoords.m",
       "lines": 891,
       "sha256": "6ecd6f08ff75ea288fe9483319cd23b1102a75a4d191a847f58a8bed8dae7fea",
-      "python_status": "not_ported",
+      "python_status": "partial_adapted",
       "signatures": [
         "function [acom,pcom,dcom, rot,trans] = computeAPDVCoords(tubi, opts)"
       ]

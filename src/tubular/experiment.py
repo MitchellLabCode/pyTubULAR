@@ -57,32 +57,18 @@ def _options(options, allowed, method):
 class TubULAR(CoordinateMethods):
     """A Python TubULAR object with MATLAB-style method names.
 
-    Accepts a metadata mapping xp with fileMeta.timePoints, plus an options
-    mapping; native callers may instead supply time_points. No filesystem
+    Accepts explicit acquisition time_points and an options mapping. No
+    ImSAnE experiment object or simulated xp metadata is used. No filesystem
     writes occur on construction. Register mesh/data sources explicitly.
     Use method_status() to distinguish implemented methods from pending ports.
     """
 
-    def __init__(self, xp=None, opts=None, *, time_points=None, mesh_sources=None, data_sources=None):
-        if xp is not None and not isinstance(xp, Mapping):
-            raise TypeError("xp must be a metadata mapping; ImSAnE objects are not supported")
-        metadata = deepcopy(dict(xp or {}))
-        file_meta = metadata.setdefault("fileMeta", {})
-        if not isinstance(file_meta, Mapping):
-            raise TypeError("xp.fileMeta must be a mapping")
-        file_meta = metadata["fileMeta"] = dict(file_meta)
-        if time_points is not None and "timePoints" in file_meta:
-            raise ValueError("specify time_points or xp.fileMeta.timePoints, not both")
-        times = time_points if time_points is not None else file_meta.get("timePoints", [0])
+    def __init__(self, *, time_points=None, opts=None, mesh_sources=None, data_sources=None):
+        times = [0] if time_points is None else time_points
         times = real_array(times, "timePoints", ndim=1)
         if len(times) == 0 or np.any(np.diff(times) <= 0):
             raise ValueError("timePoints must be nonempty, unique, and strictly increasing")
         times.setflags(write=False)
-        file_meta["timePoints"] = times
-        metadata.setdefault("expMeta", {})
-        self.xp = _namespace(metadata)
-        self.xp.fileMeta.timePoints = times
-        self.xp.tIdx = {float(tp): i for i, tp in enumerate(times)}
         self._time_points = times
         options = _options(opts, {"meshDir", "timeUnits", "spaceUnits", "nU", "nV", "flipy",
                                 "timeInterval", "timeinterval", "t0", "resolution", "rot", "trans",
@@ -105,8 +91,7 @@ class TubULAR(CoordinateMethods):
                                         xyzlim_um=None, xyzlim_um_buff=None)
         self.piv = SimpleNamespace(imCoords="sp_sme")
         self.uvexten = f"_nU{self.nU:04d}_nV{self.nV:04d}"
-        self.dir = SimpleNamespace(mesh=Path(options.get("meshDir", ".")),
-                                   data=Path(file_meta.get("dataDir", ".")))
+        self.dir = SimpleNamespace(mesh=Path(options.get("meshDir", ".")))
         for name in ("fileName", "fullFileBase"):
             if not isinstance(options.get(name, {}), Mapping):
                 raise TypeError(f"{name} must be a mapping")
@@ -114,15 +99,7 @@ class TubULAR(CoordinateMethods):
         self.fullFileBase = _namespace(options.get("fullFileBase", {}))
         if not hasattr(self.fileName, "t0"):
             self.fileName.t0 = self.dir.mesh / "t0_referenceTime.txt"
-        if "resolution" in options:
-            resolution = scalar(options["resolution"], "resolution", positive=True)
-        else:
-            spacing = real_array(file_meta.get("stackResolution", [1, 1, 1]), "stackResolution", ndim=1)
-            if (spacing.shape != (3,) or not np.isfinite(spacing).all() or np.any(spacing <= 0)
-                    or not np.allclose(spacing, spacing[0], rtol=1e-12, atol=0)):
-                raise ValueError("anisotropic stackResolution requires an explicit APDV resolution; "
-                                 "Python does not implicitly resample image data")
-            resolution = float(spacing[0])
+        resolution = scalar(options.get("resolution", 1), "resolution", positive=True)
         self.APDV = SimpleNamespace(resolution=resolution, rot=None, trans=None)
         if "rot" in options or "trans" in options:
             if "rot" not in options or "trans" not in options:
@@ -193,7 +170,7 @@ class TubULAR(CoordinateMethods):
     def _time(self, value):
         value = scalar(value, "timepoint")
         if value not in self._time_points:
-            raise ValueError(f"timepoint {value:g} is not in xp.fileMeta.timePoints")
+            raise ValueError(f"timepoint {value:g} is not in timePoints")
         return value
 
     def _require_time(self):
@@ -266,6 +243,55 @@ class TubULAR(CoordinateMethods):
             raise ValueError("APDV frame is unset; call set_apdv_frame(rot, trans, resolution=...)")
         self.set_apdv_frame(rot, trans)
         return self.APDV.rot.copy(), self.APDV.trans.copy()
+
+    def computeAPDVCoords(self, anterior, posterior, dorsal, *, origin=None,
+                          resolution=None, flipy=None):
+        """Set an APDV frame from supplied XYZ landmarks; no image processing.
+
+        All points use the raw mesh coordinates. Origin defaults to anterior;
+        supplying it corresponds to an explicitly selected start point. Returns
+        (anterior, posterior, dorsal, rotation, translation), all copied. Scale
+        and reflection keep their configured values unless explicitly supplied.
+        """
+        from .alignment import landmark_frame
+        rot, trans = landmark_frame(anterior, posterior, dorsal, origin=origin)
+        self.set_apdv_frame(rot, trans, resolution=resolution, flipy=flipy)
+        return (np.array(anterior, dtype=float, copy=True),
+                np.array(posterior, dtype=float, copy=True),
+                np.array(dorsal, dtype=float, copy=True), rot.copy(), trans.copy())
+
+    def alignMeshesAPDV(self, *, time_points=None, register=False, preserve_orientation=True):
+        """Align registered raw meshes using one explicitly configured APDV frame.
+
+        Returns meshes and transform metadata in a dictionary. By default this
+        is a preview: registration is explicit and happens only after the entire
+        series succeeds. register=True replaces alignedMesh sources for those
+        times and invalidates the selected aligned cache. No disk writes,
+        endpoint adjustment, smoothing, segmentation, or rendering occurs.
+        """
+        from .alignment import align_mesh
+        times = self._series_times(self.timePoints if time_points is None else time_points)
+        register = boolean(register, "register")
+        preserve = boolean(preserve_orientation, "preserve_orientation")
+        rot, trans = self.getRotTrans()
+        scale, flip = self.APDV.resolution, self.flipy
+        meshes, units = [], set()
+        for time in times:
+            mesh = self._read_mesh("rawMesh", time)
+            units.add(mesh.length_unit)
+            meshes.append(align_mesh(mesh, rot, trans, resolution=scale, flipy=flip,
+                                     preserve_orientation=preserve, length_unit=self.spaceUnits))
+        if len(units) != 1:
+            raise ValueError("raw mesh units differ across timepoints")
+        result = {"timepoints": times, "times": self.trueTime(times), "time_unit": self.timeUnits,
+                  "meshes": tuple(meshes), "rot": rot, "trans": trans, "resolution": scale,
+                  "flipy": flip, "preserve_orientation": preserve,
+                  "face_corner_order": np.array([0, 2, 1] if flip and preserve else [0, 1, 2]),
+                  "source_length_unit": next(iter(units)), "length_unit": self.spaceUnits}
+        if register:
+            for time, mesh in zip(times, meshes):
+                self.register_mesh(time, mesh, kind="alignedMesh")
+        return result
 
     def xyz2APDV(self, a):
         rot, trans = self.getRotTrans()

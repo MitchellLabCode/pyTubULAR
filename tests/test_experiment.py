@@ -11,18 +11,22 @@ from tubular.experiment import MESH_KINDS
 from tubular.io import save_mesh
 
 
-def test_constructor_legacy_metadata_and_no_writes(tmp_path):
+def test_constructor_native_timepoints_and_no_writes(tmp_path):
     output = tmp_path / "absent"
-    xp = {"fileMeta": {"timePoints": [2, 4, 9], "stackResolution": [0.5]*3}, "expMeta": {}}
-    tubi = TubULAR(xp, {"meshDir": output, "nU": 12, "nV": 25, "timeInterval": 3, "t0": 4})
+    times = [2, 4, 9]
+    opts = {"meshDir": output, "nU": 12, "nV": 25, "timeInterval": 3, "t0": 4, "resolution": 0.5}
+    tubi = TubULAR(time_points=times, opts=opts)
     assert tubi.currentTime is None and tubi.dynamic
-    assert_array_equal(tubi.xp.fileMeta.timePoints, [2, 4, 9])
-    assert tubi.xp.tIdx[9] == 2  # Python positions, not MATLAB one-based positions.
+    assert_array_equal(tubi.timePoints, [2, 4, 9])
+    assert not hasattr(tubi, "xp")
     assert tubi.uvexten == "_nU0012_nV0025"
     assert tubi.APDV.resolution == 0.5
     assert not output.exists()
-    xp["fileMeta"]["timePoints"][0] = 100
+    times[0] = 100
+    opts["resolution"] = 4
     assert tubi.timePoints[0] == 2
+    assert not tubi.timePoints.flags.writeable
+    assert tubi.APDV.resolution == 0.5
     assert_allclose(tubi.trueTime([2, 4, 9]), [-6, 0, 15])
     assert tubi.trueTime(9, True, return_label=True) == (0.25, "0.25 hr")
     assert tubi.t0set() == 4
@@ -109,10 +113,9 @@ def test_apdv_requires_explicit_valid_frame(tmp_path):
     np.savetxt(trans_path, [1, 2, 3])
     tubi.fileName.rot, tubi.fileName.trans = rot_path, trans_path
     assert_allclose(tubi.xyz2APDV([[0, 0, 0]]), [[1, 2, 3]])
-    xp = {"fileMeta": {"stackResolution": [1, 1, 2]}}
-    with pytest.raises(ValueError, match="anisotropic"):
-        TubULAR(xp)
-    assert TubULAR(xp, {"resolution": 1}).APDV.resolution == 1
+    with pytest.raises(ValueError, match="resolution"):
+        TubULAR(opts={"resolution": [1, 1, 2]})
+    assert TubULAR().APDV.resolution == 1
 
 
 def test_named_mat_mesh_and_legacy_path_cache(tmp_path, plane):
@@ -249,7 +252,7 @@ def test_complete_method_catalog_and_explicit_pending_behavior(tmp_path):
 def test_unsupported_options_are_not_silently_ignored():
     with pytest.raises(NotImplementedError, match="useBioformats"):
         TubULAR(opts={"useBioformats": True})
-    with pytest.raises(ValueError, match="both"):
-        TubULAR({"fileMeta": {"timePoints": [0]}}, time_points=[0])
+    with pytest.raises(TypeError):
+        TubULAR(xp={"fileMeta": {"timePoints": [0]}})
     with pytest.raises(ValueError):
         TubULAR(opts={"timeInterval": -1})

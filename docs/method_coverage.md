@@ -1,8 +1,8 @@
 # MATLAB method coverage
 
-Generated from the original MATLAB class metadata and the Python class in 0.4.0a1.
+Generated from the original MATLAB class metadata and the Python class in 0.5.0a1.
 
-53 adapted methods; 147 pending ports; 200 total.
+55 adapted methods; 145 pending ports; 200 total.
 
 **Adapted** means working within the [class API scope](class_api.md), not full
 MATLAB workflow equivalence. **Not ported** methods raise `MethodNotPortedError`.
@@ -16,12 +16,12 @@ hidden helpers are included. Native Python convenience methods are not counted.
 | `XY2uv` | adapted | `@TubULAR/TubULAR.m` |
 | `adjustIV` | not_ported | `@TubULAR/TubULAR.m` |
 | `alignMaskedDataAPDV` | not_ported | `@TubULAR/alignMaskedDataAPDV.m` |
-| `alignMeshesAPDV` | not_ported | `@TubULAR/alignMeshesAPDV.m` |
+| `alignMeshesAPDV` | adapted | `@TubULAR/alignMeshesAPDV.m` |
 | `cleanCylMeshes` | not_ported | `@TubULAR/cleanCylMeshes.m` |
 | `cleanFastMarchingCenterlines` | not_ported | `@TubULAR/cleanFastMarchingCenterlines.m` |
 | `clearTime` | adapted | `@TubULAR/TubULAR.m` |
 | `clipXY` | adapted | `@TubULAR/TubULAR.m` |
-| `computeAPDVCoords` | not_ported | `@TubULAR/computeAPDVCoords.m` |
+| `computeAPDVCoords` | adapted | `@TubULAR/computeAPDVCoords.m` |
 | `computeAPDpoints` | not_ported | `@TubULAR/computeAPDpoints.m` |
 | `computeLBSoverTime` | not_ported | `@TubULAR/computeLBSoverTime.m` |
 | `computeLocalSurfacePatch` | not_ported | `@TubULAR/computeLocalSurfacePatch.m` |

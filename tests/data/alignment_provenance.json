@@ -1,0 +1,15 @@
+{
+  "source_repository": "https://github.com/npmitchell/tubular",
+  "source_commit": "9bd49dbffd38b199c32552b8cc089f611f584679",
+  "matlab_version": "25.2.0.3055257 (R2025b) Update 2",
+  "fixture_sha256": "9bccb49aa77b97f9243a071cf16c6d94a2c0af68baa0820d8e20fad9f6745298",
+  "generator_sha256": "ad72fcf9a21869b75b4f6d51be4f77abe37983d064b2a8eeca260ca6ff8caa3d",
+  "source_sha256": {
+    "@TubULAR/TubULAR.m": "7b82c88865bc9250fa4b21a2a2be092ef60d45159c29c880235cb013ab1f755e",
+    "@TubULAR/initializeTubULAR.m": "bfd2140836fac1d6232f04896072a8f1fb16108f1fc3c81d429582bce1d513db",
+    "@TubULAR/computeAPDVCoords.m": "6ecd6f08ff75ea288fe9483319cd23b1102a75a4d191a847f58a8bed8dae7fea",
+    "@TubULAR/alignMeshesAPDV.m": "f3db3c219a9f48efaefd4ac3197513aa5cdb279d7a04b1496fc685e4d5aa2d47",
+    "utility/mesh_handling/read_ply_mod.m": "6bc1c613f68d612d4bc7f19cc3f06ebafb5a5006098d672a46fc7a704c0cbeb0"
+  },
+  "note": "Unchanged computeAPDVCoords with supplied temporary landmark files; no segmentation. The class declaration exposes three outputs, so rotation/translation references come from its five-significant-digit dlmwrite output. xyz2APDV separately validates vertex transformations with full-precision proper input rotations. This does not run the full alignMeshesAPDV workflow. All MATLAB analysis output is temporary; original sources unchanged."
+}

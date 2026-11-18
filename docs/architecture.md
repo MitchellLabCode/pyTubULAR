@@ -30,6 +30,7 @@ flowchart TD
 | --- | --- | --- |
 | `mesh` | Validated mesh snapshots and topology checks | NumPy; SciPy only for topology |
 | `geometry` | Pure per-mesh numerical operations | NumPy/SciPy, no files or viewer |
+| `alignment` | Landmark-defined frames and oriented mesh transforms | NumPy; explicit scale, reflection policy, and corner correspondence |
 | `curves` | Path length, polygonal writhe, Gauss quadrature, and segment-contact checks | NumPy; explicit normalization and open/closed conventions |
 | `grid` | Rectilinear connectivity and explicit seam mapping | No implicit parameterization |
 | `io` | MATLAB and NPZ adapters | Conversion happens at this boundary |
@@ -49,19 +50,23 @@ cancellation callbacks without importing a UI library.
 
 ## Implemented experiment object
 
-`TubULAR` provides the familiar MATLAB-facing interface over these modules.
-It accepts Python metadata mappings, stores acquisition timepoints, loads
+`TubULAR` retains useful MATLAB method names over a Python-native experiment.
+It accepts explicit acquisition timepoints and options, loads
 explicit mesh/image sources, and owns caches for the selected timepoint.
 Changing time clears all current caches, including aligned and Ricci meshes.
 Each instance owns its state. `getCurrent…` reuses a loaded mesh;
 `loadCurrent…` reloads it. No constructor, getter, or measurement writes files.
 
-The object adapts 53 original method names and explicitly marks 147 as pending.
-This compatibility layer is separate from the future durable project manifest:
-the in-memory object is not a serialization format or a complete ImSAnE port.
+The object adapts 55 original method names and explicitly marks 145 as pending.
+ImSAnE compatibility is not a design requirement: version 0.5 removes the
+simulated `xp.fileMeta`/`xp.expMeta` object and the `xp` constructor argument.
+The in-memory object is separate from the future durable project manifest.
 See [class API](class_api.md) for the supported scope and changed conventions.
 GUI controllers can use it for selection and loading; background workers should
 receive immutable mesh/data inputs rather than share a mutable selected time.
+Alignment supports previewing a full series before explicitly registering it;
+registration occurs only after all mesh transforms succeed. Landmark inputs
+can later come from a GUI without coupling the calculation to that viewer.
 
 ## Proposed project model (not implemented)
 

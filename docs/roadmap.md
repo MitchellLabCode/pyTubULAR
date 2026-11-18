@@ -22,7 +22,7 @@ outputs are available.
 
 The `TubULAR` object now supplies time selection, mesh and volume sources,
 APDV transforms, coordinate helpers, and an explicit method-coverage catalog.
-Its 53 adapted MATLAB methods are documented in [class_api.md](class_api.md).
+Its 55 adapted MATLAB methods are documented in [class_api.md](class_api.md).
 The next five after the initial class milestone add UV surface queries,
 rectilinear pullback-field interpolation, experiment bounds, and existing hoop
 centerline loading. Their outputs have been compared to an actual original
@@ -31,7 +31,11 @@ The 0.4 milestone adds centerline length and Levitt/Gauss writhe series, includi
 independent quadrature checks, original-MATLAB kernel comparisons, and explicit
 rejection of intersecting curves. Polar writhe and the original smoothing
 pipeline are still pending; see [centerline_writhe.md](centerline_writhe.md).
-The other 147 method names are explicit pending ports, including topology,
+The 0.5 milestone adds explicit landmark-frame estimation and batch mesh
+alignment. Its native constructor no longer simulates an ImSAnE experiment.
+Anatomical landmark detection and endpoint adjustment remain separate future
+work; see [landmark_alignment.md](landmark_alignment.md).
+The other 145 method names are explicit pending ports, including topology,
 parameterization, velocity, strain, and plotting workflows.
 
 Import one existing MATLAB `spcutMeshSm` and its matching raw image volume.

@@ -4,8 +4,8 @@
 from tubular import TubULAR, Mesh, MeshSource, MethodNotPortedError
 ```
 
-Version 0.4.0a1 extends the stateful experiment object using MATLAB method
-names. Of 200 original callable method names, 53 are **adapted** and 147 are
+Version 0.5.0a1 extends the stateful experiment object using MATLAB method
+names. Of 200 original callable method names, 55 are **adapted** and 145 are
 **not ported**. Adapted means working within the scope below, not every legacy
 argument, format, return value, or side effect. The constructor is additional
 to this count. The original MATLAB repository is only a reference source.
@@ -33,11 +33,13 @@ elapsed, label = tubi.trueTime(5, return_label=True)  # (9.0, "9 min")
 tubi.clearTime()
 ```
 
-Alternatively, `TubULAR(xp, opts)` accepts a Python mapping with
-`xp["fileMeta"]["timePoints"]`, optional `stackResolution`/`dataDir`, and optional
-`expMeta`. This is not an ImSAnE object or a reader for a saved MATLAB object.
-Metadata is copied. Access uses `tubi.xp.fileMeta.timePoints` after construction.
-Do not supply both `time_points` and metadata timepoints.
+Construction is keyword-only: `TubULAR(time_points=..., opts=...,
+mesh_sources=..., data_sources=...)`. Access acquired times through
+`tubi.timePoints`. Inputs are copied and timepoints are read-only.
+Version 0.5 removes the `xp` argument, simulated `xp.fileMeta`/`xp.expMeta`
+namespace, and metadata-derived `stackResolution` and `dataDir`. Supply the
+APDV scale explicitly with `opts={"resolution": ...}` and register image/mesh
+paths directly. ImSAnE backwards compatibility is not a project requirement.
 
 Timepoints are finite, strictly increasing acquisition coordinates. `setTime`
 only accepts an acquired timepoint. `trueTime(tp)` computes
@@ -68,7 +70,6 @@ reference time; `t0set(value)` changes it in memory without writing or reloading
 a file. Time selection starts unset. Changing time, including assigning
 `currentTime`, clears all current mesh/data/velocity/segmentation/strain/centerline
 caches. Selecting the same time retains them; `clearTime()` clears them explicitly.
-`xp.tIdx` positions are zero-based Python positions.
 
 ## Load existing meshes by stage
 
@@ -163,15 +164,33 @@ raw = tubi.APDV2xyz(aligned)
 
 Positions use `(xyz @ rot.T + trans) * resolution`, then optional Y reflection.
 Vectors use `dx2APDV` / `APDV2dxyz` without translation. Inputs are N-by-3, and
-rotation must be proper orthonormal. The frame must be supplied explicitly;
+rotation must be proper orthonormal. Supply a frame explicitly or define it
+from landmarks with `computeAPDVCoords`, described below;
 `getRotTrans()` can instead read explicit `fileName.rot` / `fileName.trans` text
-paths. No anatomical landmarks are inferred. With isotropic metadata,
-`stackResolution` supplies the scalar resolution; anisotropic metadata requires
-an explicit scalar because this class does not perform legacy image resampling.
+paths. No anatomical landmarks are inferred. `resolution` is an explicit scalar,
+defaulting to 1. Convert anisotropic voxel coordinates to physical XYZ before
+aligning a mesh and its landmarks; the class does not resample images.
 The image sampler separately accepts all three physical voxel spacings.
 
 `setAPDVOptions` and `setEndcapOptions` copy option dictionaries into memory;
 their downstream estimation, load, and save workflows remain pending.
+
+`computeAPDVCoords(anterior, posterior, dorsal, origin=None, resolution=None,
+flipy=None)` defines and stores a frame from supplied raw XYZ points. The last
+three arguments are keyword-only. It returns five copied arrays: the three
+input landmarks, rotation, and translation. Origin defaults to anterior;
+X points toward posterior and Z toward dorsal perpendicular to X.
+
+`alignMeshesAPDV(time_points=None, register=False, preserve_orientation=True)`
+takes keyword-only arguments and transforms registered raw meshes into new
+snapshots. It returns a dictionary of meshes, timepoints, transform parameters,
+units, and a per-face corner mapping. Registration as `alignedMesh` is explicit
+and happens only after the whole batch succeeds. Selection is preserved.
+Reflection swaps triangle corners by default to preserve outward/inward
+orientation; `preserve_orientation=False` retains MATLAB's original face order.
+Neither method performs landmark detection, endpoint displacement, smoothing,
+or plotting. See [alignment details](landmark_alignment.md) for correspondence,
+reference precision, and the intentional change from the MATLAB return schema.
 
 `measureSurfaceAreaVolume(options=None)` returns a dictionary of `timepoints`,
 physical `times`, `time_unit`, `area`, `volume`, `signed_volume`, `length_unit`,

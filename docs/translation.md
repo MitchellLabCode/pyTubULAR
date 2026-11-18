@@ -12,6 +12,13 @@ methods from pending ports; it is not a claim of complete MATLAB compatibility.
 
 ## Implemented source map
 
+The 0.5 alignment operations adapt `computeAPDVCoords` to supplied XYZ landmarks
+and `alignMeshesAPDV` to mesh snapshots. Direct orthonormal-frame construction
+avoids the original -X Rodrigues singularity. Reflection preserves mesh
+orientation by default, with an explicit option to retain original face order.
+The `xp` metadata adapter is removed; ImSAnE compatibility is not required.
+See [landmark_alignment.md](landmark_alignment.md) for numerical and API scope.
+
 The 0.4 curve operations port `utility/curve_functions/writheLevitt.m` and
 `writheGaussIntegral.m` and expose their supported numerical workflow through
 `measureWrithe` and `measureLength`. The Gauss helper's duplicated numerator

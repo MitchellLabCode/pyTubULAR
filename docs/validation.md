@@ -4,8 +4,9 @@ The initial implementation was checked on macOS arm64 with Python 3.9.6,
 NumPy 2.0.2, SciPy 1.13.1, and MATLAB R2025b Update 2. The repository contains
 62 passing tests at the numerical-foundation checkpoint. The class milestone
 extended this to 100 passing tests. The geometry-method milestone extends it to
-122 passing tests. The centerline/writhe milestone extends it to **157 passing
-tests** in the same local environment. The CI workflow additionally requests
+122 passing tests. The centerline/writhe milestone extends it to 157 passing
+tests. The native alignment milestone extends it to **190 passing tests** in
+the same local environment. The CI workflow additionally requests
 Linux, Windows, and macOS jobs on several Python versions; a configured job
 is not evidence of a successful run. Consult GitHub Actions for those results.
 
@@ -78,7 +79,7 @@ error in `generateCurrentCutMesh.m` in this source snapshot. No original source
 was edited to obtain the fixtures. This is not validation of that method.
 
 Additional Python tests check known APDV position/vector transforms, mirroring
-and inverses, explicit anisotropic-resolution handling, time labels and gaps,
+and inverses, explicit scalar-resolution handling, time labels and gaps,
 cache invalidation across every mesh stage, separate-instance state, named MAT
 structs, NPZ patterns, channel/MIP axes, file reloads, area/volume scaling, units,
 and class-driven geometry and pullback sampling. APDV expectations in those
@@ -136,6 +137,16 @@ supplied triangles. Neither is a substitute for local ARAP flattening, seam
 construction, or missing chart generation. Validation remains synthetic.
 
 ## Analytic and failure-case coverage
+
+The 0.5 milestone runs the original `computeAPDVCoords` on four supplied
+landmark triples. The reference uses its five-significant-digit saved frame,
+since the class declaration does not expose the external method's rotation
+and translation outputs. Full-precision proper rotations separately exercise
+the original `xyz2APDV` transform. Independent checks cover frame axes and
+handedness (including antiparallel AP), rigid-motion covariance, scaling,
+reflection/winding, normal and signed-volume conventions, UV correspondence,
+and atomic batch registration. See [alignment validation](landmark_alignment.md)
+for exact comparison scope and `tests/data/alignment_provenance.json` for hashes.
 
 The 0.4 centerline milestone adds independent Gauss-Legendre integration over
 polygon segment pairs, geometric invariance tests, physical-time derivatives

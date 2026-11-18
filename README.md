@@ -4,13 +4,13 @@ A Python implementation of [TubULAR](https://github.com/npmitchell/tubular),
 developed as an independent Mitchell Lab repository. The numerical core is
 designed to work from scripts, notebooks, and eventually a desktop GUI.
 
-**Status: experimental class API (0.4.0a1), not a replacement for the MATLAB pipeline.**
+**Status: experimental class API (0.5.0a1), not a replacement for the MATLAB pipeline.**
 The translated geometry routines have been checked against outputs generated
 by the original MATLAB functions. Full surface mapping, motion analysis, and
 biological-dataset equivalence remain future milestones. There is no GUI yet.
 
 `from tubular import TubULAR` now provides an experiment object with the original
-MATLAB method names. **53 of 200 methods have working, adapted implementations**;
+MATLAB method names. **55 of 200 methods have working, adapted implementations**;
 the remaining names raise `MethodNotPortedError`. Method names alone do not imply
 equivalent options, file formats, or complete scientific workflows.
 
@@ -18,6 +18,9 @@ equivalent options, file formats, or complete scientific workflows.
 
 - A `TubULAR` object with time selection, stage-specific mesh caches, image
   channels, APDV transforms, coordinate helpers, and raw area/volume series.
+- Landmark-defined APDV frames and mesh-series alignment, with explicit
+  reflection orientation and preview/registration behavior. Experiment setup
+  uses native Python inputs; ImSAnE compatibility is not a project requirement.
 - UV-to-3D surface queries on the supplied triangles, tiled pullback-field
   interpolation, experiment bounds, and existing hoop-centerline loading.
 - Centerline length, polygonal Levitt writhe, and Gauss writhe quadrature, with
@@ -48,6 +51,7 @@ python examples/synthetic_pullback.py /tmp/pytubular-demo
 python examples/class_workflow.py
 python examples/surface_queries.py
 python examples/centerline_writhe.py
+python examples/landmark_alignment.py
 ```
 
 On Windows, activate with `.venv\Scripts\activate` and use a local output path.
@@ -81,6 +85,9 @@ interpolates vertex fields, and measures bounds without creating output files.
 The [centerline example](examples/centerline_writhe.py) measures length and
 writhe over time. See [writhe conventions and limits](docs/centerline_writhe.md)
 before comparing results with an existing MATLAB analysis.
+The [alignment example](examples/landmark_alignment.py) defines an anatomical
+frame from landmarks and aligns registered meshes. See
+[alignment conventions](docs/landmark_alignment.md) for units and reflection.
 
 ## Bring a MATLAB mesh across
 
