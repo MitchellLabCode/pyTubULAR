@@ -4,7 +4,8 @@ The initial implementation was checked on macOS arm64 with Python 3.9.6,
 NumPy 2.0.2, SciPy 1.13.1, and MATLAB R2025b Update 2. The repository contains
 62 passing tests at the numerical-foundation checkpoint. The class milestone
 extended this to 100 passing tests. The geometry-method milestone extends it to
-**122 passing tests** in the same local environment. The CI workflow additionally requests
+122 passing tests. The centerline/writhe milestone extends it to **157 passing
+tests** in the same local environment. The CI workflow additionally requests
 Linux, Windows, and macOS jobs on several Python versions; a configured job
 is not evidence of a successful run. Consult GitHub Actions for those results.
 
@@ -135,6 +136,14 @@ supplied triangles. Neither is a substitute for local ARAP flattening, seam
 construction, or missing chart generation. Validation remains synthetic.
 
 ## Analytic and failure-case coverage
+
+The 0.4 centerline milestone adds independent Gauss-Legendre integration over
+polygon segment pairs, geometric invariance tests, physical-time derivatives
+with missing acquisition frames, and rejection of crossings including nearly
+parallel ones. `generate_writhe_reference.m` runs the unchanged original Levitt
+and Gauss kernels and the numerical `aux_compute_writhe` helper. See the
+[writhe validation details](centerline_writhe.md#validation) for fixture hashes,
+the required original `linesegments` dependency, and unsupported output fields.
 
 - An oblique affine plane supplies exact Jacobians, metric, surface area, and
   zero second fundamental form.

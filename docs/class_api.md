@@ -4,8 +4,8 @@
 from tubular import TubULAR, Mesh, MeshSource, MethodNotPortedError
 ```
 
-Version 0.3.0a1 extends the stateful experiment object using MATLAB method
-names. Of 200 original callable method names, 51 are **adapted** and 149 are
+Version 0.4.0a1 extends the stateful experiment object using MATLAB method
+names. Of 200 original callable method names, 53 are **adapted** and 147 are
 **not ported**. Adapted means working within the scope below, not every legacy
 argument, format, return value, or side effect. The constructor is additional
 to this count. The original MATLAB repository is only a reference source.
@@ -282,8 +282,9 @@ caches are preserved. `getXYZLims()` recomputes from current sources and frame,
 so changes do not leave stale bounds. Unlike MATLAB, these methods do not load
 or write bound text files; old `fileName.xyzlim_*` entries are not consulted.
 
-`getCurrentClineDVhoop()` loads top-level `mss`, `mcline`, and `avgpts` from the
-selected time's existing MAT file. Set `fullFileBase.clineDVhoop` to its filename
+`getCurrentClineDVhoop()` reads a registered centerline, or loads top-level `mss`,
+`mcline`, and `avgpts` from the selected time's existing MAT file. Set
+`fullFileBase.clineDVhoop` to its filename
 pattern. `mss` must be an increasing row/column vector matching the number of
 N-by-3 `mcline` points. `avgpts` is a separate M-by-3 array; M may differ from N.
 Both curves must have at least two points and finite coordinates. A preexisting
@@ -292,9 +293,35 @@ centerline is required: extraction, smoothing, and spline fitting remain pending
 Returns `(mss, mcline, avgpts)`, with `mss` flattened to a Python vector. The
 stored coordinates are assumed to be physical coordinates before optional Y
 reflection; no additional rotation or scale is applied. Each call reloads the
-file and reflects once if `flipy=True`, matching MATLAB. Independent read-only
+file (unless a registered source takes precedence) and reflects once if
+`flipy=True`, matching MATLAB. Independent read-only
 copies enter `currentCline`, and time changes clear that cache. Invalid files
 raise before updating any centerline cache entry.
+
+## Centerline length and writhe (0.4)
+
+`register_centerline(timepoint, mcline, mss=None, avgpts=None)` supplies an
+existing physical curve without a MAT file. This native helper copies inputs;
+`mss` defaults to cumulative polygonal length and `avgpts` to `mcline`. Coordinates
+are stored before optional Y reflection, as for the MAT reader.
+
+`measureLength(options=None)` returns a dictionary containing `lengths`,
+`polygonal_length`, `dl`, `timepoints`, `times`, `length_unit`, and `time_unit`.
+The only option is `timePoints`, defaulting to all acquired times. It measures
+the full stored path-length span, independently reports the geometric polyline
+length, and estimates the unsmoothed rate using physical acquisition times.
+
+`measureWrithe(options=None)` returns `(Wr, Wr_density, dWr, Length_t, curves)`.
+Supported entries in the first three dictionaries are `Levitt` and `Gauss`;
+polar writhe is not supplied. Supported options are `timePoints`, `omit_endpts`
+(default 4 from each end), `filter_curve` (only 0, the Python default),
+`flipy_centerline` (default false), and `gauss_legacy` (default false).
+
+Both methods preserve selection and current caches and write no files. Results
+are numerical series, without MATLAB's smoothing or plotting side effects.
+Some original arithmetic and indexing defects are corrected deliberately;
+see the [full conventions and comparison guide](centerline_writhe.md) before
+comparing datasets. A single timepoint has NaN time derivatives.
 
 ## Image-coordinate helpers and intentional differences
 

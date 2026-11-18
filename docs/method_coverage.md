@@ -1,8 +1,8 @@
 # MATLAB method coverage
 
-Generated from the original MATLAB class metadata and the Python class in 0.3.0a1.
+Generated from the original MATLAB class metadata and the Python class in 0.4.0a1.
 
-51 adapted methods; 149 pending ports; 200 total.
+53 adapted methods; 147 pending ports; 200 total.
 
 **Adapted** means working within the [class API scope](class_api.md), not full
 MATLAB workflow equivalence. **Not ported** methods raise `MethodNotPortedError`.
@@ -131,7 +131,7 @@ hidden helpers are included. Native Python convenience methods are not counted.
 | `measureDxDyStrainFiltered` | not_ported | `@TubULAR/measureDxDyStrainFiltered.m` |
 | `measureFoldCrossSectionDynamics` | not_ported | `@TubULAR/TubULAR.m` |
 | `measureFoldRadiiVariance` | not_ported | `@TubULAR/TubULAR.m` |
-| `measureLength` | not_ported | `@TubULAR/TubULAR.m` |
+| `measureLength` | adapted | `@TubULAR/TubULAR.m` |
 | `measureLobeDynamics` | not_ported | `@TubULAR/TubULAR.m` |
 | `measureMetricKinematics` | not_ported | `@TubULAR/measureMetricKinematics.m` |
 | `measureMetricStrainRate` | not_ported | `@TubULAR/measureMetricStrainRate.m` |
@@ -154,7 +154,7 @@ hidden helpers are included. Native Python convenience methods are not counted.
 | `measureTwist` | not_ported | `@TubULAR/measureTwist.m` |
 | `measureUVPrimePathlineFeatureIDs` | not_ported | `@TubULAR/measureUVPrimePathlineFeatureIDs.m` |
 | `measureUVPrimePathlines` | not_ported | `@TubULAR/measureUVPrimePathlines.m` |
-| `measureWrithe` | not_ported | `@TubULAR/measureWrithe.m` |
+| `measureWrithe` | adapted | `@TubULAR/measureWrithe.m` |
 | `measureXYZLims` | adapted | `@TubULAR/measureXYZLims.m` |
 | `mip` | adapted | `@TubULAR/TubULAR.m` |
 | `plotAlignedMeshesPretty` | not_ported | `@TubULAR/plotAlignedMeshesPretty.m` |

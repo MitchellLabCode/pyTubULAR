@@ -136,6 +136,7 @@ class TubULAR(CoordinateMethods):
             self.t0 = times[0]
         self._mesh_sources = {kind: {} for kind in MESH_KINDS}
         self._data_sources = {}
+        self._centerline_sources = {}
         self.data = SimpleNamespace(adjustlow=0, adjusthigh=100, axisOrder="zyx")
         self.apdvOptions = {}
         self.endcapOptions = {}
@@ -607,10 +608,51 @@ class TubULAR(CoordinateMethods):
         The stored curve is in physical coordinates before optional Y reflection.
         Reloads each call as MATLAB does; no additional rotation/scale or fitting.
         """
-        from scipy.io import loadmat
         time = self._require_time()
+        result = self._read_centerline(time, flipy=self.flipy)
+        for key, array in zip(("mss", "mcline", "avgpts"), result):
+            cached = array.copy()
+            cached.setflags(write=False)
+            setattr(self.currentCline, key, cached)
+        return result
+
+    @staticmethod
+    def _validate_centerline(mss, cline, average):
+        mss = real_array(mss, "mss", ndim=1)
+        cline, average = points(cline, "mcline", 3), points(average, "avgpts", 3)
+        if len(mss) < 2 or len(cline) != len(mss) or len(average) < 2 or np.any(np.diff(mss) <= 0):
+            raise ValueError("centerline needs matching mss/mcline lengths, increasing mss, and at least two points")
+        return mss, cline, average
+
+    def register_centerline(self, timepoint, mcline, *, mss=None, avgpts=None):
+        """Register physical centerline coordinates before optional Y reflection.
+
+        Omitted mss is computed as polygonal arc length; avgpts defaults to
+        mcline. Copies inputs; registered data take precedence over MAT files.
+        """
+        from .curves import curve_arclength
+        timepoint = self._time(timepoint)
+        if mss is None:
+            mss = curve_arclength(mcline)
+        if avgpts is None:
+            avgpts = mcline
+        result = self._validate_centerline(mss, mcline, avgpts)
+        for array in result:
+            array.setflags(write=False)
+        self._centerline_sources[timepoint] = result
+        if timepoint == self.currentTime:
+            self.currentCline = SimpleNamespace(mss=None, mcline=None, avgpts=None)
+
+    def _read_centerline(self, time, *, flipy=False):
+        from scipy.io import loadmat
+        if time in self._centerline_sources:
+            result = tuple(a.copy() for a in self._centerline_sources[time])
+            if flipy:
+                result[1][:, 1] *= -1
+                result[2][:, 1] *= -1
+            return result
         if not hasattr(self.fullFileBase, "clineDVhoop"):
-            raise FileNotFoundError("supply fullFileBase.clineDVhoop for the existing centerline MAT files")
+            raise FileNotFoundError("register a centerline or supply fullFileBase.clineDVhoop for existing MAT files")
         path = self._format_path(self.fullFileBase.clineDVhoop, time)
         data = loadmat(path, variable_names=["mss", "mcline", "avgpts"])
         if not {"mss", "mcline", "avgpts"}.issubset(data):
@@ -618,19 +660,91 @@ class TubULAR(CoordinateMethods):
         mss = np.asarray(data["mss"])
         if mss.ndim != 2 or 1 not in mss.shape:
             raise ValueError("mss must be a MATLAB row or column vector")
-        mss = real_array(mss.ravel(), "mss", ndim=1)
-        cline, average = points(data["mcline"], "mcline", 3), points(data["avgpts"], "avgpts", 3)
-        if len(mss) < 2 or len(cline) != len(mss) or len(average) < 2 or np.any(np.diff(mss) <= 0):
-            raise ValueError("centerline needs matching mss/mcline lengths, increasing mss, and at least two points")
-        if self.flipy:
+        mss, cline, average = self._validate_centerline(mss.ravel(), data["mcline"], data["avgpts"])
+        if flipy:
             cline[:, 1] *= -1
             average[:, 1] *= -1
-        result = mss, cline, average
-        for key, array in zip(("mss", "mcline", "avgpts"), result):
-            cached = array.copy()
-            cached.setflags(write=False)
-            setattr(self.currentCline, key, cached)
-        return result
+        return mss, cline, average
+
+    def _series_times(self, values):
+        times = real_array(values, "timePoints", ndim=1)
+        if len(times) == 0 or np.any(np.diff(times) <= 0):
+            raise ValueError("timePoints must be nonempty and strictly increasing")
+        return np.array([self._time(t) for t in times])
+
+    @staticmethod
+    def _time_derivative(values, times):
+        return np.gradient(values, times) if len(times) > 1 else np.full_like(values, np.nan)
+
+    def _length_result(self, times, lengths, geometric):
+        lengths, physical = np.asarray(lengths), self.trueTime(times)
+        return {"lengths": lengths, "polygonal_length": np.asarray(geometric),
+                "dl": self._time_derivative(lengths, physical), "timepoints": times,
+                "times": physical, "length_unit": self.spaceUnits, "time_unit": self.timeUnits}
+
+    def measureLength(self, options=None):
+        """Return stored centerline span, polygonal length, and physical-time rate.
+
+        No writhe, filtering, trimming, plots, or output writes. length uses
+        mss[-1]-mss[0]; polygonal_length independently sums geometric segments.
+        Supported option: timePoints. The selected time and caches are preserved.
+        """
+        from .curves import curve_arclength
+        opts = _options(options, {"timePoints"}, "measureLength")
+        times = self._series_times(opts.get("timePoints", self.timePoints))
+        lengths, geometric = [], []
+        for time in times:
+            mss, curve, _ = self._read_centerline(time)
+            lengths.append(mss[-1]-mss[0])
+            geometric.append(curve_arclength(curve)[-1])
+        return self._length_result(times, lengths, geometric)
+
+    def measureWrithe(self, options=None):
+        """Return (Wr, Wr_density, dWr, Length_t, curves) for existing open curves.
+
+        Levitt polygonal writhe and Gauss quadrature are supported. Polar writhe,
+        curve/temporal smoothing, plots, and output writes remain unsupported.
+        Options: timePoints, omit_endpts (default 4 at EACH end), filter_curve
+        (only 0, the Python default), flipy_centerline (default False), and
+        gauss_legacy (default False: correct the original normalization defect).
+        dWr/dl are unsmoothed physical-time derivatives; a single time gives NaN.
+        """
+        from .curves import curve_arclength, writhe_levitt, writhe_gauss
+        opts = _options(options, {"timePoints", "omit_endpts", "filter_curve", "flipy_centerline",
+                                 "gauss_legacy"}, "measureWrithe")
+        if scalar(opts.get("filter_curve", 0), "filter_curve") != 0:
+            raise NotImplementedError("curve smoothing is not yet validated; use filter_curve=0")
+        omit = np.asarray(opts.get("omit_endpts", 4))
+        if omit.dtype.kind not in "iu" or omit.ndim > 1 or omit.size not in (1, 2) or np.any(omit < 0):
+            raise ValueError("omit_endpts must be one or two nonnegative integers")
+        omit = np.repeat(omit, 2) if omit.size == 1 else omit
+        front, back = int(omit[0]), int(omit[1])
+        flip = boolean(opts.get("flipy_centerline", False), "flipy_centerline")
+        legacy = boolean(opts.get("gauss_legacy", False), "gauss_legacy")
+        times = self._series_times(opts.get("timePoints", self.timePoints))
+        wr, density = {"Levitt": [], "Gauss": []}, {"Levitt": [], "Gauss": []}
+        curves = []
+        lengths, geometric = [], []
+        for time in times:
+            mss, curve, _ = self._read_centerline(time, flipy=flip)
+            lengths.append(mss[-1]-mss[0])
+            geometric.append(curve_arclength(curve)[-1])
+            if len(curve)-front-back < 3:
+                raise ValueError("endpoint omission must leave at least three curve points")
+            kept = np.arange(front, len(curve)-back)
+            for name, calculation in (("Levitt", lambda: writhe_levitt(curve[kept])),
+                                      ("Gauss", lambda: writhe_gauss(curve[kept], mss[kept], legacy=legacy))):
+                total, local = calculation()
+                wr[name].append(total)
+                density[name].append(local)
+            curves.append({"ssx": mss, "xyzp": curve, "kept_indices": kept})
+        wr = {name: np.asarray(values) for name, values in wr.items()}
+        density = {name: tuple(values) for name, values in density.items()}
+        physical = self.trueTime(times)
+        derivative = {name: self._time_derivative(values, physical) for name, values in wr.items()}
+        length = self._length_result(times, lengths, geometric)
+        length["gauss_convention"] = "matlab_legacy" if legacy else "standard_1_over_4pi"
+        return wr, density, derivative, length, tuple(curves)
 
     def sample_current_pullback(self, u, v, *, mesh_kind="spcutMeshSm", channel=0,
                                 spacing_xyz=(1, 1, 1), origin_xyz=(0, 0, 0),

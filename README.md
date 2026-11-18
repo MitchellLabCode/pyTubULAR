@@ -4,13 +4,13 @@ A Python implementation of [TubULAR](https://github.com/npmitchell/tubular),
 developed as an independent Mitchell Lab repository. The numerical core is
 designed to work from scripts, notebooks, and eventually a desktop GUI.
 
-**Status: experimental class API (0.3.0a1), not a replacement for the MATLAB pipeline.**
+**Status: experimental class API (0.4.0a1), not a replacement for the MATLAB pipeline.**
 The translated geometry routines have been checked against outputs generated
 by the original MATLAB functions. Full surface mapping, motion analysis, and
 biological-dataset equivalence remain future milestones. There is no GUI yet.
 
 `from tubular import TubULAR` now provides an experiment object with the original
-MATLAB method names. **51 of 200 methods have working, adapted implementations**;
+MATLAB method names. **53 of 200 methods have working, adapted implementations**;
 the remaining names raise `MethodNotPortedError`. Method names alone do not imply
 equivalent options, file formats, or complete scientific workflows.
 
@@ -20,6 +20,8 @@ equivalent options, file formats, or complete scientific workflows.
   channels, APDV transforms, coordinate helpers, and raw area/volume series.
 - UV-to-3D surface queries on the supplied triangles, tiled pullback-field
   interpolation, experiment bounds, and existing hoop-centerline loading.
+- Centerline length, polygonal Levitt writhe, and Gauss writhe quadrature, with
+  intersection checks and explicit MATLAB normalization compatibility.
 - Validated triangular meshes with explicit coordinates, units, and indexing.
 - Manifold/orientation checks, area, signed closed-mesh volume, and face normals.
 - Face/vertex averaging, 2D–3D Jacobians, vector projection, induced metrics,
@@ -45,6 +47,7 @@ tubular inspect /tmp/tube.npz
 python examples/synthetic_pullback.py /tmp/pytubular-demo
 python examples/class_workflow.py
 python examples/surface_queries.py
+python examples/centerline_writhe.py
 ```
 
 On Windows, activate with `.venv\Scripts\activate` and use a local output path.
@@ -75,6 +78,9 @@ generate missing cuts or parameterizations. See the
 [runnable two-timepoint example](examples/class_workflow.py).
 The [surface query example](examples/surface_queries.py) maps UV points to 3D,
 interpolates vertex fields, and measures bounds without creating output files.
+The [centerline example](examples/centerline_writhe.py) measures length and
+writhe over time. See [writhe conventions and limits](docs/centerline_writhe.md)
+before comparing results with an existing MATLAB analysis.
 
 ## Bring a MATLAB mesh across
 

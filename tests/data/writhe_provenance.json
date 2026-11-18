@@ -1,0 +1,25 @@
+{
+  "source_repository": "https://github.com/npmitchell/tubular",
+  "source_commit": "9bd49dbffd38b199c32552b8cc089f611f584679",
+  "fixture_sha256": "6ff7fcadb6d7fc57be4dff7d570d1310d766373c7da62be112b75aa95f2b3520",
+  "generator_sha256": "c154508dcef63be4737a08ee8802550761fc13497f648f84cc5cf14026f38155",
+  "matlab_version": "25.2.0.3055257 (R2025b) Update 2",
+  "source_sha256": {
+    "@TubULAR/measureWrithe.m": "ac53c760d7fd55145fbf2cbc06cbcd9daa32009b1e670c45347c77659b28c2e9",
+    "@TubULAR/TubULAR.m": "7b82c88865bc9250fa4b21a2a2be092ef60d45159c29c880235cb013ab1f755e",
+    "utility/axisymmetric_pullbacks/aux_compute_writhe.m": "0c417213ff741b8dfd0a2e63b78da0b1f8cbdf3e40e18d02a2d8ddbbf30eb410",
+    "utility/curve_functions/writheLevitt.m": "2f2781ceb44e37381bce763fcaab987f158e8dff14e65c44f473d13068fd8497",
+    "utility/curve_functions/writheGaussIntegral.m": "72b2450c6538e6183d4894b6d90f062b65a981473452c82973e8dcb2313033c4",
+    "utility/curve_functions/tangent_from_curve.m": "e72bc40ef18a06ceed64dc69404c4fa1b3845e484a1a41c7fbd1ee664811e96b",
+    "utility/curve_functions/ss_from_xyz.m": "f249f3617b39b37fccd80ee46baa8d1e5d044f00d4947f42df5391935c56b502",
+    "utility/curve_functions/polarWrithe.m": "a711b35bd64fd57bc7af7d5bf0ee139d27d79bbc3e5b151674189ecb71de1594",
+    "utility/curve_functions/local_writhe.m": "9ef2b025e75531d62424dacec8b5d8f07f1d5632ab74d929ace3ab8caf0e69df"
+  },
+  "linesegments_dependency": {
+    "repository": "https://github.com/MitchellLabCode/matlab",
+    "commit": "1877f4bf1c3fcedc34839c1c20f311ee7a826820",
+    "path": "curve_functions/linesegments.m",
+    "sha256": "6d9dcfe36b14aec0f168764e14b96252c423ce3ceb839608fe3b8c7fb0fa19ef"
+  },
+  "note": "Original writhe kernels and aux_compute_writhe called without edits; temporary centerlines, filter_curve=0, original omit_endpts=1 (retains 1:N-1). Python Gauss legacy mode preserves original factor 3/(2*pi); standard mode corrects it. Polar outputs and filtered time derivatives are references only and are not ported."
+}

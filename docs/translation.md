@@ -12,6 +12,14 @@ methods from pending ports; it is not a claim of complete MATLAB compatibility.
 
 ## Implemented source map
 
+The 0.4 curve operations port `utility/curve_functions/writheLevitt.m` and
+`writheGaussIntegral.m` and expose their supported numerical workflow through
+`measureWrithe` and `measureLength`. The Gauss helper's duplicated numerator
+and extra normalization are available through an explicit legacy flag;
+the default uses the standard Gauss factor. Curve trimming, time derivatives,
+and stored length origins have documented corrections. See
+[centerline_writhe.md](centerline_writhe.md) for exact conventions and limits.
+
 The 0.3 class additions map `uv2APDV` to the original
 `utility/axisymmetric_pullbacks/interpolate2Dpts_3Dmesh.m` barycentric operation;
 `surface.locate_chart` also exposes this operation for arbitrary vertex/face

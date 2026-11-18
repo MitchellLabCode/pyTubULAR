@@ -597,7 +597,7 @@
       "source": "@TubULAR/measureWrithe.m",
       "lines": 135,
       "sha256": "ac53c760d7fd55145fbf2cbc06cbcd9daa32009b1e670c45347c77659b28c2e9",
-      "python_status": "not_ported",
+      "python_status": "partial_adapted",
       "signatures": [
         "function [Wr, Wr_density, dWr, Length_t, clines_resampled] = measureWrithe(tubi, options)"
       ]

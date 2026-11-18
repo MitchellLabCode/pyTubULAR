@@ -30,6 +30,7 @@ flowchart TD
 | --- | --- | --- |
 | `mesh` | Validated mesh snapshots and topology checks | NumPy; SciPy only for topology |
 | `geometry` | Pure per-mesh numerical operations | NumPy/SciPy, no files or viewer |
+| `curves` | Path length, polygonal writhe, Gauss quadrature, and segment-contact checks | NumPy; explicit normalization and open/closed conventions |
 | `grid` | Rectilinear connectivity and explicit seam mapping | No implicit parameterization |
 | `io` | MATLAB and NPZ adapters | Conversion happens at this boundary |
 | `imaging` | Trilinear sampling and supplied-chart pullbacks | No segmentation or temporal tracking |
@@ -55,7 +56,7 @@ Changing time clears all current caches, including aligned and Ricci meshes.
 Each instance owns its state. `getCurrent…` reuses a loaded mesh;
 `loadCurrent…` reloads it. No constructor, getter, or measurement writes files.
 
-The object adapts 51 original method names and explicitly marks 149 as pending.
+The object adapts 53 original method names and explicitly marks 147 as pending.
 This compatibility layer is separate from the future durable project manifest:
 the in-memory object is not a serialization format or a complete ImSAnE port.
 See [class API](class_api.md) for the supported scope and changed conventions.
