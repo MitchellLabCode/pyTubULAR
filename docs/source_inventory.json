@@ -417,7 +417,7 @@
       "source": "@TubULAR/measureBeltramiCoefficient.m",
       "lines": 396,
       "sha256": "801e55b3ccf971abccf4b4b92a3a94f8f5fbe27f45d5d7e6e0b1560c0fdcc43d",
-      "python_status": "not_ported",
+      "python_status": "partial_adapted",
       "signatures": [
         "function measureBeltramiCoefficient(tubi, options)"
       ]
@@ -426,7 +426,7 @@
       "source": "@TubULAR/measureBeltramiCoefficientPullbackToPullback.m",
       "lines": 395,
       "sha256": "78eca8d0bc899ba37f4f3cbc23b342403d80d5198202464e0bacdb00ecba31ae",
-      "python_status": "not_ported",
+      "python_status": "partial_adapted",
       "signatures": [
         "function measureBeltramiCoefficientPullbackToPullback(QS, options)"
       ]
@@ -435,7 +435,7 @@
       "source": "@TubULAR/measureCurvatures.m",
       "lines": 90,
       "sha256": "27fca67ffd5cb9ebe1e2c391bf5288eac71d3df7ace9effae3e9c828cc9b4f21",
-      "python_status": "not_ported",
+      "python_status": "partial_adapted",
       "signatures": [
         "function measureCurvatures(QS, options)"
       ]

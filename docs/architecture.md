@@ -31,6 +31,8 @@ flowchart TD
 | `mesh` | Validated mesh snapshots and topology checks | NumPy; SciPy only for topology |
 | `geometry` | Pure per-mesh numerical operations | NumPy/SciPy, no files or viewer |
 | `alignment` | Landmark-defined frames and oriented mesh transforms | NumPy; explicit scale, reflection policy, and corner correspondence |
+| `curvature` | Normal estimation, mixed areas, transported curvature tensors, and principal values | NumPy/SciPy topology; BSD-derived numerical estimator, no chart required |
+| `quasiconformal` | Per-face Beltrami coefficients and dilatation of supplied maps | NumPy; explicit vertex correspondence and planar orientation checks |
 | `curves` | Path length, polygonal writhe, Gauss quadrature, and segment-contact checks | NumPy; explicit normalization and open/closed conventions |
 | `grid` | Rectilinear connectivity and explicit seam mapping | No implicit parameterization |
 | `io` | MATLAB and NPZ adapters | Conversion happens at this boundary |
@@ -57,7 +59,7 @@ Changing time clears all current caches, including aligned and Ricci meshes.
 Each instance owns its state. `getCurrent…` reuses a loaded mesh;
 `loadCurrent…` reloads it. No constructor, getter, or measurement writes files.
 
-The object adapts 55 original method names and explicitly marks 145 as pending.
+The object adapts 58 original method names and explicitly marks 142 as pending.
 ImSAnE compatibility is not a design requirement: version 0.5 removes the
 simulated `xp.fileMeta`/`xp.expMeta` object and the `xp` constructor argument.
 The in-memory object is separate from the future durable project manifest.

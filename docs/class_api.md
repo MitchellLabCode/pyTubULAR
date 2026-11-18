@@ -4,8 +4,8 @@
 from tubular import TubULAR, Mesh, MeshSource, MethodNotPortedError
 ```
 
-Version 0.5.0a1 extends the stateful experiment object using MATLAB method
-names. Of 200 original callable method names, 55 are **adapted** and 145 are
+Version 0.6.0a1 extends the stateful experiment object using MATLAB method
+names. Of 200 original callable method names, 58 are **adapted** and 142 are
 **not ported**. Adapted means working within the scope below, not every legacy
 argument, format, return value, or side effect. The constructor is additional
 to this count. The original MATLAB repository is only a reference source.
@@ -203,7 +203,33 @@ saved analysis files are not replicated. Selection and current caches are preser
 
 `measure_current_geometry(mesh_kind="spcutMeshSm")` returns the first and second
 fundamental forms of a supplied chart. This native helper is separate from the
-unported full `measureCurvatures` workflow.
+vertex estimator in `measureCurvatures`.
+
+## Surface curvature and Beltrami measurements (0.6)
+
+`measureCurvatures(mesh_kind="spcutMeshSmRSC", time_points=None)` takes
+keyword-only arguments and returns a time-series dictionary with a tuple of
+`CurvatureResult` objects. Each contains vertex principal values/directions,
+mean and Gaussian curvature, normals, an ambient shape operator, corner/vertex
+areas, and a boundary mask. Meshes need no UV chart and can have different
+vertex counts across time. The estimator retains MATLAB's negative mean
+curvature for outward convex spheres. Open neighborhoods are flagged, never
+implicitly glued or capped. See [curvature details](surface_curvature.md).
+
+`measureBeltramiCoefficient(reference, vertex_positions, time_points=None)`
+uses a fixed reference `Mesh` with UV and an explicit mapping from timepoints
+to N-by-3 coordinates in reference vertex order. The chart counterpart,
+`measureBeltramiCoefficientPullbackToPullback(reference, target_charts,
+time_points=None)`, requires N-by-2 chart coordinates in that same order.
+For both, `time_points` is keyword-only. Results include T-by-F raw complex
+`mu`, `dilatation`, and a separate `reference_mu`, plus time metadata.
+No tracking or correspondence is inferred from registered mesh stages.
+Planar folds/reflections are rejected; a 3D metric cannot detect reflection
+or global self-intersection. See [Beltrami details](beltrami.md).
+
+These methods preserve selection/caches and write no files. Smoothing,
+pathline construction, Ricci flow, automatic reference-offset subtraction,
+and plotting are outside this numerical scope.
 
 ## Surface queries and field interpolation (0.3)
 

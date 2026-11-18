@@ -4,13 +4,13 @@ A Python implementation of [TubULAR](https://github.com/npmitchell/tubular),
 developed as an independent Mitchell Lab repository. The numerical core is
 designed to work from scripts, notebooks, and eventually a desktop GUI.
 
-**Status: experimental class API (0.5.0a1), not a replacement for the MATLAB pipeline.**
+**Status: experimental class API (0.6.0a1), not a replacement for the MATLAB pipeline.**
 The translated geometry routines have been checked against outputs generated
 by the original MATLAB functions. Full surface mapping, motion analysis, and
 biological-dataset equivalence remain future milestones. There is no GUI yet.
 
 `from tubular import TubULAR` now provides an experiment object with the original
-MATLAB method names. **55 of 200 methods have working, adapted implementations**;
+MATLAB method names. **58 of 200 methods have working, adapted implementations**;
 the remaining names raise `MethodNotPortedError`. Method names alone do not imply
 equivalent options, file formats, or complete scientific workflows.
 
@@ -25,6 +25,9 @@ equivalent options, file formats, or complete scientific workflows.
   interpolation, experiment bounds, and existing hoop-centerline loading.
 - Centerline length, polygonal Levitt writhe, and Gauss writhe quadrature, with
   intersection checks and explicit MATLAB normalization compatibility.
+- Vertex principal/mean/Gaussian curvature, with boundary and winding conventions.
+- Beltrami distortion of supplied 3D trajectories and chart-to-chart maps,
+  using explicit reference vertex correspondence.
 - Validated triangular meshes with explicit coordinates, units, and indexing.
 - Manifold/orientation checks, area, signed closed-mesh volume, and face normals.
 - Face/vertex averaging, 2D–3D Jacobians, vector projection, induced metrics,
@@ -52,6 +55,7 @@ python examples/class_workflow.py
 python examples/surface_queries.py
 python examples/centerline_writhe.py
 python examples/landmark_alignment.py
+python examples/surface_measurements.py
 ```
 
 On Windows, activate with `.venv\Scripts\activate` and use a local output path.
@@ -88,6 +92,9 @@ before comparing results with an existing MATLAB analysis.
 The [alignment example](examples/landmark_alignment.py) defines an anatomical
 frame from landmarks and aligns registered meshes. See
 [alignment conventions](docs/landmark_alignment.md) for units and reflection.
+The [surface measurement example](examples/surface_measurements.py) computes
+cylinder curvature and distortion from a known stretch. See
+[curvature conventions](docs/surface_curvature.md) and [Beltrami scope](docs/beltrami.md).
 
 ## Bring a MATLAB mesh across
 
@@ -123,11 +130,13 @@ checkout and MATLAB; see the validation document.
 ## Attribution
 
 Original TubULAR: Noah P. Mitchell and Dillon J. Cislo. The source snapshot used
-for this translation is `9bd49dbffd38b199c32552b8cc089f611f584679`.
+for this translation is `9bd49dbffd38b199c32582b8cc089f611f584679`.
 The original MIT notice is retained alongside this project's notice.
 Individual mathematical routines retain their source attribution in
 [the translation map](docs/translation.md). Bundled MATLAB dependencies have
-not been copied into this repository.
+not been copied wholesale into this repository. The curvature estimator adapts
+Itzik Ben Shabat's BSD-licensed MATLAB code; its notice is preserved in
+[`licenses/curvature-BSD.txt`](licenses/curvature-BSD.txt) and packaged with releases.
 
 For the original method, see the citation supplied by TubULAR:
 Mitchell, N.P. & Cislo, D.J., *TubULAR: Tracking in toto deformations of dynamic

@@ -1,0 +1,13 @@
+{
+  "source_repository": "https://github.com/npmitchell/tubular",
+  "source_commit": "9bd49dbffd38b199c32552b8cc089f611f584679",
+  "source_sha256": {
+    "utility/geometry/metric/bc_metric.m": "19922c3191576f7079f20b580d866dbd0a107f70c6ae79b4239df91b18953948",
+    "@TubULAR/measureBeltramiCoefficient.m": "801e55b3ccf971abccf4b4b92a3a94f8f5fbe27f45d5d7e6e0b1560c0fdcc43d",
+    "@TubULAR/measureBeltramiCoefficientPullbackToPullback.m": "78eca8d0bc899ba37f4f3cbc23b342403d80d5198202464e0bacdb00ecba31ae"
+  },
+  "matlab_version": "25.2.0.3055257 (R2025b) Update 2",
+  "fixture_sha256": "b6bc8572f7cab042f8d17019583610d1d0030d1a6de3bf001332218f2a6a559a",
+  "generator_sha256": "ec7424dd601577631a0f9fd515a18074b0682939dc479fc6cf516ed1f0bd5e25",
+  "scope": "Unchanged bc_metric with nonuniform planar and spatial maps. The original class workflows are not executed. Python requires explicit correspondence, returns raw coefficients and the reference coefficient separately, and rejects reversed planar faces rather than losing their orientation through a 3D metric."
+}

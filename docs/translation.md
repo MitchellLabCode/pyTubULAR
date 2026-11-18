@@ -12,6 +12,15 @@ methods from pending ports; it is not a claim of complete MATLAB compatibility.
 
 ## Implemented source map
 
+The 0.6 surface operations adapt `measureCurvatures` through the BSD-licensed
+`GetCurvatures` dependency and its normal/area/tensor helpers. See
+[surface_curvature.md](surface_curvature.md) for the mean-curvature sign and the
+one-line temporary reference-harness correction required by current MATLAB.
+`measureBeltramiCoefficient` and `measureBeltramiCoefficientPullbackToPullback`
+adapt the `bc_metric.m` measurement stage on explicitly corresponding vertices.
+Python returns raw coefficients and the reference coefficient separately and
+rejects reversed planar maps. See [beltrami.md](beltrami.md).
+
 The 0.5 alignment operations adapt `computeAPDVCoords` to supplied XYZ landmarks
 and `alignMeshesAPDV` to mesh snapshots. Direct orthonormal-frame construction
 avoids the original -X Rodrigues singularity. Reflection preserves mesh

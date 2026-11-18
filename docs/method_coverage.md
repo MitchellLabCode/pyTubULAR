@@ -1,8 +1,8 @@
 # MATLAB method coverage
 
-Generated from the original MATLAB class metadata and the Python class in 0.5.0a1.
+Generated from the original MATLAB class metadata and the Python class in 0.6.0a1.
 
-55 adapted methods; 145 pending ports; 200 total.
+58 adapted methods; 142 pending ports; 200 total.
 
 **Adapted** means working within the [class API scope](class_api.md), not full
 MATLAB workflow equivalence. **Not ported** methods raise `MethodNotPortedError`.
@@ -124,10 +124,10 @@ hidden helpers are included. Native Python convenience methods are not counted.
 | `manualTrackingAdd` | not_ported | `@TubULAR/TubULAR.m` |
 | `manualTrackingCorrect` | not_ported | `@TubULAR/TubULAR.m` |
 | `maskCurrentDataWithMesh` | not_ported | `@TubULAR/TubULAR.m` |
-| `measureBeltramiCoefficient` | not_ported | `@TubULAR/measureBeltramiCoefficient.m` |
-| `measureBeltramiCoefficientPullbackToPullback` | not_ported | `@TubULAR/measureBeltramiCoefficientPullbackToPullback.m` |
+| `measureBeltramiCoefficient` | adapted | `@TubULAR/measureBeltramiCoefficient.m` |
+| `measureBeltramiCoefficientPullbackToPullback` | adapted | `@TubULAR/measureBeltramiCoefficientPullbackToPullback.m` |
 | `measureCellDensity` | not_ported | `@TubULAR/TubULAR.m` |
-| `measureCurvatures` | not_ported | `@TubULAR/measureCurvatures.m` |
+| `measureCurvatures` | adapted | `@TubULAR/measureCurvatures.m` |
 | `measureDxDyStrainFiltered` | not_ported | `@TubULAR/measureDxDyStrainFiltered.m` |
 | `measureFoldCrossSectionDynamics` | not_ported | `@TubULAR/TubULAR.m` |
 | `measureFoldRadiiVariance` | not_ported | `@TubULAR/TubULAR.m` |

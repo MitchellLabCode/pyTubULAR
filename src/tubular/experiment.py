@@ -503,6 +503,68 @@ class TubULAR(CoordinateMethods):
         """Native Python access to first/second forms of the current chart."""
         return fundamental_forms(self.get_mesh(mesh_kind))
 
+    def measureCurvatures(self, *, mesh_kind="spcutMeshSmRSC", time_points=None):
+        """Return vertex curvature estimates for a supplied mesh series.
+
+        Uses the same estimator and mean-curvature sign as MATLAB's
+        GetCurvatures-based measurement. Open boundaries are flagged, not
+        glued or capped. No smoothing, plotting, saves, or selection changes.
+        """
+        from .curvature import estimate_curvature
+        if mesh_kind not in MESH_KINDS:
+            raise ValueError(f"unknown mesh kind {mesh_kind!r}")
+        times = self._series_times(self.timePoints if time_points is None else time_points)
+        results, units = [], set()
+        for time in times:
+            mesh = self._read_mesh(mesh_kind, time)
+            units.add(mesh.length_unit)
+            results.append(estimate_curvature(mesh))
+        if len(units) != 1:
+            raise ValueError("mesh units differ across timepoints")
+        return {"timepoints": times, "times": self.trueTime(times), "time_unit": self.timeUnits,
+                "curvatures": tuple(results), "mesh_kind": mesh_kind,
+                "length_unit": next(iter(units))}
+
+    def _beltrami_series(self, reference, mapped_coordinates, time_points, dimension):
+        from .quasiconformal import beltrami_coefficient
+        if not isinstance(mapped_coordinates, Mapping):
+            raise TypeError("supply a timepoint-to-coordinate mapping in reference vertex order")
+        if not isinstance(reference, Mesh):
+            raise TypeError("reference must be a Mesh")
+        times = self._series_times(self.timePoints if time_points is None else time_points)
+        baseline = beltrami_coefficient(reference, reference.uv if dimension == 2 else None)
+        results = []
+        for time in times:
+            if time not in mapped_coordinates:
+                raise KeyError(f"no mapped coordinates for time {time:g}")
+            target = real_array(mapped_coordinates[time], "mapped_coordinates", ndim=2)
+            if target.shape != (len(reference.v), dimension):
+                raise ValueError(f"coordinates must have shape (N, {dimension}) in reference vertex order")
+            results.append(beltrami_coefficient(reference, target))
+        return {"timepoints": times, "times": self.trueTime(times), "time_unit": self.timeUnits,
+                "mu": np.stack([r.mu for r in results]),
+                "dilatation": np.stack([r.dilatation for r in results]),
+                "reference_mu": baseline.mu, "target_dimension": dimension}
+
+    def measureBeltramiCoefficient(self, reference, vertex_positions, *, time_points=None):
+        """Measure supplied 3D vertex trajectories against a fixed reference UV chart.
+
+        vertex_positions maps acquired times to (N, 3) coordinates with explicit
+        reference vertex correspondence. Returns raw per-face mu/dilatation and
+        reference_mu separately. No reference offset, tracking, Ricci flow,
+        filtering, plots, file writes, or current-state changes are performed.
+        """
+        return self._beltrami_series(reference, vertex_positions, time_points, 3)
+
+    def measureBeltramiCoefficientPullbackToPullback(self, reference, target_charts, *, time_points=None):
+        """Measure supplied chart-to-chart maps on fixed vertex correspondence.
+
+        target_charts maps acquired times to (N, 2) UV arrays in reference vertex
+        order. Every target triangle must preserve orientation relative to the
+        reference chart. Charts are supplied, not constructed or made conformal.
+        """
+        return self._beltrami_series(reference, target_charts, time_points, 2)
+
     def uv2APDV(self, uv, coordSys="spsmrs", umax=1, vmax=1, *, return_details=False):
         """Map chart points to the supplied APDV mesh using its original triangles.
 

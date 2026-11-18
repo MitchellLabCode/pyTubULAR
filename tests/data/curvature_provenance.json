@@ -1,0 +1,23 @@
+{
+  "source_repository": "https://github.com/npmitchell/tubular",
+  "source_commit": "9bd49dbffd38b199c32552b8cc089f611f584679",
+  "method_sha256": "27fca67ffd5cb9ebe1e2c391bf5288eac71d3df7ace9effae3e9c828cc9b4f21",
+  "dependency_repository": "https://github.com/MitchellLabCode/matlab",
+  "dependency_commit": "1877f4bf1c3fcedc34839c1c20f311ee7a826820",
+  "dependency_sha256": {
+    "GetCurvatures.m": "d5f74d132afe1340cdf44ae08611219fe7c639aa7293be26220ec7af25dead8c",
+    "CalcFaceNormals.m": "3ecbf8a176e2df5e3623c553d8526dc13b9015b52036b87694fe6473e23e98d8",
+    "CalcVertexNormals.m": "7c9d02b474957eb589bdc96f9633f807e80231f5fcfebb86c7ae5af1ad635003",
+    "CalcCurvature.m": "1cb9ac1e9a678ad2f083255979f8948aa3788fb5bf0d52fc009ff13f8563dc3c",
+    "ProjectCurvatureTensor.m": "f7dfacea0a22275a2f3c33b3c8fdb946c68e3e82bc43e8e8f1f39577a85ca93a",
+    "RotateCoordinateSystem.m": "0dade6ac0aeceff1b96a646f4c5fa4bd329c39f61acec1462aec53e8371822e7",
+    "getPrincipalCurvatures.m": "34dcf29c3456480ae6c3214e5de9409fea04f86fd2c87b33bb2c0da3795999ea",
+    "license.txt": "04b546ccd59ad309b4e731b89d5e80563cb495590a0e8858449cfb9396f08384"
+  },
+  "matlab_version": "25.2.0.3055257 (R2025b) Update 2",
+  "fixture_sha256": "7f69b0a24f3b2632d3810af1a5fef58ca1c3666e963ef30d692ce078eefafb34",
+  "generator_sha256": "19209603bd45f925438296a71dd915ff22d0d1a93c4375b9acf5802566334eb0",
+  "reference_patch": "Only the active for i=1:size(FV.vertices) loop becomes for i=1:size(FV.vertices,1), in a temporary copy of getPrincipalCurvatures.m. Current MATLAB rejects the original non-scalar colon bound. No numerical expression is changed; original repositories untouched.",
+  "scope": "GetCurvatures plus its normal/area/tensor helpers on an open saddle patch and an ellipsoid with both windings. Full measureCurvatures plotting and disk workflow not executed.",
+  "temporary_principal_helper_sha256": "8b688f0f291edf60b8030ddd39a1a0af4f77d3f655b381b52d22fc59b8a9f2a8"
+}

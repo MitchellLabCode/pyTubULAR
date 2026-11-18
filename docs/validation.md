@@ -5,8 +5,9 @@ NumPy 2.0.2, SciPy 1.13.1, and MATLAB R2025b Update 2. The repository contains
 62 passing tests at the numerical-foundation checkpoint. The class milestone
 extended this to 100 passing tests. The geometry-method milestone extends it to
 122 passing tests. The centerline/writhe milestone extends it to 157 passing
-tests. The native alignment milestone extends it to **190 passing tests** in
-the same local environment. The CI workflow additionally requests
+tests. Native alignment extended it to 190 passing tests. The surface curvature
+and Beltrami milestone extends it to **218 passing tests** in the same local
+environment. The CI workflow additionally requests
 Linux, Windows, and macOS jobs on several Python versions; a configured job
 is not evidence of a successful run. Consult GitHub Actions for those results.
 
@@ -137,6 +138,21 @@ supplied triangles. Neither is a substitute for local ARAP flattening, seam
 construction, or missing chart generation. Validation remains synthetic.
 
 ## Analytic and failure-case coverage
+
+The 0.6 milestone compares vertex normals, mixed areas, curvature tensors,
+principal values and direction projectors on an open patch and a closed
+ellipsoid with both windings. Its original MATLAB principal helper requires a
+documented one-line loop-bound correction in a temporary copy; all other
+curvature calculations are unchanged, and source repositories are untouched.
+Independent checks include sphere and cylinder values, flat triangle types,
+winding/scale/rigid-motion invariants, and singular-normal rejection. See
+[surface_curvature.md](surface_curvature.md) and the hashed provenance record.
+
+Beltrami references call unchanged `bc_metric.m` with 2D and 3D targets.
+Analytic stretch/shear, chart-axis phase, target similarity invariance,
+orientation-reversal rejection, and explicit time/vertex correspondence are
+checked separately. The reference tests do not execute the original tracking,
+Ricci-flow, filtering, or plotting pipelines. See [beltrami.md](beltrami.md).
 
 The 0.5 milestone runs the original `computeAPDVCoords` on four supplied
 landmark triples. The reference uses its five-significant-digit saved frame,
