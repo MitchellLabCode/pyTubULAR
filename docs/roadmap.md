@@ -22,7 +22,7 @@ outputs are available.
 
 The `TubULAR` object now supplies time selection, mesh and volume sources,
 APDV transforms, coordinate helpers, and an explicit method-coverage catalog.
-Its 60 adapted MATLAB methods are documented in [class_api.md](class_api.md).
+Its 63 adapted MATLAB methods are documented in [class_api.md](class_api.md).
 The next five after the initial class milestone add UV surface queries,
 rectilinear pullback-field interpolation, experiment bounds, and existing hoop
 centerline loading. Their outputs have been compared to an actual original
@@ -48,7 +48,12 @@ interpolation, and reusable vertex-field weights through `generateCurrentUVCutMe
 The default retains original triangles; a separate Delaunay mode is compared
 against the unchanged MATLAB class. See [uv_grid_resampling.md](uv_grid_resampling.md)
 for numerical differences and remaining real-data validation.
-The other 140 method names are explicit pending ports, including the remaining
+The 0.9 slice connects explicit segmented-mesh endcaps and shortest edge seams
+to reference-phase surface `(s,phi)` coordinates, with source field maps. It
+also adds a single-pass PIVlab-kernel translation and a Python package audit.
+Temporal phase fitting, multipass PIV and real-data validation remain pending.
+See [s-phi](sphi_parameterization.md) and [PIV](piv.md).
+The other 137 method names are explicit pending ports, including the remaining
 topology, parameterization, velocity, strain, and plotting workflows.
 
 Import one existing MATLAB `spcutMeshSm` and its matching raw image volume.

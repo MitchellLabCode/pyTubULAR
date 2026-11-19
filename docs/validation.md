@@ -228,3 +228,13 @@ of the UV mesh. `signed_volume` is algebraic and assumes a meaningful shell
 orientation; it does not determine whether nested shells are cavities. The
 reference fixture is deliberately small enough for CI and must be expanded
 with real-data cases before scientific replacement of the MATLAB pipeline.
+
+## Surface s-phi and initial PIV (0.9)
+
+The [s-phi guide](sphi_parameterization.md) records six stage-level MATLAB
+comparisons, custom cap removal and the two source indexing defects that
+preclude claiming full-class equivalence. Analytic/invariance tests cover the
+complete closed-mesh-to-s-phi path and field correspondence.
+The [PIV guide](piv.md) records six unchanged PIVlab-kernel comparisons, direct
+correlation-sum tests and synthetic known-shift errors. These tests validate a
+single pass, not the full deforming-window pipeline or biological data.

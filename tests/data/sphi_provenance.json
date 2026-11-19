@@ -1,0 +1,20 @@
+{
+  "reference_revision": "9bd49dbffd38b199c32552b8cc089f611f584679",
+  "generator_sha256": "4d823301da772ef55dbe48c14b2717866d6949fc51bcb9e3aeedcda423c09c57",
+  "fixture_sha256": "fca76699ae2047dd84350dde0d89317f71f14ecd1936cd020408a0c56362b5f7",
+  "matlab_version": "R2025b Update 2",
+  "scope": "Stage-level unchanged numerical kernels, not full class workflow",
+  "source_sha256": {
+    "@TubULAR/generateCurrentSPCutMesh.m": "aa526ddf75f020da4ee97c85fa75bbfd0c6bbf22469b5d4daacd7f84c77e9fed",
+    "@TubULAR/sliceMeshEndcaps.m": "e5ee3de448dd4892f8730a91a7e288c7413d817abf9b46d2888455f11d923717",
+    "utility/axisymmetric_pullbacks/ringpathsGridSampling.m": "7cceac6332ca2c7495f7e8f0d5e2c365de2dd215a057cacbb7da17124f33924e",
+    "utility/axisymmetric_pullbacks/srFromDVCurves.m": "5eab849aa9decd48a1e3942fdacca1fd3195c0d1db064bf84a1be0e5c884e1dc",
+    "utility/axisymmetric_pullbacks/interpolate2Dpts_3Dmesh.m": "86e7611a2b132cc1f92376f5dd5d10d3c3e4677870528c18434da6721974b5d0",
+    "utility/axisymmetric_pullbacks/tileAnnularCutMesh.m": "66b0b31a39b60ee55b21e10cda89ffa3ccda842aaea9f1fdcf0cec344294f47a",
+    "utility/curve_functions/equidistantSampling1D.m": "becf6911b22008c8f556e7da43b2cfa1db1427930541d5b6b695bf658e80a3a3",
+    "utility/curve_functions/resampleCurvReplaceNaNs.m": "b42b38c5c569697018796ff2dc00d6e6d8ab05b92337c0dddda699780c2ced59",
+    "utility/curve_functions/curvspace.m": "4b8878c2cef3586008ca419d8eb8ba0c49b6c2048f385f948163bdcc6c0c29aa",
+    "utility/mesh_handling/remove_vertex_from_mesh.m": "d2a8f600fa17b79908ebaf08c6832f5ec447935a517823932496e4b6b24c44f7"
+  },
+  "uv_fixture_sha256": "27e660631741174dc5eb531a7a279479a76f278109fa4e8bc053c7b37cf51d43"
+}

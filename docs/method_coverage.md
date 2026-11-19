@@ -1,8 +1,8 @@
 # MATLAB method coverage
 
-Generated from the original MATLAB class metadata and the Python class in 0.8.0a1.
+Generated from the original MATLAB class metadata and the Python class in 0.9.0a1.
 
-60 adapted methods; 140 pending ports; 200 total.
+63 adapted methods; 137 pending ports; 200 total.
 
 **Adapted** means working within the [class API scope](class_api.md), not full
 MATLAB workflow equivalence. **Not ported** methods raise `MethodNotPortedError`.
@@ -43,7 +43,7 @@ hidden helpers are included. Native Python convenience methods are not counted.
 | `generateCellSegmentationPathlines3D` | not_ported | `@TubULAR/generateCellSegmentationPathlines3D.m` |
 | `generateCurrentCutMesh` | adapted | `@TubULAR/generateCurrentCutMesh.m` |
 | `generateCurrentPullbacks` | not_ported | `@TubULAR/generateCurrentPullbacks.m` |
-| `generateCurrentSPCutMesh` | not_ported | `@TubULAR/generateCurrentSPCutMesh.m` |
+| `generateCurrentSPCutMesh` | adapted | `@TubULAR/generateCurrentSPCutMesh.m` |
 | `generateCurrentUVCutMesh` | adapted | `@TubULAR/generateCurrentUVCutMesh.m` |
 | `generateFastMarchingCenterlines` | not_ported | `@TubULAR/generateFastMarchingCenterlines.m` |
 | `generateFoldCrossSections` | not_ported | `@TubULAR/TubULAR.m` |
@@ -135,7 +135,7 @@ hidden helpers are included. Native Python convenience methods are not counted.
 | `measureLobeDynamics` | not_ported | `@TubULAR/TubULAR.m` |
 | `measureMetricKinematics` | not_ported | `@TubULAR/measureMetricKinematics.m` |
 | `measureMetricStrainRate` | not_ported | `@TubULAR/measureMetricStrainRate.m` |
-| `measurePIV2d` | not_ported | `@TubULAR/measurePIV2d.m` |
+| `measurePIV2d` | adapted | `@TubULAR/measurePIV2d.m` |
 | `measurePIV3d` | not_ported | `@TubULAR/measurePIV3d.m` |
 | `measurePIV3dMultiChannel` | not_ported | `@TubULAR/measurePIV3dMultiChannel.m` |
 | `measurePathlineIndentation` | not_ported | `@TubULAR/TubULAR.m` |
@@ -198,7 +198,7 @@ hidden helpers are included. Native Python convenience methods are not counted.
 | `setEndcapOptions` | adapted | `@TubULAR/TubULAR.m` |
 | `setTime` | adapted | `@TubULAR/TubULAR.m` |
 | `singleToDoubleCover` | adapted | `@TubULAR/TubULAR.m` |
-| `sliceMeshEndcaps` | not_ported | `@TubULAR/sliceMeshEndcaps.m` |
+| `sliceMeshEndcaps` | adapted | `@TubULAR/sliceMeshEndcaps.m` |
 | `smoothDynamicSPhiMeshes` | not_ported | `@TubULAR/smoothDynamicSPhiMeshes.m` |
 | `t0set` | adapted | `@TubULAR/TubULAR.m` |
 | `timeAverageVelocities` | not_ported | `@TubULAR/timeAverageVelocities.m` |

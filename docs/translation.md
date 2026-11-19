@@ -12,6 +12,13 @@ methods from pending ports; it is not a claim of complete MATLAB compatibility.
 
 ## Implemented source map
 
+The 0.9 operations adapt custom `sliceMeshEndcaps` vertex removal and the
+geometric stages of `generateCurrentSPCutMesh`, and add shortest edge seams.
+The single-pass `measurePIV2d` core translates pinned PIVlab numerical kernels.
+Neither temporal phase fitting nor multipass PIV is claimed. See
+[sphi_parameterization.md](sphi_parameterization.md) and [piv.md](piv.md) for
+reference scope, deliberate changes, package/license audit and remaining work.
+
 The 0.8 resampling operation adapts `generateCurrentUVCutMesh` and
 `tileAnnularCutMesh`. Default sampling uses the existing source triangles,
 matching `interpolate2Dpts_3Dmesh`, and preserves source winding. Explicit

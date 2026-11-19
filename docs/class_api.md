@@ -4,8 +4,8 @@
 from tubular import TubULAR, Mesh, MeshSource, MethodNotPortedError
 ```
 
-Version 0.8.0a1 extends the stateful experiment object using MATLAB method
-names. Of 200 original callable method names, 60 are **adapted** and 140 are
+Version 0.9.0a1 extends the stateful experiment object using MATLAB method
+names. Of 200 original callable method names, 63 are **adapted** and 137 are
 **not ported**. Adapted means working within the scope below, not every legacy
 argument, format, return value, or side effect. The constructor is additional
 to this count. The original MATLAB repository is only a reference source.
@@ -207,7 +207,7 @@ vertex estimator in `measureCurvatures`.
 
 ## Annular parameterization (0.7)
 
-`generateCurrentCutMesh(seam_path, *, aspect_ratio=1.0,
+`generateCurrentCutMesh(seam_path=None, *, seam_endpoints=None, aspect_ratio=1.0,
 negative_weights="clamp", register=False)` cuts the selected `cylinderMeshClean`
 and solves for a new UV chart. The supplied zero-based vertex path must connect
 its two boundary loops through interior edges. The result contains a mapped
@@ -217,7 +217,7 @@ Failed solves leave the registered cut mesh intact. Retain the result separately
 for its correspondence metadata.
 
 The algorithm ports the custom-path cut and Dirichlet `flattenAnnulus` solve;
-automatic path selection, Ricci/MVC, optimal aspect ratio, reflected charts,
+automatic landmark selection, Ricci/MVC, optimal aspect ratio, reflected charts,
 normal shifts and file output are not included. The constructor's `flipy`
 does not alter this chart. Negative cotangent weights use the MATLAB 0.01 clamp
 unless the caller chooses `negative_weights="error"`. See
@@ -429,3 +429,25 @@ and UV extents are positive `umax`, `vmax` (default 1). Double cover defaults tr
 Corrected defaults are explicit Python behavior changes. Use `legacy=True` only
 when reproducing the documented legacy arithmetic, not as a general guarantee
 of MATLAB workflow compatibility. See [validation evidence](validation.md).
+
+## Segmented mesh to s-phi and initial PIV (0.9)
+
+`sliceMeshEndcaps(anterior_vertices, posterior_vertices, register=False)` adapts
+explicit vertex removal on the selected closed rawMesh. It returns an annulus
+and source maps, optionally registered as cylinderMeshClean.
+`generateCurrentCutMesh` now also accepts `seam_endpoints=[start,end]` instead of
+`seam_path`, finding an interior shortest edge path between opposite boundaries.
+
+`generateCurrentSPCutMesh(path_pairs, n_u=None, n_v=None, phi_offsets=None,
+seam_weight="unique", register=False)` adapts the geometric s-phi stages on
+the selected cutMesh. It returns SPhiGrid, optionally registering spcutMesh.
+XYZ is already in the desired length units, s is dimensional, and phi uses
+turns. It does not estimate phase offsets between timepoints. See the
+[complete workflow and correspondence guide](sphi_parameterization.md).
+
+`measurePIV2d(image_a, image_b, window_size=32, step=None, dt=1,
+correlation="circular", mask=None)` measures an explicitly supplied image pair.
+It does not require time selection. It returns image-plane pixel displacements
+and validity flags, with velocities divided by explicit dt. **Only one pass**
+is implemented; the method name does not imply the MATLAB four-pass pipeline.
+See [PIV scope, validation and package comparison](piv.md).

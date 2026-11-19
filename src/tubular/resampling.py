@@ -156,11 +156,13 @@ class UVGrid:
 
 
 def resample_annulus(mesh: Mesh, path_pairs, n_u: int, n_v: int, *, normals=None,
-                     interpolation="mesh", preserve_orientation=True) -> UVGrid:
+                     interpolation="mesh", preserve_orientation=True, u_samples=None) -> UVGrid:
     """Sample a periodic cut chart onto a normalized rectilinear UV mesh.
 
     U boundary rings must lie at 0 and a positive width. V's positive period is
     inferred from explicit seam pairs; query V runs from zero to that period.
+    Optional u_samples supplies n_u strictly increasing normalized coordinates
+    from 0 to 1; returned UV retains that nonuniform spacing (uniform by default).
     Mesh-mode tile coverage adapts to curved seams. Endpoint samples share the
     exact same weights and positions, with V shifts one period apart.
 
@@ -175,6 +177,9 @@ def resample_annulus(mesh: Mesh, path_pairs, n_u: int, n_v: int, *, normals=None
     normals. Explicit input normals are periodic unit vectors in source XYZ.
     """
     n_u, n_v = _size(n_u,"n_u"), _size(n_v,"n_v",4)
+    us = np.linspace(0,1,n_u) if u_samples is None else real_array(u_samples,"u_samples",ndim=1)
+    if us.shape != (n_u,) or us[0] != 0 or us[-1] != 1 or np.any(np.diff(us) <= 0):
+        raise ValueError("u_samples must be strictly increasing, length n_u, from 0 to 1")
     preserve = boolean(preserve_orientation,"preserve_orientation")
     if interpolation not in ("mesh","matlab_scattered"):
         raise ValueError("interpolation must be 'mesh' or 'matlab_scattered'")
@@ -210,7 +215,7 @@ def resample_annulus(mesh: Mesh, path_pairs, n_u: int, n_v: int, *, normals=None
     if interpolation == "matlab_scattered":
         counts = (1,1)
     tiled = tile_annular_mesh(tiling_mesh,pairs,counts)
-    u, v = np.meshgrid(np.linspace(0,width,n_u),np.linspace(0,period,n_v)[:-1])
+    u, v = np.meshgrid(width*us,np.linspace(0,period,n_v)[:-1])
     query = np.column_stack((u.ravel(),v.ravel()))
     source_faces = None
     if interpolation == "mesh":

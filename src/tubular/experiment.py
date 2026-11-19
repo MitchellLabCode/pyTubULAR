@@ -392,15 +392,32 @@ class TubULAR(CoordinateMethods):
             raise TypeError("currentMesh entries must be validated Mesh objects")
         return result
 
-    def generateCurrentCutMesh(self, seam_path, *, aspect_ratio=1.0,
+    def sliceMeshEndcaps(self, anterior_vertices, posterior_vertices, *, register=False):
+        """Open selected rawMesh using explicit zero-based cap vertex sets.
+
+        Returns OpenedSurface with vertex/face correspondence and ordered end
+        boundaries. register=True installs cylinderMeshClean after validation.
+        This single-time native operation does not infer landmarks or repair
+        geometry; the name does not imply MATLAB's series/geodesic workflow.
+        """
+        from .endcaps import remove_endcaps
+        time = self._require_time()
+        register = boolean(register,"register")
+        result = remove_endcaps(self._read_mesh("rawMesh",time),anterior_vertices,posterior_vertices)
+        if register:
+            self.register_mesh(time,result.mesh,kind="cylinderMeshClean")
+        return result
+
+    def generateCurrentCutMesh(self, seam_path=None, *, seam_endpoints=None, aspect_ratio=1.0,
                                negative_weights="clamp", register=False):
         """Cut and parameterize the selected cylinderMeshClean along an explicit seam.
 
-        seam_path contains zero-based source vertex IDs, from one boundary to
-        the other. Returns ParameterizedCutMesh with geometry, correspondence,
+        Supply seam_path or seam_endpoints=[start,end] for shortest interior
+        edge-path search. seam_path contains zero-based source vertex IDs, from
+        one boundary to the other. Returns ParameterizedCutMesh with correspondence,
         seam pairs and solver diagnostics. register=True installs result.mesh
         as cutMesh only after all checks succeed; retain the result for seam
-        metadata. No path search, remeshing, aspect optimization, reflection,
+        metadata. No remeshing, aspect optimization, reflection,
         normal displacement, files or plots. APDV/flipy settings do not change
         this intrinsic chart; aspect_ratio is an explicit positive width.
         """
@@ -408,6 +425,11 @@ class TubULAR(CoordinateMethods):
         time = self._require_time()
         register = boolean(register, "register")
         source = self._read_mesh("cylinderMeshClean", time)
+        if (seam_path is None) == (seam_endpoints is None):
+            raise ValueError("supply exactly one of seam_path or seam_endpoints")
+        if seam_path is None:
+            from .endcaps import shortest_seam
+            seam_path = shortest_seam(source,seam_endpoints)
         cut = cut_annulus(source, seam_path)
         embedding = flatten_annulus(cut.mesh, cut.path_pairs, aspect_ratio=aspect_ratio,
                                     negative_weights=negative_weights)
@@ -440,6 +462,40 @@ class TubULAR(CoordinateMethods):
         if register:
             self.register_mesh(time, result.mesh, kind="uvcutMesh")
         return result
+
+    def generateCurrentSPCutMesh(self, path_pairs, *, n_u=None, n_v=None,
+                                 phi_offsets=None, seam_weight="unique", register=False):
+        """Create surface-arclength s and periodic phi from selected cutMesh.
+
+        Returns SPhiGrid with (s,phi) in mesh.uv, s in supplied XYZ units and phi
+        in turns. Zero offsets define reference phase; optional per-ring offsets
+        are explicit, not fitted in time. Retain the result for correspondence
+        and diagnostics. register=True installs spcutMesh after validation.
+        APDV transforms, smoothing, temporal fitting and files are separate.
+        """
+        from .sphi import parameterize_sphi
+        time = self._require_time()
+        register = boolean(register,"register")
+        result = parameterize_sphi(self._read_mesh("cutMesh",time),path_pairs,
+                                   self.nU if n_u is None else n_u,
+                                   self.nV if n_v is None else n_v,
+                                   phi_offsets=phi_offsets,seam_weight=seam_weight)
+        if register:
+            self.register_mesh(time,result.mesh,kind="spcutMesh")
+        return result
+
+    def measurePIV2d(self, image_a, image_b, *, window_size=32, step=None,
+                     dt=1., correlation="circular", mask=None):
+        """Measure a supplied image pair with the supported single-pass PIV core.
+
+        Returns PIVResult in image pixels and explicit dt units. This does not
+        load a time series, run PIVlab's four deforming passes, preprocess,
+        inpaint, scale to physical velocity, or write outputs. Selected time
+        and the experiment's time/length units do not alter this calculation.
+        """
+        from .piv import piv_pair
+        return piv_pair(image_a,image_b,window_size=window_size,step=step,dt=dt,
+                        correlation=correlation,mask=mask)
 
     def register_data(self, timepoint, source):
         """Register one ZYX array/.npy file, or a sequence of channels; no resampling."""

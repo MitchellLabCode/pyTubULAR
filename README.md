@@ -4,13 +4,13 @@ A Python implementation of [TubULAR](https://github.com/npmitchell/tubular),
 developed as an independent Mitchell Lab repository. The numerical core is
 designed to work from scripts, notebooks, and eventually a desktop GUI.
 
-**Status: experimental class API (0.8.0a1), not a replacement for the MATLAB pipeline.**
+**Status: experimental class API (0.9.0a1), not a replacement for the MATLAB pipeline.**
 The translated geometry routines have been checked against outputs generated
 by the original MATLAB functions. Full surface mapping, motion analysis, and
 biological-dataset equivalence remain future milestones. There is no GUI yet.
 
 `from tubular import TubULAR` now provides an experiment object with the original
-MATLAB method names. **60 of 200 methods have working, adapted implementations**;
+MATLAB method names. **63 of 200 methods have working, adapted implementations**;
 the remaining names raise `MethodNotPortedError`. Method names alone do not imply
 equivalent options, file formats, or complete scientific workflows.
 
@@ -32,6 +32,10 @@ equivalent options, file formats, or complete scientific workflows.
   seam path, with vertex correspondence and foldover/boundary checks.
 - Periodic regular UV-grid resampling, optional supplied normals, and reusable
   vertex-field weights; original-triangle and MATLAB-style interpolation modes.
+- Explicit endcap removal and shortest edge seams, followed by surface `(s,phi)`
+  coordinates with field correspondence ([guide](docs/sphi_parameterization.md)).
+- Single-pass PIV with translated PIVlab kernels, validity flags and an audited
+  comparison of Python packages ([scope and package audit](docs/piv.md)).
 - Validated triangular meshes with explicit coordinates, units, and indexing.
 - Manifold/orientation checks, area, signed closed-mesh volume, and face normals.
 - Face/vertex averaging, 2D–3D Jacobians, vector projection, induced metrics,

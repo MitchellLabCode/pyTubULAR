@@ -1,0 +1,18 @@
+{
+  "reference_revision": "9bd49dbffd38b199c32552b8cc089f611f584679",
+  "generator_sha256": "dcb0951621c5be168ee4ee87f11098cd4e4a5628cc18ba7c5a2557ab533e75e0",
+  "fixture_sha256": "4d5e9bb6e6d8a5d940f96750595a7fcd37743d08f9e051ad7d264e2a7f4e086e",
+  "matlab_version": "R2025b Update 2",
+  "scope": "Stage-level unchanged numerical kernels, not full class workflow",
+  "pivlab_revision": "10ca97f90bb14cd58f644855ed84ad4d5016cbc2",
+  "pivlab_source_sha256": "af705ae1bdd98976c894874e618ec7993c19e0dd539b4d16481d5217289cb844",
+  "license_sha256": "5a48f42d718ecd917deac878519d596d0d193503386b5163714aef86b7bbb02a",
+  "kernels": [
+    "do_correlations",
+    "meanzeropad",
+    "rescale_array",
+    "SUBPIXGAUSS"
+  ],
+  "tubular_measurePIV2d_sha256": "b4925bc53e705ab6a78621eae318951ad6223616949a51dbb16ac2678f1cde0b",
+  "pivlab_source_git_blob": "adbd724a1543d3e97253a0c6bc4eb53e317787d9"
+}

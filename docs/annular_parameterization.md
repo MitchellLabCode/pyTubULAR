@@ -1,5 +1,10 @@
 # Annular surface parameterization (0.7)
 
+Version 0.9 also accepts explicit boundary endpoint pairs for shortest edge
+seams and connects this stage to surface `(s,phi)`; see the
+[s-phi workflow](sphi_parameterization.md). The original custom-path solve and
+its validation below are unchanged.
+
 `TubULAR.generateCurrentCutMesh` now constructs a UV chart from a registered
 `cylinderMeshClean` and an explicit zero-based seam path. This is a numerical
 slice of the original method, with no file workflow or automatic seam selection.
