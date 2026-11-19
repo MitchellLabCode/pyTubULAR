@@ -4,8 +4,8 @@
 from tubular import TubULAR, Mesh, MeshSource, MethodNotPortedError
 ```
 
-Version 0.7.0a1 extends the stateful experiment object using MATLAB method
-names. Of 200 original callable method names, 59 are **adapted** and 141 are
+Version 0.8.0a1 extends the stateful experiment object using MATLAB method
+names. Of 200 original callable method names, 60 are **adapted** and 140 are
 **not ported**. Adapted means working within the scope below, not every legacy
 argument, format, return value, or side effect. The constructor is additional
 to this count. The original MATLAB repository is only a reference source.
@@ -223,6 +223,26 @@ does not alter this chart. Negative cotangent weights use the MATLAB 0.01 clamp
 unless the caller chooses `negative_weights="error"`. See
 [parameterization conventions and validation](annular_parameterization.md)
 before using a generated chart for periodic sampling.
+
+## Periodic UV-grid resampling (0.8)
+
+`generateCurrentUVCutMesh(path_pairs, *, n_u=None, n_v=None, normals=None,
+interpolation="mesh", preserve_orientation=True, register=False)` samples the
+selected `cutMesh` on a regular periodic grid. Pass the source's explicit seam
+pairs, such as `cut.path_pairs` from `generateCurrentCutMesh`. Sizes default to
+the object's `nU`, `nV`; overrides affect this result only. The output `UVGrid`
+contains its `mesh`, exact output seam pairs, optional normalized interpolated
+normals, source vertex indices, weights, periodic shifts and original query UV.
+`grid.interpolate(source_vertex_field)` transfers periodic scalar/vector fields.
+
+Default interpolation preserves original triangles and winding. Explicit
+`interpolation="matlab_scattered"` uses MATLAB-style three-tile Delaunay
+interpolation; `preserve_orientation=False` uses MATLAB's grid face order.
+Co-circular Delaunay ties can differ between libraries. No mode extrapolates,
+infers normals, transforms to APDV, or writes files. `register=True` installs
+the output as `uvcutMesh` only after all checks succeed. Keep the result for its
+correspondence; the registered `Mesh` alone does not carry that metadata. See
+[UV-grid scope and comparisons](uv_grid_resampling.md).
 
 ## Surface curvature and Beltrami measurements (0.6)
 

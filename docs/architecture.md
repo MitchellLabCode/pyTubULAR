@@ -59,7 +59,7 @@ Changing time clears all current caches, including aligned and Ricci meshes.
 Each instance owns its state. `getCurrent…` reuses a loaded mesh;
 `loadCurrent…` reloads it. No constructor, getter, or measurement writes files.
 
-The object adapts 59 original method names and explicitly marks 141 as pending.
+The object adapts 60 original method names and explicitly marks 140 as pending.
 ImSAnE compatibility is not a design requirement: version 0.5 removes the
 simulated `xp.fileMeta`/`xp.expMeta` object and the `xp` constructor argument.
 The in-memory object is separate from the future durable project manifest.
@@ -73,6 +73,10 @@ Annular parameterization likewise takes an explicit seam and returns a complete
 cut/embedding result before optional registration. Its numerical core is
 independent of time selection and file output. Registration stores the mapped
 mesh; callers retain the result's topology correspondence and solver diagnostics.
+Periodic UV resampling returns a similarly independent result with source
+triangle/vertex sampling weights and seam metadata. The same weights transfer
+geometry and periodic vertex fields; a future GUI can inspect them without
+owning the numerical calculation or mutating the selected source mesh.
 
 ## Proposed project model (not implemented)
 

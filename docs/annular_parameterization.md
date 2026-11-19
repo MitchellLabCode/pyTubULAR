@@ -53,8 +53,8 @@ It solves the cotangent Laplacian with linear equality constraints:
   `uv[path_pairs[:,0]] - uv[path_pairs[:,1]] == [0,1]`.
 - Interior seam positions are otherwise free. The seam curves need not lie
   on V=0 and V=1; the cut polygon need not be a rectangle. Treat this as a
-  periodic fundamental domain. Rectangular resampling needs explicit periodic
-  tiling and is a separate, still pending operation.
+  periodic fundamental domain. Explicit periodic tiling and regular-grid
+  resampling are now available in [the 0.8 UV-grid operation](uv_grid_resampling.md).
 
 The first seam column retains the left side of the directed path; the second
 contains appended right-side copies. The MATLAB boundary convention normally
@@ -102,7 +102,7 @@ boundary-overlap rejection. Class tests cover preview, successful registration,
 failed registration and time selection without file writes.
 
 Automatic seam search/tracking, aspect-ratio minimization, MVC, Ricci flow,
-`generateCurrentUVCutMesh`, `generateCurrentSPCutMesh`, normal displacement and
+`generateCurrentSPCutMesh`, normal displacement and
 temporal phase stabilization remain pending. The full original
 `generateCurrentCutMesh` file workflow is not a parity target of this release.
 Representative biological datasets and overlays are still needed before

@@ -22,7 +22,7 @@ outputs are available.
 
 The `TubULAR` object now supplies time selection, mesh and volume sources,
 APDV transforms, coordinate helpers, and an explicit method-coverage catalog.
-Its 59 adapted MATLAB methods are documented in [class_api.md](class_api.md).
+Its 60 adapted MATLAB methods are documented in [class_api.md](class_api.md).
 The next five after the initial class milestone add UV surface queries,
 rectilinear pullback-field interpolation, experiment bounds, and existing hoop
 centerline loading. Their outputs have been compared to an actual original
@@ -43,7 +43,12 @@ parameterization through `generateCurrentCutMesh`. Original MATLAB kernels and
 independent geometry tests validate synthetic cases. Biological cuts/overlays
 are still required to complete stages 3 and 4; see
 [annular_parameterization.md](annular_parameterization.md).
-The other 141 method names are explicit pending ports, including the remaining
+The 0.8 slice adds periodic regular UV-grid resampling, optional supplied normal
+interpolation, and reusable vertex-field weights through `generateCurrentUVCutMesh`.
+The default retains original triangles; a separate Delaunay mode is compared
+against the unchanged MATLAB class. See [uv_grid_resampling.md](uv_grid_resampling.md)
+for numerical differences and remaining real-data validation.
+The other 140 method names are explicit pending ports, including the remaining
 topology, parameterization, velocity, strain, and plotting workflows.
 
 Import one existing MATLAB `spcutMeshSm` and its matching raw image volume.

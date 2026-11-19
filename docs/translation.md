@@ -12,6 +12,14 @@ methods from pending ports; it is not a claim of complete MATLAB compatibility.
 
 ## Implemented source map
 
+The 0.8 resampling operation adapts `generateCurrentUVCutMesh` and
+`tileAnnularCutMesh`. Default sampling uses the existing source triangles,
+matching `interpolate2Dpts_3Dmesh`, and preserves source winding. Explicit
+`matlab_scattered` interpolation and `preserve_orientation=False` retain the
+original algorithm/face-order choices within documented Delaunay tie limits.
+Both return vertex sampling weights; neither extrapolates or writes files.
+See [uv_grid_resampling.md](uv_grid_resampling.md) for measured differences.
+
 The 0.7 parameterization operation adapts `generateCurrentCutMesh` with a
 caller-supplied seam, preserving the `cylinderCutMesh` custom-path correspondence
 and `flattenAnnulus` Dirichlet boundary constraints. Local vertex-fan cutting
@@ -55,6 +63,8 @@ All paths below are relative to the original TubULAR repository.
 
 | MATLAB source | Python API | Equivalence and deliberate differences |
 | --- | --- | --- |
+| `utility/axisymmetric_pullbacks/tileAnnularCutMesh.m` | `resampling.tile_annular_mesh` | Same sewn vertex/face order; adds explicit source maps and seam/chart validation |
+| `@TubULAR/generateCurrentUVCutMesh.m` | `resampling.resample_annulus`, `TubULAR.generateCurrentUVCutMesh` | Original-triangle default; explicit Delaunay comparison mode, exact seam closure, supplied normals, no extrapolation; optional legacy face order |
 | `utility/axisymmetric_pullbacks/cylinderCutMesh.m` (custom path) | `parameterization.cut_annulus` | Local fan splitting, unchanged face/corner order, explicit vertex maps; errors rather than repairs |
 | `utility/axisymmetric_pullbacks/flattenAnnulus.m` (Dirichlet) | `parameterization.flatten_annulus` | Same cotangent constraints and 0.01 negative-weight clamp; adds chart validation and explicit lateral scaling |
 | `utility/mesh_handling/meshArea.m` | `geometry.surface_area` | Same triangle area; rejects invalid geometry rather than ignoring NaNs |

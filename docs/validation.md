@@ -7,12 +7,21 @@ extended this to 100 passing tests. The geometry-method milestone extends it to
 122 passing tests. The centerline/writhe milestone extends it to 157 passing
 tests. Native alignment extended it to 190 passing tests. The surface curvature
 and Beltrami milestone extends it to 218 passing tests. The annular cutting and
-parameterization slice extends it to **256 passing tests** in the same local
+parameterization slice extends it to 256 passing tests. Periodic UV-grid
+resampling extends it to **285 passing tests** in the same local
 environment. The CI workflow additionally requests
 Linux, Windows, and macOS jobs on several Python versions; a configured job
 is not evidence of a successful run. Consult GitHub Actions for those results.
 
 ## Independent reference generation
+
+The 0.8 UV-grid fixture runs unchanged `generateCurrentUVCutMesh` on three
+synthetic cases and compares the tiling and original-triangle interpolation
+helpers separately. Geometry, normals and unambiguous field interpolation
+agree within 4e-15 in this run. Co-circular Delaunay field ties are checked
+against both analytic choices rather than an unsupported exact-match claim.
+See [UV-grid validation](uv_grid_resampling.md) for the default mathematical
+change, sampled-surface approximation and remaining real-data work.
 
 The 0.7 annular parameterization fixture runs the unchanged `cylinderCutMesh`
 custom-path branch and `flattenAnnulus` Dirichlet branch on four synthetic

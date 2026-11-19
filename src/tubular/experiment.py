@@ -416,6 +416,31 @@ class TubULAR(CoordinateMethods):
             self.register_mesh(time, result.mesh, kind="cutMesh")
         return result
 
+    def generateCurrentUVCutMesh(self, path_pairs, *, n_u=None, n_v=None, normals=None,
+                                 interpolation="mesh", preserve_orientation=True, register=False):
+        """Resample the selected cutMesh onto a periodic regular UV grid.
+
+        Pass the cut's explicit zero-based seam pairs (for example those returned
+        by generateCurrentCutMesh). Grid sizes default to this object's nU/nV.
+        Returns UVGrid with a mapped mesh and reusable vertex sampling weights.
+        register=True replaces uvcutMesh only after the whole operation succeeds.
+        The default retains the supplied triangles for interpolation and the
+        source winding; matlab_scattered and preserve_orientation=False expose
+        the legacy interpolation/face-order choices. No automatic normals,
+        APDV copies, normal shifts, plotting, caching to disk or file writes.
+        """
+        from .resampling import resample_annulus
+        time = self._require_time()
+        register = boolean(register, "register")
+        source = self._read_mesh("cutMesh", time)
+        result = resample_annulus(source, path_pairs, self.nU if n_u is None else n_u,
+                                  self.nV if n_v is None else n_v, normals=normals,
+                                  interpolation=interpolation,
+                                  preserve_orientation=preserve_orientation)
+        if register:
+            self.register_mesh(time, result.mesh, kind="uvcutMesh")
+        return result
+
     def register_data(self, timepoint, source):
         """Register one ZYX array/.npy file, or a sequence of channels; no resampling."""
         timepoint = self._time(timepoint)

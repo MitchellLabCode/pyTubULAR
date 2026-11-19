@@ -1,0 +1,28 @@
+{
+  "source_repository": "https://github.com/npmitchell/tubular",
+  "source_commit": "9bd49dbffd38b199c32552b8cc089f611f584679",
+  "source_sha256": {
+    "@TubULAR/TubULAR.m": "7b82c88865bc9250fa4b21a2a2be092ef60d45159c29c880235cb013ab1f755e",
+    "@TubULAR/initializeTubULAR.m": "bfd2140836fac1d6232f04896072a8f1fb16108f1fc3c81d429582bce1d513db",
+    "@TubULAR/generateCurrentUVCutMesh.m": "65eee2cc9fb19dd7c88a591c2cfe4e3bf24ee639cd18e8c4b1253d765b431c04",
+    "utility/axisymmetric_pullbacks/tileAnnularCutMesh.m": "66b0b31a39b60ee55b21e10cda89ffa3ccda842aaea9f1fdcf0cec344294f47a",
+    "utility/axisymmetric_pullbacks/interpolate2Dpts_3Dmesh.m": "86e7611a2b132cc1f92376f5dd5d10d3c3e4677870528c18434da6721974b5d0",
+    "utility/mesh_handling/rectilinearMesh/defineFacesRectilinearGrid.m": "4163ac2dc384ed8a7d53320a7a7eace98cf5a3e98b25fd27d5090e26d5cfb168"
+  },
+  "matlab_version": "25.2.0.3055257 (R2025b) Update 2",
+  "fixture_sha256": "27e660631741174dc5eb531a7a279479a76f278109fa4e8bc053c7b37cf51d43",
+  "generator_sha256": "551636d8d2de17d511f6b122cb8a4e63e373738fa07c9caecac0c5ec4dab18de",
+  "reference_patch": null,
+  "scope": "Unchanged generateCurrentUVCutMesh class method with identity APDV transform, supplied normals and temporary output files. Three synthetic cases: regular cylindrical chart, curved seam/nonplanar tube, reversed face winding and seam pair order. Also unchanged tileAnnularCutMesh and interpolate2Dpts_3Dmesh helpers.",
+  "python_differences": "Default interpolation retains original triangles. Explicit matlab_scattered chooses Delaunay linear interpolation. Default output winding preserves source orientation; preserve_orientation=False gives MATLAB rectilinear face order. No nearest extrapolation. Exact seam endpoint copying, adaptive mesh-mode tiling with integer phase-offset removal (fixed three tiles in matlab_scattered mode), validated periodic fields, optional supplied normals, no APDV copy or disk workflow.",
+  "delaunay_ties": "Case 0 has co-circular rectangular cells. XYZ and normals are invariant to the diagonal choice, but the first non-affine field component is not. Test that both MATLAB and Python fields equal one of the two analytic piecewise-linear interpolants instead of requiring identical tie-breaking. Cases 1 and 2 compare all fields directly.",
+  "observed_max_absolute_errors": {
+    "mesh_xyz": 2.1e-15,
+    "mesh_normals": 1.9e-15,
+    "mesh_fields": 3.7e-15,
+    "scattered_xyz": 2.1e-15,
+    "scattered_normals": 1.7e-15,
+    "scattered_fields_unambiguous_cases": 3.4e-15
+  },
+  "observed_matlab_mesh_vs_scattered_xyz_max_difference": 0.05953900978887239
+}

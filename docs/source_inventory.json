@@ -287,7 +287,7 @@
       "source": "@TubULAR/generateCurrentUVCutMesh.m",
       "lines": 186,
       "sha256": "65eee2cc9fb19dd7c88a591c2cfe4e3bf24ee639cd18e8c4b1253d765b431c04",
-      "python_status": "not_ported",
+      "python_status": "partial_adapted",
       "signatures": [
         "function uvcutMesh = generateCurrentUVCutMesh(tubi, options)"
       ]
