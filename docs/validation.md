@@ -6,12 +6,23 @@ NumPy 2.0.2, SciPy 1.13.1, and MATLAB R2025b Update 2. The repository contains
 extended this to 100 passing tests. The geometry-method milestone extends it to
 122 passing tests. The centerline/writhe milestone extends it to 157 passing
 tests. Native alignment extended it to 190 passing tests. The surface curvature
-and Beltrami milestone extends it to **218 passing tests** in the same local
+and Beltrami milestone extends it to 218 passing tests. The annular cutting and
+parameterization slice extends it to **256 passing tests** in the same local
 environment. The CI workflow additionally requests
 Linux, Windows, and macOS jobs on several Python versions; a configured job
 is not evidence of a successful run. Consult GitHub Actions for those results.
 
 ## Independent reference generation
+
+The 0.7 annular parameterization fixture runs the unchanged `cylinderCutMesh`
+custom-path branch and `flattenAnnulus` Dirichlet branch on four synthetic
+annuli. Connectivity and correspondence agree exactly; observed UV differences
+are below 9e-16. Independent tests cover analytic UV coordinates, conformal
+cylinder scaling, seam constraints, topology, invariance, field transfer,
+invalid paths, chart overlaps and class registration. See
+[parameterization evidence and limits](annular_parameterization.md). This is
+kernel validation, not validation of automatic seam selection or the complete
+MATLAB class workflow on biological data.
 
 `scripts/generate_matlab_reference.m` calls original functions in the MATLAB
 TubULAR checkout. It does not restate the Python algorithms in MATLAB. The

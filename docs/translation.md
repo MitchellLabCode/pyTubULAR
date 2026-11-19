@@ -12,6 +12,13 @@ methods from pending ports; it is not a claim of complete MATLAB compatibility.
 
 ## Implemented source map
 
+The 0.7 parameterization operation adapts `generateCurrentCutMesh` with a
+caller-supplied seam, preserving the `cylinderCutMesh` custom-path correspondence
+and `flattenAnnulus` Dirichlet boundary constraints. Local vertex-fan cutting
+replaces the global path-adjacent flood, and output checks reject invalid charts
+instead of attempting remeshing. No automatic seam search or aspect optimization
+is included. See [annular_parameterization.md](annular_parameterization.md).
+
 The 0.6 surface operations adapt `measureCurvatures` through the BSD-licensed
 `GetCurvatures` dependency and its normal/area/tensor helpers. See
 [surface_curvature.md](surface_curvature.md) for the mean-curvature sign and the
@@ -48,6 +55,8 @@ All paths below are relative to the original TubULAR repository.
 
 | MATLAB source | Python API | Equivalence and deliberate differences |
 | --- | --- | --- |
+| `utility/axisymmetric_pullbacks/cylinderCutMesh.m` (custom path) | `parameterization.cut_annulus` | Local fan splitting, unchanged face/corner order, explicit vertex maps; errors rather than repairs |
+| `utility/axisymmetric_pullbacks/flattenAnnulus.m` (Dirichlet) | `parameterization.flatten_annulus` | Same cotangent constraints and 0.01 negative-weight clamp; adds chart validation and explicit lateral scaling |
 | `utility/mesh_handling/meshArea.m` | `geometry.surface_area` | Same triangle area; rejects invalid geometry rather than ignoring NaNs |
 | `utility/mesh_handling/meshVolumeArea.m` | `geometry.signed_volume` | Same signed volume on closed oriented surfaces; stable shifted-origin tetrahedral sum; rejects open/nonmanifold/inconsistently oriented meshes |
 | MATLAB `triangulation.faceNormal` | `geometry.face_normals` | Right-hand unit normal; does not infer outwardness |

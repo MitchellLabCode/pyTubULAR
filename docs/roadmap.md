@@ -22,7 +22,7 @@ outputs are available.
 
 The `TubULAR` object now supplies time selection, mesh and volume sources,
 APDV transforms, coordinate helpers, and an explicit method-coverage catalog.
-Its 58 adapted MATLAB methods are documented in [class_api.md](class_api.md).
+Its 59 adapted MATLAB methods are documented in [class_api.md](class_api.md).
 The next five after the initial class milestone add UV surface queries,
 rectilinear pullback-field interpolation, experiment bounds, and existing hoop
 centerline loading. Their outputs have been compared to an actual original
@@ -38,8 +38,13 @@ work; see [landmark_alignment.md](landmark_alignment.md).
 The 0.6 milestone adds vertex curvature and Beltrami measurements on supplied
 corresponding vertices/charts, with original-kernel and analytic comparisons.
 These do not implement tracking, new surface parameterization, or full strain.
-The other 142 method names are explicit pending ports, including topology,
-parameterization, velocity, strain, and plotting workflows.
+The 0.7 slice adds explicit annular seam cutting and the constrained Dirichlet
+parameterization through `generateCurrentCutMesh`. Original MATLAB kernels and
+independent geometry tests validate synthetic cases. Biological cuts/overlays
+are still required to complete stages 3 and 4; see
+[annular_parameterization.md](annular_parameterization.md).
+The other 141 method names are explicit pending ports, including the remaining
+topology, parameterization, velocity, strain, and plotting workflows.
 
 Import one existing MATLAB `spcutMeshSm` and its matching raw image volume.
 Keep the existing mapping fixed. Compare surface overlays, sampled pullback,

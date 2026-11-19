@@ -1,0 +1,16 @@
+{
+  "source_repository": "https://github.com/npmitchell/tubular",
+  "source_commit": "9bd49dbffd38b199c32552b8cc089f611f584679",
+  "source_sha256": {
+    "@TubULAR/generateCurrentCutMesh.m": "28ba6750ab189dcccd621702ebd270a59acd6fc2aefd87ee85ca3e35f99a192d",
+    "utility/axisymmetric_pullbacks/cylinderCutMesh.m": "fb077b4f5cfa762000ed7e0dae4e8a831f5c6e48f98cc64fc296545bd9eb1a16",
+    "utility/axisymmetric_pullbacks/flattenAnnulus.m": "ef8532c8f1a398e6e6af91e78d4ea0991957c2ef798a8092f4a962f57404bfc4",
+    "external/gptoolbox/mesh/cotmatrix.m": "cd00414d9cfeeeef6e8720c47785aaa2699f46703b5171c0a07872b74972da21"
+  },
+  "matlab_version": "25.2.0.3055257 (R2025b) Update 2",
+  "fixture_sha256": "875c3cb5acbbf438b1eacdc816ad2ebc6e456b8102052248410172b2e2086119",
+  "generator_sha256": "cf5b980f75f8b5e32725c29251503ac2a155e5115f4645bd66a023c4dcda0bfa",
+  "reference_patch": null,
+  "scope": "Unchanged cylinderCutMesh custom-path branch and flattenAnnulus Dirichlet branch on four synthetic annuli: straight cylinder, curved tapered tube, diagonal seam, and reversed winding/path. Class file workflow, automatic path selection, MVC, Ricci flow and aspect-ratio minimization are not executed.",
+  "python_differences": "Local vertex-fan cutting rather than global path-adjacent face flooding; identical results on these cases. Additional manifold, seam, residual, foldover and boundary-intersection validation; errors instead of repair/remeshing. Same assembled negative-weight clamp (0.01). Cotangents evaluated with locally scaled edge vectors."
+}

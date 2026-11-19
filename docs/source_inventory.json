@@ -260,7 +260,7 @@
       "source": "@TubULAR/generateCurrentCutMesh.m",
       "lines": 461,
       "sha256": "28ba6750ab189dcccd621702ebd270a59acd6fc2aefd87ee85ca3e35f99a192d",
-      "python_status": "not_ported",
+      "python_status": "partial_adapted",
       "signatures": [
         "function generateCurrentCutMesh(tubi, cutMeshOptions)"
       ]

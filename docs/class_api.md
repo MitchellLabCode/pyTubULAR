@@ -4,8 +4,8 @@
 from tubular import TubULAR, Mesh, MeshSource, MethodNotPortedError
 ```
 
-Version 0.6.0a1 extends the stateful experiment object using MATLAB method
-names. Of 200 original callable method names, 58 are **adapted** and 142 are
+Version 0.7.0a1 extends the stateful experiment object using MATLAB method
+names. Of 200 original callable method names, 59 are **adapted** and 141 are
 **not ported**. Adapted means working within the scope below, not every legacy
 argument, format, return value, or side effect. The constructor is additional
 to this count. The original MATLAB repository is only a reference source.
@@ -204,6 +204,25 @@ saved analysis files are not replicated. Selection and current caches are preser
 `measure_current_geometry(mesh_kind="spcutMeshSm")` returns the first and second
 fundamental forms of a supplied chart. This native helper is separate from the
 vertex estimator in `measureCurvatures`.
+
+## Annular parameterization (0.7)
+
+`generateCurrentCutMesh(seam_path, *, aspect_ratio=1.0,
+negative_weights="clamp", register=False)` cuts the selected `cylinderMeshClean`
+and solves for a new UV chart. The supplied zero-based vertex path must connect
+its two boundary loops through interior edges. The result contains a mapped
+`mesh`, `path_pairs`, `cut_to_uncut`, `uncut_to_cut`, and `embedding` diagnostics.
+With `register=True`, subsequent `getCurrentCutMesh()` calls return that mesh.
+Failed solves leave the registered cut mesh intact. Retain the result separately
+for its correspondence metadata.
+
+The algorithm ports the custom-path cut and Dirichlet `flattenAnnulus` solve;
+automatic path selection, Ricci/MVC, optimal aspect ratio, reflected charts,
+normal shifts and file output are not included. The constructor's `flipy`
+does not alter this chart. Negative cotangent weights use the MATLAB 0.01 clamp
+unless the caller chooses `negative_weights="error"`. See
+[parameterization conventions and validation](annular_parameterization.md)
+before using a generated chart for periodic sampling.
 
 ## Surface curvature and Beltrami measurements (0.6)
 

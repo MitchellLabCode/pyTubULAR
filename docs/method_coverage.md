@@ -1,8 +1,8 @@
 # MATLAB method coverage
 
-Generated from the original MATLAB class metadata and the Python class in 0.6.0a1.
+Generated from the original MATLAB class metadata and the Python class in 0.7.0a1.
 
-58 adapted methods; 142 pending ports; 200 total.
+59 adapted methods; 141 pending ports; 200 total.
 
 **Adapted** means working within the [class API scope](class_api.md), not full
 MATLAB workflow equivalence. **Not ported** methods raise `MethodNotPortedError`.
@@ -41,7 +41,7 @@ hidden helpers are included. Native Python convenience methods are not counted.
 | `generateCellSegmentation2D` | not_ported | `@TubULAR/generateCellSegmentation2D.m` |
 | `generateCellSegmentation3D` | not_ported | `@TubULAR/generateCellSegmentation3D.m` |
 | `generateCellSegmentationPathlines3D` | not_ported | `@TubULAR/generateCellSegmentationPathlines3D.m` |
-| `generateCurrentCutMesh` | not_ported | `@TubULAR/generateCurrentCutMesh.m` |
+| `generateCurrentCutMesh` | adapted | `@TubULAR/generateCurrentCutMesh.m` |
 | `generateCurrentPullbacks` | not_ported | `@TubULAR/generateCurrentPullbacks.m` |
 | `generateCurrentSPCutMesh` | not_ported | `@TubULAR/generateCurrentSPCutMesh.m` |
 | `generateCurrentUVCutMesh` | not_ported | `@TubULAR/generateCurrentUVCutMesh.m` |

@@ -392,6 +392,30 @@ class TubULAR(CoordinateMethods):
             raise TypeError("currentMesh entries must be validated Mesh objects")
         return result
 
+    def generateCurrentCutMesh(self, seam_path, *, aspect_ratio=1.0,
+                               negative_weights="clamp", register=False):
+        """Cut and parameterize the selected cylinderMeshClean along an explicit seam.
+
+        seam_path contains zero-based source vertex IDs, from one boundary to
+        the other. Returns ParameterizedCutMesh with geometry, correspondence,
+        seam pairs and solver diagnostics. register=True installs result.mesh
+        as cutMesh only after all checks succeed; retain the result for seam
+        metadata. No path search, remeshing, aspect optimization, reflection,
+        normal displacement, files or plots. APDV/flipy settings do not change
+        this intrinsic chart; aspect_ratio is an explicit positive width.
+        """
+        from .parameterization import ParameterizedCutMesh, cut_annulus, flatten_annulus
+        time = self._require_time()
+        register = boolean(register, "register")
+        source = self._read_mesh("cylinderMeshClean", time)
+        cut = cut_annulus(source, seam_path)
+        embedding = flatten_annulus(cut.mesh, cut.path_pairs, aspect_ratio=aspect_ratio,
+                                    negative_weights=negative_weights)
+        result = ParameterizedCutMesh(cut, embedding)
+        if register:
+            self.register_mesh(time, result.mesh, kind="cutMesh")
+        return result
+
     def register_data(self, timepoint, source):
         """Register one ZYX array/.npy file, or a sequence of channels; no resampling."""
         timepoint = self._time(timepoint)

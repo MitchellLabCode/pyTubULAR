@@ -59,7 +59,7 @@ Changing time clears all current caches, including aligned and Ricci meshes.
 Each instance owns its state. `getCurrent…` reuses a loaded mesh;
 `loadCurrent…` reloads it. No constructor, getter, or measurement writes files.
 
-The object adapts 58 original method names and explicitly marks 142 as pending.
+The object adapts 59 original method names and explicitly marks 141 as pending.
 ImSAnE compatibility is not a design requirement: version 0.5 removes the
 simulated `xp.fileMeta`/`xp.expMeta` object and the `xp` constructor argument.
 The in-memory object is separate from the future durable project manifest.
@@ -69,6 +69,10 @@ receive immutable mesh/data inputs rather than share a mutable selected time.
 Alignment supports previewing a full series before explicitly registering it;
 registration occurs only after all mesh transforms succeed. Landmark inputs
 can later come from a GUI without coupling the calculation to that viewer.
+Annular parameterization likewise takes an explicit seam and returns a complete
+cut/embedding result before optional registration. Its numerical core is
+independent of time selection and file output. Registration stores the mapped
+mesh; callers retain the result's topology correspondence and solver diagnostics.
 
 ## Proposed project model (not implemented)
 
