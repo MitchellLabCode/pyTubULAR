@@ -1,6 +1,6 @@
 # MATLAB method coverage
 
-Generated from the original MATLAB class metadata and the Python class in 0.9.0a1.
+Generated from the original MATLAB class metadata and the Python class in 0.10.0a1.
 
 63 adapted methods; 137 pending ports; 200 total.
 

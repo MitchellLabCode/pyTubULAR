@@ -238,3 +238,12 @@ complete closed-mesh-to-s-phi path and field correspondence.
 The [PIV guide](piv.md) records six unchanged PIVlab-kernel comparisons, direct
 correlation-sum tests and synthetic known-shift errors. These tests validate a
 single pass, not the full deforming-window pipeline or biological data.
+
+## Geometric phase alignment (0.10)
+
+The unchanged non-resampled `phiOffsetsFromPrevMesh` branch supplies 33 hoop
+fits across three MATLAB cases. Separate tests verify known shifts, global
+minima, circular unwrapping, transformations, ambiguity, search bounds, axial
+correspondence and two-timepoint class integration with atomic registration.
+The original residual-size defect and mathematical differences are documented
+in [temporal_phase.md](temporal_phase.md). Biological-data validation is pending.

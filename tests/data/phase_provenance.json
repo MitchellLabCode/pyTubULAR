@@ -1,0 +1,15 @@
+{
+  "reference_revision": "9bd49dbffd38b199c32552b8cc089f611f584679",
+  "source_sha256": {
+    "utility/axisymmetric_pullbacks/phiOffsetsFromPrevMesh.m": "0bda1e46de08424ef1ee12e480f34c77351b60d171ef27f92f28fe4b101c7099",
+    "utility/axisymmetric_pullbacks/fitPhiOffsetsFromPrevMesh.m": "d758316fdf842501364faa5b48e3f3bd221e717ac81569ffdd8cf7df270d7778",
+    "utility/axisymmetric_pullbacks/interpolate2Dpts_3Dmesh.m": "86e7611a2b132cc1f92376f5dd5d10d3c3e4677870528c18434da6721974b5d0",
+    "utility/axisymmetric_pullbacks/tileAnnularCutMesh.m": "66b0b31a39b60ee55b21e10cda89ffa3ccda842aaea9f1fdcf0cec344294f47a",
+    "utility/curve_functions/distance2curve/distance2curve.m": "e75a1b3da29751d672c45397e26451933008159e7500e431e28e04f1530f87f3",
+    "@TubULAR/generateCurrentSPCutMesh.m": "aa526ddf75f020da4ee97c85fa75bbfd0c6bbf22469b5d4daacd7f84c77e9fed"
+  },
+  "fixture_sha256": "7ebfaee5a1502b83d6e4470fbd8f56821e77d571a9245c3eb4d0777ab0340b24",
+  "generator_sha256": "93df81a62d48bac049cc252247ae1f2b604832f6174e81a9a6980f4dd40a939a",
+  "matlab_version": "R2025b Update 2",
+  "scope": "Unchanged phiOffsetsFromPrevMesh, resample_hoops=false, one output; straight centerline matching; no GUI or class workflow"
+}

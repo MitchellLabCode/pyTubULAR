@@ -464,14 +464,17 @@ class TubULAR(CoordinateMethods):
         return result
 
     def generateCurrentSPCutMesh(self, path_pairs, *, n_u=None, n_v=None,
-                                 phi_offsets=None, seam_weight="unique", register=False):
+                                 phi_offsets=None, seam_weight="unique", reference=None,
+                                 reference_s=None, phase_bounds=None, register=False):
         """Create surface-arclength s and periodic phi from selected cutMesh.
 
         Returns SPhiGrid with (s,phi) in mesh.uv, s in supplied XYZ units and phi
-        in turns. Zero offsets define reference phase; optional per-ring offsets
-        are explicit, not fitted in time. Retain the result for correspondence
-        and diagnostics. register=True installs spcutMesh after validation.
-        APDV transforms, smoothing, temporal fitting and files are separate.
+        in turns. Supply explicit phi_offsets or a reference SPhiGrid to fit
+        angular alignment geometrically. Axial correspondence defaults to equal
+        normalized s, with optional reference_s overrides. Retain results for
+        correspondence and fit diagnostics. register=True installs spcutMesh
+        after validation. APDV transforms, texture matching, smoothing and files
+        are separate. The caller selects the reference timepoint explicitly.
         """
         from .sphi import parameterize_sphi
         time = self._require_time()
@@ -479,7 +482,9 @@ class TubULAR(CoordinateMethods):
         result = parameterize_sphi(self._read_mesh("cutMesh",time),path_pairs,
                                    self.nU if n_u is None else n_u,
                                    self.nV if n_v is None else n_v,
-                                   phi_offsets=phi_offsets,seam_weight=seam_weight)
+                                   phi_offsets=phi_offsets,seam_weight=seam_weight,
+                                   reference=reference,reference_s=reference_s,
+                                   phase_bounds=phase_bounds)
         if register:
             self.register_mesh(time,result.mesh,kind="spcutMesh")
         return result

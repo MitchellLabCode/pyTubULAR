@@ -4,7 +4,7 @@ A Python implementation of [TubULAR](https://github.com/npmitchell/tubular),
 developed as an independent Mitchell Lab repository. The numerical core is
 designed to work from scripts, notebooks, and eventually a desktop GUI.
 
-**Status: experimental class API (0.9.0a1), not a replacement for the MATLAB pipeline.**
+**Status: experimental class API (0.10.0a1), not a replacement for the MATLAB pipeline.**
 The translated geometry routines have been checked against outputs generated
 by the original MATLAB functions. Full surface mapping, motion analysis, and
 biological-dataset equivalence remain future milestones. There is no GUI yet.
@@ -34,6 +34,8 @@ equivalent options, file formats, or complete scientific workflows.
   vertex-field weights; original-triangle and MATLAB-style interpolation modes.
 - Explicit endcap removal and shortest edge seams, followed by surface `(s,phi)`
   coordinates with field correspondence ([guide](docs/sphi_parameterization.md)).
+- Geometric angular alignment to an explicit reference timepoint, with phase
+  unwrapping and residual/ambiguity diagnostics ([guide](docs/temporal_phase.md)).
 - Single-pass PIV with translated PIVlab kernels, validity flags and an audited
   comparison of Python packages ([scope and package audit](docs/piv.md)).
 - Validated triangular meshes with explicit coordinates, units, and indexing.
@@ -145,7 +147,7 @@ checkout and MATLAB; see the validation document.
 ## Attribution
 
 Original TubULAR: Noah P. Mitchell and Dillon J. Cislo. The source snapshot used
-for this translation is `9bd49dbffd38b199c32582b8cc089f611f584679`.
+for this translation is `9bd49dbffd38b199c32552b8cc089f611f584679`.
 The original MIT notice is retained alongside this project's notice.
 Individual mathematical routines retain their source attribution in
 [the translation map](docs/translation.md). Bundled MATLAB dependencies have

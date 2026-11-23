@@ -4,7 +4,7 @@
 from tubular import TubULAR, Mesh, MeshSource, MethodNotPortedError
 ```
 
-Version 0.9.0a1 extends the stateful experiment object using MATLAB method
+Version 0.10.0a1 extends the stateful experiment object using MATLAB method
 names. Of 200 original callable method names, 63 are **adapted** and 137 are
 **not ported**. Adapted means working within the scope below, not every legacy
 argument, format, return value, or side effect. The constructor is additional
@@ -442,7 +442,7 @@ and source maps, optionally registered as cylinderMeshClean.
 seam_weight="unique", register=False)` adapts the geometric s-phi stages on
 the selected cutMesh. It returns SPhiGrid, optionally registering spcutMesh.
 XYZ is already in the desired length units, s is dimensional, and phi uses
-turns. It does not estimate phase offsets between timepoints. See the
+turns. Version 0.10 can also fit offsets against an explicit reference result. See the
 [complete workflow and correspondence guide](sphi_parameterization.md).
 
 `measurePIV2d(image_a, image_b, window_size=32, step=None, dt=1,
@@ -451,3 +451,18 @@ It does not require time selection. It returns image-plane pixel displacements
 and validity flags, with velocities divided by explicit dt. **Only one pass**
 is implemented; the method name does not imply the MATLAB four-pass pipeline.
 See [PIV scope, validation and package comparison](piv.md).
+
+## Geometric temporal phase alignment (0.10)
+
+`generateCurrentSPCutMesh` additionally accepts `reference` (an SPhiGrid),
+`reference_s` (optional normalized axial correspondence), and `phase_bounds`
+(defaults to a full turn when fitting). These are mutually exclusive with
+explicit `phi_offsets`. The method retains the reference sampling and fit
+diagnostics in `result.phase_alignment`; ambiguous or bound-limited fits fail
+before registration. No timepoint or rigid alignment is inferred.
+
+`fit_sphi_phase` and `fit_hoop_phase` are headless numerical APIs for inspecting
+fits, including rejected cases. These extend an existing adapted class method;
+the coverage count remains 63. See [temporal_phase.md](temporal_phase.md) for
+phase sign, unwrapping, residuals, source comparisons and the distinction
+between geometric chart alignment and material tracking.

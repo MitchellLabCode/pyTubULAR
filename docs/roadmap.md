@@ -51,8 +51,12 @@ for numerical differences and remaining real-data validation.
 The 0.9 slice connects explicit segmented-mesh endcaps and shortest edge seams
 to reference-phase surface `(s,phi)` coordinates, with source field maps. It
 also adds a single-pass PIVlab-kernel translation and a Python package audit.
-Temporal phase fitting, multipass PIV and real-data validation remain pending.
+Texture-based phase fitting, multipass PIV and real-data validation remain pending.
 See [s-phi](sphi_parameterization.md) and [PIV](piv.md).
+The 0.10 extension aligns angular phase against an explicit reference s-phi
+mesh, with global fitting on sampled hoops, axial correspondence, unwrapping
+and rejection diagnostics. This stabilizes geometric charts without claiming
+material tracking; see [temporal_phase.md](temporal_phase.md).
 The other 137 method names are explicit pending ports, including the remaining
 topology, parameterization, velocity, strain, and plotting workflows.
 

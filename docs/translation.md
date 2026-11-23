@@ -12,10 +12,17 @@ methods from pending ports; it is not a claim of complete MATLAB compatibility.
 
 ## Implemented source map
 
+The 0.10 extension adds reference-based geometric phase alignment through
+`generateCurrentSPCutMesh`, with separate `fit_hoop_phase` and `fit_sphi_phase`
+diagnostics. The non-resampled `phiOffsetsFromPrevMesh` objective has an
+unchanged MATLAB reference; global search, unique seam weighting, axial
+correspondence and unwrapping are explicit Python choices. See
+[temporal_phase.md](temporal_phase.md).
+
 The 0.9 operations adapt custom `sliceMeshEndcaps` vertex removal and the
 geometric stages of `generateCurrentSPCutMesh`, and add shortest edge seams.
 The single-pass `measurePIV2d` core translates pinned PIVlab numerical kernels.
-Neither temporal phase fitting nor multipass PIV is claimed. See
+That 0.9 slice did not include temporal phase fitting or multipass PIV. See
 [sphi_parameterization.md](sphi_parameterization.md) and [piv.md](piv.md) for
 reference scope, deliberate changes, package/license audit and remaining work.
 

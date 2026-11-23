@@ -3,7 +3,8 @@
 Version 0.9 adds a connected, headless path from a **triangulated** closed
 segmented surface to an `(s,phi)` mesh. Endcap vertex sets and reference seam
 landmarks are supplied explicitly. Voxel-label isosurface extraction, automatic
-landmarks, mesh repair, temporal phase fitting and GUI selection are not included.
+landmarks, mesh repair, texture-based phase fitting and GUI selection are not
+included. Version 0.10 adds [geometric alignment to an explicit reference](temporal_phase.md).
 Run `python examples/segmented_mesh_to_sphi.py` for a complete synthetic example.
 
 ```python
@@ -56,9 +57,11 @@ No APDV transform, reflection or length-unit conversion is implicit.
 
 Offsets default to zero, fixing phase to the input chart. Supplied `phi_offsets`
 must contain one finite value per intermediate U ring, in turns, evaluated at
-the returned `u_samples`. Automatic geometric/texture registration between
-timepoints and iterative phase smoothing remain pending. Thus this can create
-a reference-time chart, but does not establish material tracking between frames.
+the returned `u_samples`. Version 0.10 alternatively accepts
+`reference=previous_result` for geometric phase fitting; see
+[temporal_phase.md](temporal_phase.md) for axial correspondence
+and ambiguity handling. Texture registration and iterative phase smoothing
+remain pending. Neither path establishes material tracking between frames.
 
 Both interpolation stages use original triangles of their respective inputs.
 The second stage interpolates a newly connected grid, so its points need not
@@ -113,7 +116,9 @@ This is **stage-level validation**, not execution of the full MATLAB class:
 - Exact endpoint interpolation replaces epsilon boundary nudges. Original
   triangle interpolation and winding are retained. Centerline cropping,
   1000-point resampled centerlines, automatic aspect optimization, normals,
-  temporal phase fitting, image matching, plots and disk caches are omitted.
+  temporal phase fitting, image matching, plots and disk caches are omitted from
+  this 0.9 reference comparison. The 0.10 geometric phase fitting is validated
+  separately in [temporal_phase.md](temporal_phase.md).
 - Cap compaction uses vertex IDs rather than coordinate equality. Coincident
   but distinct vertices are never merged by accident.
 
