@@ -12,6 +12,15 @@ methods from pending ports; it is not a claim of complete MATLAB compatibility.
 
 ## Implemented source map
 
+The 0.11 extension adapts `fitPhiOffsetsViaTexture` to explicit pullback images
+and normalized periodic strip correlation. The original integer phase helper
+provides sign/periodicity references, including a preserved rectangular-image
+defect; whitening, polynomial smoothing and implicit projection are not ported.
+`measurePIV2d` also accepts coarse-to-fine window sizes. Its integer-window-shift
+driver is native, built on the previously validated PIVlab kernels, and does
+not reproduce PIVlab deformation. See [texture_phase.md](texture_phase.md) and
+[piv.md](piv.md) for contracts, tests and known limits.
+
 The 0.10 extension adds reference-based geometric phase alignment through
 `generateCurrentSPCutMesh`, with separate `fit_hoop_phase` and `fit_sphi_phase`
 diagnostics. The non-resampled `phiOffsetsFromPrevMesh` objective has an

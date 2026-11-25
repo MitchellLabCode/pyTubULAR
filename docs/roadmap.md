@@ -22,7 +22,7 @@ outputs are available.
 
 The `TubULAR` object now supplies time selection, mesh and volume sources,
 APDV transforms, coordinate helpers, and an explicit method-coverage catalog.
-Its 63 adapted MATLAB methods are documented in [class_api.md](class_api.md).
+Its 64 adapted MATLAB methods are documented in [class_api.md](class_api.md).
 The next five after the initial class milestone add UV surface queries,
 rectilinear pullback-field interpolation, experiment bounds, and existing hoop
 centerline loading. Their outputs have been compared to an actual original
@@ -51,13 +51,19 @@ for numerical differences and remaining real-data validation.
 The 0.9 slice connects explicit segmented-mesh endcaps and shortest edge seams
 to reference-phase surface `(s,phi)` coordinates, with source field maps. It
 also adds a single-pass PIVlab-kernel translation and a Python package audit.
-Texture-based phase fitting, multipass PIV and real-data validation remain pending.
+That slice left texture-based phase fitting, multipass PIV and real-data validation pending.
 See [s-phi](sphi_parameterization.md) and [PIV](piv.md).
 The 0.10 extension aligns angular phase against an explicit reference s-phi
 mesh, with global fitting on sampled hoops, axial correspondence, unwrapping
 and rejection diagnostics. This stabilizes geometric charts without claiming
 material tracking; see [temporal_phase.md](temporal_phase.md).
-The other 137 method names are explicit pending ports, including the remaining
+The 0.11 extension adds explicit-image texture phase fitting and surface-offset
+interpolation, plus a native integer-window-shift multipass PIV driver. Original
+integer texture-shift references and synthetic motion tests validate their
+documented scope. Deforming-window PIV, vector quality filtering, physical
+surface velocity and real-data validation remain pending. See
+[texture_phase.md](texture_phase.md) and [piv.md](piv.md).
+The other 136 method names are explicit pending ports, including the remaining
 topology, parameterization, velocity, strain, and plotting workflows.
 
 Import one existing MATLAB `spcutMeshSm` and its matching raw image volume.

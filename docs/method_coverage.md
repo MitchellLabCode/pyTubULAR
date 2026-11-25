@@ -1,8 +1,8 @@
 # MATLAB method coverage
 
-Generated from the original MATLAB class metadata and the Python class in 0.10.0a1.
+Generated from the original MATLAB class metadata and the Python class in 0.11.0a1.
 
-63 adapted methods; 137 pending ports; 200 total.
+64 adapted methods; 136 pending ports; 200 total.
 
 **Adapted** means working within the [class API scope](class_api.md), not full
 MATLAB workflow equivalence. **Not ported** methods raise `MethodNotPortedError`.
@@ -37,7 +37,7 @@ hidden helpers are included. Native Python convenience methods are not counted.
 | `dx2APDV` | adapted | `@TubULAR/TubULAR.m` |
 | `estimateIntercalationRate` | not_ported | `@TubULAR/TubULAR.m` |
 | `extendImage2DoubleCover` | adapted | `@TubULAR/TubULAR.m` |
-| `fitPhiOffsetsViaTexture` | not_ported | `@TubULAR/fitPhiOffsetsViaTexture.m` |
+| `fitPhiOffsetsViaTexture` | adapted | `@TubULAR/fitPhiOffsetsViaTexture.m` |
 | `generateCellSegmentation2D` | not_ported | `@TubULAR/generateCellSegmentation2D.m` |
 | `generateCellSegmentation3D` | not_ported | `@TubULAR/generateCellSegmentation3D.m` |
 | `generateCellSegmentationPathlines3D` | not_ported | `@TubULAR/generateCellSegmentationPathlines3D.m` |

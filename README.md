@@ -4,13 +4,13 @@ A Python implementation of [TubULAR](https://github.com/npmitchell/tubular),
 developed as an independent Mitchell Lab repository. The numerical core is
 designed to work from scripts, notebooks, and eventually a desktop GUI.
 
-**Status: experimental class API (0.10.0a1), not a replacement for the MATLAB pipeline.**
+**Status: experimental class API (0.11.0a1), not a replacement for the MATLAB pipeline.**
 The translated geometry routines have been checked against outputs generated
 by the original MATLAB functions. Full surface mapping, motion analysis, and
 biological-dataset equivalence remain future milestones. There is no GUI yet.
 
 `from tubular import TubULAR` now provides an experiment object with the original
-MATLAB method names. **63 of 200 methods have working, adapted implementations**;
+MATLAB method names. **64 of 200 methods have working, adapted implementations**;
 the remaining names raise `MethodNotPortedError`. Method names alone do not imply
 equivalent options, file formats, or complete scientific workflows.
 
@@ -36,8 +36,10 @@ equivalent options, file formats, or complete scientific workflows.
   coordinates with field correspondence ([guide](docs/sphi_parameterization.md)).
 - Geometric angular alignment to an explicit reference timepoint, with phase
   unwrapping and residual/ambiguity diagnostics ([guide](docs/temporal_phase.md)).
-- Single-pass PIV with translated PIVlab kernels, validity flags and an audited
-  comparison of Python packages ([scope and package audit](docs/piv.md)).
+- Texture-based angular alignment of explicit pullback images, with validated
+  offsets for surface reconstruction ([guide](docs/texture_phase.md)).
+- Single-pass and coarse-to-fine window-shift PIV with translated PIVlab kernels,
+  validity flags and a Python package audit ([scope](docs/piv.md)).
 - Validated triangular meshes with explicit coordinates, units, and indexing.
 - Manifold/orientation checks, area, signed closed-mesh volume, and face normals.
 - Face/vertex averaging, 2D–3D Jacobians, vector projection, induced metrics,
@@ -68,6 +70,7 @@ python examples/landmark_alignment.py
 python examples/surface_measurements.py
 python examples/annular_parameterization.py
 python examples/uv_grid_resampling.py
+python examples/texture_phase_and_piv.py
 ```
 
 On Windows, activate with `.venv\Scripts\activate` and use a local output path.

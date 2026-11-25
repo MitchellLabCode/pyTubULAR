@@ -1,0 +1,15 @@
+{
+  "reference_revision": "9bd49dbffd38b199c32552b8cc089f611f584679",
+  "matlab_utilities_revision": "1877f4bf1c3fcedc34839c1c20f311ee7a826820",
+  "generator_sha256": "6b49d727ca2ecf1085f68aeab99a752ebb7ca3fd5423cf4031cfc82ae972fe6f",
+  "fixture_sha256": "1c2ae9a4c0463e8052b8c139711996f932eacb072902fad3c23d1c384f2e98e2",
+  "matlab_version": "R2025b Update 2",
+  "scope": "Integer shift/sign contract only; normalized 1D correlation replaces 2D phase whitening; 11 original agreements and one corrected rectangular-image wrap defect",
+  "matlab_sources": {
+    "ExtPhaseCorrelation/PhaseCorrelationPotentialBound.m": "73332098ed3b83d53d00f4a04e4fca211516f65b9d9f82fff15ee86429268757"
+  },
+  "tubular_sources": {
+    "@TubULAR/fitPhiOffsetsViaTexture.m": "de196a54121a6372f57dcead6a8f606657a5bc18c5afd0aa3ae7231ccdea2ef2",
+    "utility/axisymmetric_pullbacks/fitPhiOffsetsFromPrevPullback.m": "b086c18d6b7aa0b2dbda59650846e64c75bd5bfed7a0db95156db71f80cc652b"
+  }
+}

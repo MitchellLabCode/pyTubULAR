@@ -247,3 +247,22 @@ minima, circular unwrapping, transformations, ambiguity, search bounds, axial
 correspondence and two-timepoint class integration with atomic registration.
 The original residual-size defect and mathematical differences are documented
 in [temporal_phase.md](temporal_phase.md). Biological-data validation is pending.
+
+## Texture alignment and window-shift PIV (0.11)
+
+Twelve unchanged MATLAB integer phase-helper calls verify signs and periodicity;
+the fixture preserves a rectangular-image wrapping defect that Python corrects.
+Direct correlation sums, fractional shifts, phase unwrapping, invalid strips and
+a texture-aligned cylinder reconstruction with source-field transfer provide
+independent checks. This is not equivalence to the full MATLAB texture pipeline.
+See [texture_phase.md](texture_phase.md).
+
+The native multipass driver retains the existing PIVlab kernel reference tests.
+Independent large translations, fractional shear, predictor interpolation, masks
+and boundary cases validate the new driver. Window-size-dependent errors are
+recorded in [piv.md](piv.md); deforming-window and biological-data validation
+remain pending. No numerical tolerance was increased to accept the smaller-window
+shear error.
+
+The clean 0.11 source suite passes **405 tests** locally. Wheel and source-archive
+checks use that same clean source, independently of unrelated local work.

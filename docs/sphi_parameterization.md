@@ -118,7 +118,8 @@ This is **stage-level validation**, not execution of the full MATLAB class:
   1000-point resampled centerlines, automatic aspect optimization, normals,
   temporal phase fitting, image matching, plots and disk caches are omitted from
   this 0.9 reference comparison. The 0.10 geometric phase fitting is validated
-  separately in [temporal_phase.md](temporal_phase.md).
+  separately in [temporal_phase.md](temporal_phase.md). The 0.11 explicit-image
+  texture fit is described in [texture_phase.md](texture_phase.md).
 - Cap compaction uses vertex IDs rather than coordinate equality. Coincident
   but distinct vertices are never merged by accident.
 

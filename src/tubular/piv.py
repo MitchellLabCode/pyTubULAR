@@ -1,4 +1,4 @@
-"""Single-pass PIV using translated PIVlab correlation/peak kernels.
+"""Single-pass PIV kernels and a native integer-window-shift multipass driver.
 
 Derived from PIVlab piv_FFTmulti.m, copyright (c) 2021 William Thielicke,
 MIT license (licenses/PIVlab-MIT.txt). Its three-point Gaussian formula credits
@@ -25,6 +25,8 @@ class PIVFlag(IntEnum):
     AMBIGUOUS_PEAK = 3
     BORDER_PEAK = 4
     INVALID_GAUSSIAN = 5
+    PREDICTOR_UNAVAILABLE = 6
+    OUTSIDE_IMAGE = 7
 
 
 def _images(a,b):
@@ -141,6 +143,8 @@ def piv_pair(image_a,image_b,*,window_size=32,step=None,dt=1.,
         raise ValueError("correlation must be 'circular' or 'linear'")
     if mask is None:
         mask = np.zeros(a.shape,dtype=bool)
+    elif np.ma.isMaskedArray(mask):
+        raise ValueError("mask must be a complete boolean array")
     else:
         mask = np.asarray(mask)
         if mask.dtype.kind != "b" or mask.shape != a.shape:
@@ -165,3 +169,123 @@ def piv_pair(image_a,image_b,*,window_size=32,step=None,dt=1.,
                 continue
             dx[i,j],dy[i,j],flags[i,j] = _gaussian_peak(correlate_windows(aa,bb,correlation=correlation))
     return PIVResult(*map(_readonly,(x,y,dx,dy,flags)),dt,w,stride,correlation)
+
+
+@dataclass(frozen=True, eq=False)
+class MultiPassPIVResult:
+    """All coarse-to-fine passes; final is a PIVResult with total displacement.
+
+    Predictors are total pixel displacements on the preceding pass's grid.
+    Each next window uses an integer shift of frame B, followed by a residual
+    correlation with subpixel refinement. Images are never deformed/resampled.
+    """
+    passes: tuple
+
+    @property
+    def final(self):
+        return self.passes[-1]
+
+
+def _predictor(previous, x, y):
+    """Bilinear interpolation requiring every positive-weight corner valid.
+
+    No extrapolation, nearest-valid substitution, or zero*NaN contamination.
+    Singleton axes support their sole coordinate only.
+    """
+    axes = (previous.y[:,0],previous.x[0])
+    corners = []
+    for axis,q in zip(axes,(y,x)):
+        if q < axis[0] or q > axis[-1]:
+            return None
+        k = int(np.searchsorted(axis,q))
+        if k < len(axis) and q == axis[k]:
+            corners.append(((k,1.),))
+        else:
+            t = (q-axis[k-1])/(axis[k]-axis[k-1])
+            corners.append(((k-1,1-t),(k,t)))
+    dx = dy = 0.
+    for i,wy in corners[0]:
+        for j,wx in corners[1]:
+            if previous.flags[i,j] != PIVFlag.VALID:
+                return None
+            dx += wx*wy*previous.dx[i,j]
+            dy += wx*wy*previous.dy[i,j]
+    return dx,dy
+
+
+def piv_multipass(image_a,image_b,*,window_sizes=(64,32),steps=None,
+                  dt=1.,correlation="circular",mask=None) -> MultiPassPIVResult:
+    """Coarse-to-fine PIV with integer window shifts and bilinear predictors.
+
+    A native extension of the validated single-pass kernels, NOT PIVlab's
+    deforming-window algorithm. Even window_sizes must decrease (repeating is
+    allowed); steps defaults to half each size. At least two passes are needed.
+    Fine-grid centers outside the preceding grid are invalid, as are predictors
+    touching invalid vectors. Shifted windows outside either image are invalid.
+    The union mask is checked in both the original A and shifted B windows.
+    No outlier replacement or interpolation across missing vectors is implicit.
+    """
+    a,b = _images(image_a,image_b)
+    if np.ma.isMaskedArray(window_sizes) or np.ma.isMaskedArray(steps):
+        raise ValueError("window_sizes and steps must be unmasked sequences")
+    try:
+        sizes = tuple(_size(w,"window_sizes",4) for w in window_sizes)
+    except TypeError as exc:
+        raise ValueError("window_sizes must be a sequence of even integers") from exc
+    if len(sizes) < 2 or any(w%2 or w>min(a.shape) for w in sizes) or any(
+            b>a for a,b in zip(sizes,sizes[1:])):
+        raise ValueError("window_sizes must contain >=2 nonincreasing even sizes fitting the images")
+    if steps is None:
+        strides = tuple(w//2 for w in sizes)
+    else:
+        try:
+            strides = tuple(_size(s,"steps",1) for s in steps)
+        except TypeError as exc:
+            raise ValueError("steps must be an integer sequence matching window_sizes") from exc
+        if len(strides) != len(sizes):
+            raise ValueError("steps must match window_sizes")
+    dt = scalar(dt,"dt",positive=True)
+    if correlation not in ("circular","linear"):
+        raise ValueError("correlation must be 'circular' or 'linear'")
+    if mask is None:
+        mask = np.zeros(a.shape,dtype=bool)
+    elif np.ma.isMaskedArray(mask):
+        raise ValueError("mask must be a complete boolean array")
+    else:
+        mask = np.asarray(mask)
+        if mask.dtype.kind != 'b' or mask.shape != a.shape:
+            raise ValueError("mask must be a boolean array matching image shape")
+    passes = [piv_pair(a,b,window_size=sizes[0],step=strides[0],dt=dt,
+                       correlation=correlation,mask=mask)]
+    for w,stride in zip(sizes[1:],strides[1:]):
+        rows = np.arange(0,a.shape[0]-w+1,stride)
+        cols = np.arange(0,a.shape[1]-w+1,stride)
+        x,y = np.meshgrid(cols+(w-1)/2,rows+(w-1)/2)
+        dx,dy = np.full(x.shape,np.nan),np.full(x.shape,np.nan)
+        flags = np.zeros(x.shape,dtype=np.uint8)
+        for i,r in enumerate(rows):
+            for j,c in enumerate(cols):
+                aa = np.s_[r:r+w,c:c+w]
+                if mask[aa].any():
+                    flags[i,j] = PIVFlag.MASKED
+                    continue
+                predicted = _predictor(passes[-1],x[i,j],y[i,j])
+                if predicted is None:
+                    flags[i,j] = PIVFlag.PREDICTOR_UNAVAILABLE
+                    continue
+                # Nearest integer, ties away from zero; residual retains subpixels.
+                sx,sy = (int(np.copysign(np.floor(abs(q)+.5),q)) for q in predicted)
+                rr,cc = r+sy,c+sx
+                if rr < 0 or cc < 0 or rr+w > a.shape[0] or cc+w > a.shape[1]:
+                    flags[i,j] = PIVFlag.OUTSIDE_IMAGE
+                    continue
+                bb = np.s_[rr:rr+w,cc:cc+w]
+                if mask[bb].any():
+                    flags[i,j] = PIVFlag.MASKED
+                    continue
+                one = piv_pair(a[aa],b[bb],window_size=w,step=w,dt=dt,correlation=correlation)
+                flags[i,j] = one.flags.item()
+                if one.valid.item():
+                    dx[i,j],dy[i,j] = sx+one.dx.item(),sy+one.dy.item()
+        passes.append(PIVResult(*map(_readonly,(x,y,dx,dy,flags)),dt,w,stride,correlation))
+    return MultiPassPIVResult(tuple(passes))

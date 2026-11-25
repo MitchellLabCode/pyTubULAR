@@ -491,16 +491,34 @@ class TubULAR(CoordinateMethods):
 
     def measurePIV2d(self, image_a, image_b, *, window_size=32, step=None,
                      dt=1., correlation="circular", mask=None):
-        """Measure a supplied image pair with the supported single-pass PIV core.
+        """Measure supplied images with single-pass or window-shift multipass PIV.
 
-        Returns PIVResult in image pixels and explicit dt units. This does not
-        load a time series, run PIVlab's four deforming passes, preprocess,
-        inpaint, scale to physical velocity, or write outputs. Selected time
-        and the experiment's time/length units do not alter this calculation.
+        Scalar window_size returns PIVResult. A sequence such as (64,32,16)
+        returns MultiPassPIVResult; step is then None or a matching sequence.
+        Results use image pixels and explicit dt, independent of selected time.
+        The multipass driver shifts integer windows; it does not implement
+        PIVlab image deformation, automatic filtering, or physical velocity.
         """
-        from .piv import piv_pair
+        from .piv import piv_pair, piv_multipass
+        if isinstance(window_size,(tuple,list,np.ndarray)) and np.ndim(window_size) > 0:
+            return piv_multipass(image_a,image_b,window_sizes=window_size,steps=step,
+                                  dt=dt,correlation=correlation,mask=mask)
         return piv_pair(image_a,image_b,window_size=window_size,step=step,dt=dt,
                         correlation=correlation,mask=mask)
+
+    def fitPhiOffsetsViaTexture(self, current, reference, *, strip_width=32,
+                                step=None, bounds=(-.5,.5), method="parabolic", mask=None):
+        """Fit angular chart offsets from explicit corresponding pullback images.
+
+        Returns TexturePhaseFit. Images contain one period of unique rows;
+        columns must already correspond axially. phase_offsets(u) interpolates
+        valid fits at explicit normalized image-column positions for surface
+        reconstruction. No chart registration, volume sampling, time selection,
+        smoothing, file I/O, or material velocity is implicit.
+        """
+        from .texture_phase import fit_texture_phase
+        return fit_texture_phase(current,reference,strip_width=strip_width,step=step,
+                                  bounds=bounds,method=method,mask=mask)
 
     def register_data(self, timepoint, source):
         """Register one ZYX array/.npy file, or a sequence of channels; no resampling."""

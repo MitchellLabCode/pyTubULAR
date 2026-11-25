@@ -4,8 +4,8 @@
 from tubular import TubULAR, Mesh, MeshSource, MethodNotPortedError
 ```
 
-Version 0.10.0a1 extends the stateful experiment object using MATLAB method
-names. Of 200 original callable method names, 63 are **adapted** and 137 are
+Version 0.11.0a1 extends the stateful experiment object using MATLAB method
+names. Of 200 original callable method names, 64 are **adapted** and 136 are
 **not ported**. Adapted means working within the scope below, not every legacy
 argument, format, return value, or side effect. The constructor is additional
 to this count. The original MATLAB repository is only a reference source.
@@ -448,8 +448,9 @@ turns. Version 0.10 can also fit offsets against an explicit reference result. S
 `measurePIV2d(image_a, image_b, window_size=32, step=None, dt=1,
 correlation="circular", mask=None)` measures an explicitly supplied image pair.
 It does not require time selection. It returns image-plane pixel displacements
-and validity flags, with velocities divided by explicit dt. **Only one pass**
-is implemented; the method name does not imply the MATLAB four-pass pipeline.
+and validity flags, with velocities divided by explicit dt. Scalar window_size
+uses one pass; sequences select the 0.11 window-shift driver described below.
+The method name does not imply the MATLAB four-pass deforming-window pipeline.
 See [PIV scope, validation and package comparison](piv.md).
 
 ## Geometric temporal phase alignment (0.10)
@@ -463,6 +464,24 @@ before registration. No timepoint or rigid alignment is inferred.
 
 `fit_sphi_phase` and `fit_hoop_phase` are headless numerical APIs for inspecting
 fits, including rejected cases. These extend an existing adapted class method;
-the coverage count remains 63. See [temporal_phase.md](temporal_phase.md) for
+that slice left the coverage count at 63. See [temporal_phase.md](temporal_phase.md) for
 phase sign, unwrapping, residuals, source comparisons and the distinction
 between geometric chart alignment and material tracking.
+
+## Texture alignment and multipass PIV (0.11)
+
+`fitPhiOffsetsViaTexture(current, reference, strip_width=32, step=None,
+bounds=(-.5,.5), method="parabolic", mask=None)` returns `TexturePhaseFit`.
+Images explicitly contain one period of unique rows and corresponding axial
+columns. `fit.phase_offsets(image_positions)` interpolates valid offsets in
+turns for `generateCurrentSPCutMesh(..., phi_offsets=...)`. No time or mesh is
+changed by the fit. This uses normalized strip cross-correlation and has
+documented differences from the original workflow; see [texture_phase.md](texture_phase.md).
+
+`measurePIV2d` now also accepts a sequence `window_size=(64,32)` with
+`step=None` or a matching sequence. It returns `MultiPassPIVResult` containing
+all `passes` and a `final` PIVResult. Integer window shifts use bilinear
+predictors; missing predictors, masks and shifted windows outside the image
+remain invalid. Scalar window_size behavior is unchanged. This is not PIVlab
+image deformation; see [piv.md](piv.md) for accuracy and boundary limits.
+The class now has 64 adapted MATLAB methods and 136 pending methods.

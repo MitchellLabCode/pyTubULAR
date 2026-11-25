@@ -1,9 +1,10 @@
 # PIV implementation and package audit
 
-Version 0.9 implements a **single-pass image-pair PIV core**, with translated
+Version 0.11 retains the **single-pass image-pair PIV core** introduced in 0.9, with translated
 PIVlab FFT correlation and three-point Gaussian peak kernels. It is exposed as
 `tubular.piv.piv_pair` and `TubULAR.measurePIV2d`. It does not yet reproduce the
-four-pass deforming-window workflow in MATLAB TubULAR.
+four-pass deforming-window workflow in MATLAB TubULAR. Version 0.11 adds a
+native coarse-to-fine integer-window-shift driver, documented below.
 
 ```python
 result = tubi.measurePIV2d(image_a, image_b, window_size=32, step=16,
@@ -91,3 +92,54 @@ Next steps are multipass prediction/deformation, repeated correlation, explicit
 preprocessing and outlier filters, followed by paired real pullback-image
 comparisons and mapping validated vectors into 3D. Surface phase correspondence
 between frames must also be established before interpreting PIV as tissue flow.
+
+## Coarse-to-fine window shifting (0.11)
+
+A sequence of window sizes now selects a native multipass driver:
+
+```python
+series = tubi.measurePIV2d(image_a, image_b, window_size=(64, 32),
+                          step=(32, 16), dt=0.5, mask=invalid_pixels)
+result = series.final               # PIVResult: total displacement, not residual
+first_pass = series.passes[0]       # every pass is retained for inspection
+```
+
+The standalone API is `piv_multipass(..., window_sizes=(64,32), steps=None)`.
+A scalar class `window_size` still returns the original single-pass `PIVResult`.
+Sequences require at least two nonincreasing even sizes; repeating a size is
+allowed. Steps default to half each size, or accept a matching sequence.
+
+The first pass uses the existing PIVlab kernels. Each later window bilinearly
+interpolates total displacement from the previous grid, shifts the window in
+frame B by the nearest integer (half ties away from zero), then adds its measured
+subpixel residual to that integer shift. Positions remain the centers in frame
+A. Both image windows must fit, and both must avoid the union mask. New flags
+`PREDICTOR_UNAVAILABLE` and `OUTSIDE_IMAGE` explain rejected later vectors.
+
+Every positive-weight predictor corner must be valid. Zero-weight corners do
+not contaminate exact grid-node queries. There is no extrapolation beyond the
+previous grid, so smaller windows near image edges can remain invalid even
+when they fit in the image. Invalid vectors are not filled. An incorrect but
+unflagged coarse vector can guide later passes incorrectly; a valid flag is
+not evidence of accuracy. Inspect all passes and the mask.
+
+This is **integer window shifting**, not PIVlab's spline image deformation,
+repeated correlation or repeat-until-converged workflow. The driver is a native
+extension, not a direct translation of `piv_FFTmulti`. It uses the already
+validated kernels without changing their default numerical behavior. Periodic
+surface seams are not automatically wrapped in PIV image sampling.
+
+Independent tests recover displacements `(12,-8)` and `(-11,9)` pixels using
+64→32→16 windows, where the same single 16-pixel pass aliases the motion.
+They check time scaling, masks in both windows, exact affine interpolation,
+missing predictors, out-of-image samples and unchanged first-pass outputs.
+A prescribed fractional affine shear with 64→32 windows has maximum component
+errors 0.089 and 0.072 pixels, within the original 0.15-pixel test threshold.
+For that same texture, continuing to 16 pixels increases the maxima to 0.193
+and 0.165 pixels: smaller windows do not guarantee better estimates. The example
+reports this limitation; the regression test retains the 0.15-pixel accuracy
+requirement with a 32-pixel final window. These bounds describe those synthetic cases only.
+
+Image deformation, signal-to-noise and outlier validation, real-data comparison,
+backend benchmarking, and calibrated lifting onto a moving surface remain next
+steps. The package audit above remains dated 2026-11-19.

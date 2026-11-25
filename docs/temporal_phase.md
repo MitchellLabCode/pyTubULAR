@@ -144,5 +144,6 @@ Independent tests cover known polygon shifts, sign, branch crossing, complete
 global-search comparisons, rigid transforms, scaling, frame translation,
 seam weighting, ambiguous geometry, bound-limited fits, correspondence,
 different grid sizes, nonconsecutive times and failed-registration preservation.
-Validation on biological data remains outstanding. Multipass PIV is unchanged
-in this release; see the [PIV scope](piv.md).
+Validation on biological data remains outstanding. The separate 0.11 extension
+adds [texture phase alignment](texture_phase.md) and a native integer-window-shift
+[PIV driver](piv.md); neither establishes full material tracking.
